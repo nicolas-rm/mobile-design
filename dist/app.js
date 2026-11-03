@@ -1,6 +1,6 @@
-import {webRuntime} from './web-examples.js?v=b568087c35f7';
+import {webRuntime} from './web-examples.js?v=d28a814f4c38';
 import {illustrationMarkup} from './illustrations.js?v=2f4d505ab019';
-import {componentDocs,hasInteractiveExample} from './component-docs.js?v=9fdd778c582d';
+import {componentDocs,hasInteractiveExample} from './component-docs.js?v=79bf38014bf7';
 import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from './site-sections.js?v=b2fc80314fe6';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));

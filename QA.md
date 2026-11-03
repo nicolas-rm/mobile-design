@@ -1,5 +1,17 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Contraste con la galería nativa y corrección de alineación
+
+- Se abrió Music Design en el simulador y se recorrieron las ocho galerías con ejecución XCTest: Buttons, Extended FABs, FAB menu, FABs, Icon buttons, Segmented buttons, Split button y Cards. Se conservaron capturas, jerarquías y vídeo de interacción antes de modificar los originales. Los medios oficiales actuales de las ocho familias se consultaron de nuevo; las medidas y los fotogramas de Split se compararon directamente.
+- La revisión detectó una regresión introducida en Split: el anclaje del menú conservaba alignSelf: flex-start, mientras la mitad principal reservaba el objetivo de interacción. El desfase era de 8 dp en Extra small y 4 dp en Small. Se reprodujo en navegador y simulador. No era parte del diseño de MD3.
+- Split centra ahora el anclaje visual dentro de la fila compartida, sin trasladar el dibujo con offsets ni modificar Popup para otros consumidores. Conserva separación de 2 dp, las cinco alturas, los objetivos web de 48 dp y el menú a 4 dp de la superficie visual. La corrección se aplica al original utilizado por móvil, los ejemplos web y los encabezados de copiar/descargar de la página.
+- La fila nativa de cinco tamaños de Icon buttons heredaba la alineación inicial de Tooltip y mostraba centros diferentes. El helper de esa composición declara anchorStyle con alineación central, igual que la composición multimedia web. No se altera la colocación por defecto de menús ni ayudas en otros contextos.
+- Split distingue el foco visible por teclado del foco recibido al pulsar con ratón. Se conserva el estado hover y el feedback de presión, sin dejar el contorno de teclado tras una pulsación de puntero.
+- La prueba de navegador ahora compara centros verticales en cada combinación de Split, además de las cinco muestras y los cinco usos. Antes comprobaba alturas y separación horizontal, lo que permitió que pasara la desalineación. El nuevo contrato falló sobre la exportación anterior y pasó con el original corregido.
+- La repetición nativa verificó centros coincidentes en los cuatro estilos de Split, apertura/cierre del menú, los cinco centros de la fila de Icon buttons (desfase máximo de 0 dp; antes había 44 dp), selección de reproducción, FAB menu abierto/cerrado y detalle de Card con guardado y regreso. XCTest terminó sin fallos y dejó Split visible.
+- Repetidas y aprobadas las 1,416 configuraciones de las ocho familias con test:web completo, además de los controles originales de la página, 46 módulos TSX y los 37 bloques automáticos del paquete. Sin errores de página ni recursos fallidos en los recorridos aprobados.
+- El recorrido nativo es representativo: no acredita cada combinación, un framerate mínimo ni rendimiento en dispositivo físico. Los registros de esta entrega se conservan localmente en /private/tmp/md3-web-native-audit-20261103; la matriz de navegador mantiene su evidencia en .artifacts/.
+
 ## Segmented buttons, Split button y Cards
 
 - Se consultaron Overview, Specs, Guidelines y Accessibility actuales de las tres familias, incluidas descripciones de imágenes y demostraciones. Segmented buttons se conserva como familia publicada; Connected button groups es la recomendación para diseños Expressive nuevos.
