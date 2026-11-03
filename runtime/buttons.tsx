@@ -52,9 +52,9 @@ export function ButtonsRuntime() {
       </div>
       <div className="button-stage" dir={direction}><View style={{maxWidth:'100%'}}><Button variant={config.variant} size={config.size} shape={config.shape} selected={config.toggle?selected:undefined} icon={config.icon?'bookmark-outline':undefined} disabled={config.disabled} loading={config.loading} onPress={activate} testID="example-button">{config.label||'Guardar'}</Button></View></div>
       <div className="example-result" role="status" aria-live="polite"><span>{feedback}</span><span><span id="activation-count">{count}</span> acciones</span></div>
-      <details className="example-code"><summary>Ver código</summary><pre><code>{code}</code></pre></details>
+      <section className="example-code" aria-label="Código de la configuración"><h2>Código de la configuración</h2><pre tabIndex={0}><code>{code}</code></pre></section>
       <section className="usage-section" aria-labelledby="loading-title"><h2 id="loading-title">Acción con carga</h2><p>Guardar muestra el progreso y confirma el resultado al terminar.</p><div className="usage-row"><Button variant="filled" icon={saved?'check':'content-save-outline'} loading={saving} onPress={save} testID="async-button">{saving?'Guardando':saved?'Guardado':'Guardar cambios'}</Button><span role="status" aria-live="polite" id="save-status" data-completed={saveCount}>{saving?'Guardando cambios…':saved?'Cambios guardados.':'Listo para guardar.'}</span></div></section>
-      <details className="sizes-section"><summary>Explorar los cinco estilos</summary><div className="variant-examples">{variants.map(variant=><Button key={variant} variant={variant} icon="add" onPress={()=>setFeedback(variant+' activado.')} testID={'variant-'+variant}>{variant[0].toUpperCase()+variant.slice(1)}</Button>)}</div></details>
+      <section className="sizes-section"><h2>Los cinco estilos</h2><div className="variant-examples">{variants.map(variant=><Button key={variant} variant={variant} icon="add" onPress={()=>setFeedback(variant+' activado.')} testID={'variant-'+variant}>{variant[0].toUpperCase()+variant.slice(1)}</Button>)}</div></section>
     </main>
     <RuntimeBridge/>
   </MobileDesignProvider>;

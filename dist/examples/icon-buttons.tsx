@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { IconButton } from 'mobile-design';
+import { IconButton, MaterialSymbol, Tooltip } from 'mobile-design';
 
 // Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [favorite, setFavorite] = useState(false);
-  return <IconButton icon={favorite ? 'heart' : 'heart-outline'}
-    accessibilityLabel={favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
-    mode="contained-tonal" selected={favorite}
-    onPress={() => setFavorite(value => !value)} />;
+  const label = favorite ? 'Quitar de favoritos' : 'Añadir a favoritos';
+  return <Tooltip title={label}>
+    <IconButton icon={props => <MaterialSymbol {...props} name="favorite" filled={favorite} />}
+      accessibilityLabel={label} mode="contained-tonal" selected={favorite}
+      sizeClass="small" shape="round" widthVariant="default"
+      onPress={() => setFavorite(value => !value)} />
+  </Tooltip>;
 }

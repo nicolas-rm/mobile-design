@@ -1,7 +1,7 @@
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {createPortal,flushSync} from 'react-dom';
-import {Button,MobileDesignProvider,type ButtonVariant} from 'mobile-design';
+import {Button,IconButton,MaterialSymbol,Tooltip,MobileDesignProvider,type ButtonVariant,type ButtonSize,type IconButtonProps} from 'mobile-design';
 
 type Configuration={theme:'light'|'dark';reduced:boolean;onAction:(host:HTMLElement)=>void|Promise<void>};
 export type DocsControls={configure:(config:Configuration)=>void;mount:()=>void;clear:(container:Element)=>void};
@@ -15,6 +15,17 @@ function Action({host,onAction}:{host:HTMLElement;onAction:Configuration['onActi
   if(pending.current)return;pending.current=true;setBusy(true);
   try{await onAction(host);}finally{pending.current=false;if(alive.current)setBusy(false);}
  };
+ const label=host.dataset.accessibilityLabel??host.dataset.label??'';
+ if(host.dataset.kind==='icon'){
+  const control=<IconButton icon={p=><MaterialSymbol {...p} name={host.dataset.icon??'more_vert'} filled/>}
+   sizeClass={(host.dataset.size??'small') as ButtonSize} shape={host.dataset.shape==='square'?'square':'round'}
+   mode={host.dataset.mode as IconButtonProps['mode']} selected={host.dataset.action==='motion'?host.dataset.selected==='true':undefined}
+   accessibilityLabel={label} accessibilityState={{busy,...(host.dataset.expanded?{expanded:host.dataset.expanded==='true'}:{})}}
+   onPress={activate} testID={'docs-icon-'+host.dataset.action}/>;
+  // The page's native HTML dialog owns the top layer; its close action keeps
+  // a browser hint until the Search family replaces that dialog composition.
+  return host.closest('dialog')?control:<Tooltip title={label}>{control}</Tooltip>;
+ }
  return <Button variant={(host.dataset.variant??'text') as ButtonVariant} size="small"
   icon={host.dataset.icon||undefined} accessibilityLabel={host.dataset.accessibilityLabel??host.dataset.label}
   selected={host.dataset.action==='motion'?host.dataset.selected==='true':undefined} accessibilityState={{busy}} onPress={activate}

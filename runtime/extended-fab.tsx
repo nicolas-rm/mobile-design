@@ -17,7 +17,7 @@ const scenarios={
 };
 type Scenario=keyof typeof scenarios;
 
-function Usage({direction}:{direction:'ltr'|'rtl'}){
+export function FABUsage({direction,extended=true}:{extended?:boolean;direction:'ltr'|'rtl'}){
  const theme=useMobileTheme();
  const [scenario,setScenario]=useState<Scenario>('mail');const item=scenarios[scenario];
  const [alignment,setAlignment]=useState('end');const [rail,setRail]=useState(false);
@@ -41,7 +41,7 @@ function Usage({direction}:{direction:'ltr'|'rtl'}){
  },[open]);
  const show=(event:{currentTarget:unknown})=>{
   const trigger=event.currentTarget as HTMLElement,button=trigger.getBoundingClientRect();opener.current=trigger;
-  setOrigin({x:button.left,y:button.top,width:button.width,height:button.height,borderRadius:16,backgroundColor:theme.colors.primaryContainer});
+  setOrigin({x:button.left,y:button.top,width:button.width,height:button.height,borderRadius:parseFloat(getComputedStyle(trigger).borderRadius)||16,backgroundColor:theme.colors.primaryContainer});
   progress.set(0);setReady(false);closing.current=false;setIsClosing(false);setValue('');setOpen(true);
  };
  const close=()=>{
@@ -49,7 +49,7 @@ function Usage({direction}:{direction:'ltr'|'rtl'}){
  };
  const choose=(next:Scenario)=>{setScenario(next);setCreated([]);setResult('');setExpanded(true);previousY.current=0;if(scroller.current)scroller.current.scrollTop=0;};
  return <section className="usage-section" aria-labelledby="fab-usage-title">
-  <h2 id="fab-usage-title">Ejemplos en acción</h2><p>Una acción principal persistente. Desplaza el contenido hacia abajo para contraerla y hacia arriba para recuperar la etiqueta.</p>
+  <h2 id="fab-usage-title">Ejemplos en acción</h2><p>{extended?'Una acción principal persistente. Desplaza el contenido hacia abajo para contraerla y hacia arriba para recuperar la etiqueta.':'Una acción principal persistente que conserva su posición mientras se desplaza el contenido. Abre y completa la tarea.'}</p>
   <div className="playground-controls">
    <label>Ejemplo<select id="fab-scenario" disabled={open} value={scenario} onChange={e=>choose(e.target.value as Scenario)}>{Object.entries(scenarios).map(([key,s])=><option key={key} value={key}>{s.title}</option>)}</select></label>
    <label>Posición<select id="fab-alignment" disabled={open} value={alignment} onChange={e=>setAlignment(e.target.value)}><option value="end">Extremo final</option><option value="center">Centro inferior</option></select></label>
@@ -58,11 +58,11 @@ function Usage({direction}:{direction:'ltr'|'rtl'}){
   <div className={'fab-scene'+(rail?' with-rail':'')} ref={scene} dir={direction} data-open={open}>
    <div className="fab-scene-content" inert={open}>
     <header><h3>{item.title}</h3></header>
-    {rail?<aside className="fab-example-rail" aria-label="Acción principal"><FAB.Extended icon={item.icon} label={item.label} elevation={0} onPress={show} testID="usage-rail-fab"/><span>Tu espacio</span></aside>:null}
+    {rail?<aside className="fab-example-rail" aria-label="Acción principal">{extended?<FAB.Extended icon={item.icon} label={item.label} elevation={0} onPress={show} testID="usage-rail-fab"/>:<FAB icon={item.icon} elevation={0} accessibilityLabel={item.label} onPress={show} testID="usage-rail-fab"/>}<span>Tu espacio</span></aside>:null}
     <div className="fab-scroll-content" id="fab-scroll-content" ref={scroller} tabIndex={0} aria-label={'Contenido de '+item.title} onScroll={e=>{const y=e.currentTarget.scrollTop,delta=y-previousY.current;if(Math.abs(delta)>3||y<=0){setExpanded(y<=0||delta<0);previousY.current=y;}}}>
      {[...created,...item.rows].map((row,index)=><div className="fab-example-row" key={row+index}><span className="example-row-icon"><Icon source={scenario==='mail'?'email-outline':scenario==='tasks'?'checkbox-blank-outline':scenario==='flights'?'map-marker-outline':scenario==='checkout'?'shopping-outline':'text-box-outline'} size={24}/></span><span><strong>{row}</strong><small>{scenario==='checkout'?'1 artículo':scenario==='article'?'Ideas, historias y una nueva perspectiva.':'Una nueva oportunidad para crear.'}</small></span></div>)}
     </div>
-    {!rail?<div className={'fab-example-dock '+alignment}><FAB.Extended icon={item.icon} label={item.label} expanded={expanded} onPress={show} testID="usage-fab"/></div>:null}
+    {!rail?<div className={'fab-example-dock '+alignment}>{extended?<FAB.Extended icon={item.icon} label={item.label} expanded={expanded} onPress={show} testID="usage-fab"/>:<FAB icon={item.icon} size="medium" accessibilityLabel={item.label} onPress={show} testID="usage-fab"/>}</div>:null}
    </div>
    {open?<View style={{position:'absolute',inset:0,zIndex:3}}><ContainerTransformSurface origin={origin} transforming={theme.animation.scale!==0} entering={!isClosing} progress={progress} onMeasured={measured} borderRadius={0} backgroundColor={theme.colors.surfaceContainerHigh} fill testID="fab-transform-surface">
     <form style={{backgroundColor:'var(--raised)'}} className="fab-example-form" inert={isClosing} aria-label={item.form} onKeyDown={e=>{if(e.key==='Escape'){e.preventDefault();close();}}} onSubmit={e=>{e.preventDefault();if(isClosing||!value.trim())return;if(scenario==='tasks'||scenario==='mail')setCreated(rows=>[value.trim(),...rows]);setResult(item.result);close();}}>
@@ -95,8 +95,8 @@ export function ExtendedFABRuntime(){
    <div className="button-stage fab-stage" dir={direction}><View><FAB.Extended size={size} variant={variant} icon={icon?'pencil-outline':undefined} label={label||'Redactar'} expanded={expanded} visible={visible} onPress={()=>setCount(v=>v+1)} testID="example-fab"/></View></div>
    <p className="preview-guidance">En espacios estrechos, desliza la muestra horizontalmente para explorar los tamaños grandes.</p>
    <div className="example-result" role="status" aria-live="polite"><span>{icon?'La etiqueta conserva su nombre accesible al contraerse.':'Sin icono, la etiqueta permanece visible.'}</span><span><span id="fab-activation-count">{count}</span> acciones</span></div>
-   <details className="example-code"><summary>Ver código</summary><pre><code>{code}</code></pre></details>
-   <Usage direction={direction}/>
+   <section className="example-code" aria-label="Código de la configuración"><h2>Código de la configuración</h2><pre tabIndex={0}><code>{code}</code></pre></section>
+   <FABUsage direction={direction}/>
   </main><RuntimeBridge/>
  </MobileDesignProvider>;
 }

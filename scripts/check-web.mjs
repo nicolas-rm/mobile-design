@@ -52,7 +52,8 @@ try{
      await frame.locator('#button-size').selectOption(size);await frame.locator('#button-shape').selectOption(shape);
      if(toggle)await frame.locator('#button-selected').uncheck();
      await poll(()=>radius(button),v=>Math.abs(v-(shape==='round'?tokens.height/2:tokens.square))<0.7,'resting radius');
-     const box=await button.boundingBox();assert.ok(Math.abs(box.height-tokens.height)<1,`${theme}/${variant}/${size}/${shape} height: ${box.height}`);
+     const box=await button.boundingBox();assert.ok(Math.abs(box.height-Math.max(48,tokens.height))<1,`${theme}/${variant}/${size}/${shape} hit target height: ${box.height}`);
+     assert.ok(Math.abs((await button.locator(':scope > div').first().boundingBox()).height-tokens.height)<1,'Visual height retains the size token.');
      assert.equal(await button.getAttribute('aria-label'),'Guardar');
      const before=Number(await frame.locator('#activation-count').innerText());await button.click();
      await poll(()=>frame.locator('#activation-count').innerText(),v=>Number(v)===before+1,'single activation');
@@ -127,7 +128,7 @@ try{
   assert.ok(Math.abs(iconBox.y+iconBox.height/2-textBox.y-textBox.height/2)<1,'Icon and text vertical centering');
  }
  await frame.locator('#button-direction').selectOption('ltr');
- await frame.locator('.example-code summary').click();assert.ok((await frame.locator('.example-code code').innerText()).includes('variant="filled"'));await frame.locator('.example-code summary').click();
+ assert.ok(await frame.locator('.example-code code').isVisible());assert.ok((await frame.locator('.example-code code').innerText()).includes('variant="filled"'));assert.equal(await frame.locator('details').count(),0);
  await page.screenshot({path:path.join(artifacts,'buttons-desktop.png'),fullPage:true,animations:'disabled'});
  for(const width of [390,320]){
   await page.setViewportSize({width,height:844});await frame.locator('#button-size').selectOption('extra-large');await frame.locator('#button-label').fill('Guardar todos los cambios de mi colección de música');

@@ -33,6 +33,8 @@ for(const [id,example] of Object.entries(webExamples)){
  const runtimeHtml=fs.readFileSync(entry,'utf8');
  for(const match of runtimeHtml.matchAll(/(?:src|href)="(\/runtime\/[^"?]+)"/g))assert.ok(fs.existsSync(path.join(dist,match[1])),id+' runtime resource '+match[1]);
 }
+assert.equal(Object.keys(webExamples).length,5,'Five families integrated; the remaining families stay pending.');
+for(const file of ['dist/component-docs.js','runtime/buttons.tsx','runtime/extended-fab.tsx','runtime/fab-menu.tsx','runtime/fabs.tsx','runtime/icon-buttons.tsx'])assert.ok(!/<(?:details|summary)\b/.test(fs.readFileSync(path.join(root,file),'utf8')),file+' content must stay visible.');
 assert.ok(fs.readFileSync(path.join(dist,'styles.css'),'utf8').includes('./assets/material-symbols.ttf?v='+fingerprint('assets/material-symbols.ttf')),'Icon preload and CSS must use the same version.');
 for(const c of data.components){
  assert.ok(c.description&&c.guidance&&c.accessibility,c.id+' editorial');

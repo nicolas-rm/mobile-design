@@ -1829,19 +1829,31 @@
       "accessibility": "Incluye accessibilityLabel porque no hay etiqueta visible. La acción debe ser comprensible sin color ni movimiento.",
       "dimensions": [
         [
-          "FAB",
-          "56 dp · radio 16 dp"
+          "FAB · size=\"default\"",
+          "56 × 56 dp · radio 16 dp · icono 24 dp"
         ],
         [
-          "Medium",
-          "80 dp · radio 20 dp"
+          "Medium · recomendado",
+          "80 × 80 dp · radio 20 dp · icono 28 dp"
         ],
         [
           "Large",
-          "96 dp · radio 28 dp"
+          "96 × 96 dp · radio 28 dp · icono 36 dp"
+        ],
+        [
+          "Color",
+          "Primary / Secondary / Tertiary y sus tres contenedores"
+        ],
+        [
+          "Elevación",
+          "Nivel 3; nivel 4 al pasar el puntero"
+        ],
+        [
+          "Colocación",
+          "16 dp respecto al borde; conserva su posición al desplazar contenido"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { FAB } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <FAB icon=\"plus\" accessibilityLabel=\"Crear lista\"\n    onPress={() => Alert.alert('Nueva lista')} />;\n}\n",
+      "example": "import { Alert } from 'react-native';\nimport { FAB, MaterialSymbol, Tooltip } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <Tooltip title=\"Crear lista\">\n    <FAB size=\"medium\" variant=\"tonalPrimary\"\n      icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name=\"add\" filled />}\n      accessibilityLabel=\"Crear lista\"\n      onPress={() => Alert.alert('Nueva lista')} />\n  </Tooltip>;\n}\n",
       "api": [
         {
           "name": "icon",
@@ -1958,36 +1970,46 @@
       ],
       "guide": {
         "integration": [
-          "Define icon y accessibilityLabel para la acción principal.",
-          "El host controla visible, posición e insets. size y variant seleccionan tamaño y par de colores semánticos."
+          "Define un MaterialSymbol con filled, accessibilityLabel y onPress para la acción principal. Medium (80 dp) es el tamaño recomendado; la API conserva size=\"default\" (56 dp) como valor inicial.",
+          "El host controla visible, posición e insets. size y variant seleccionan tamaño y par de colores semánticos. Añade Tooltip para explicar la acción al pasar el puntero o enfocar."
         ],
         "behavior": [
           [
             "Comando",
-            "onPress inicia una única tarea destacada."
+            "onPress inicia una única tarea destacada: crear, redactar, publicar o completar una compra."
           ],
           [
-            "Presión",
-            "El feedback pertenece a su superficie; el área de interacción conserva su propia geometría."
+            "Presión y elevación",
+            "La capa de estado queda dentro de la forma. Conserva elevación 3 y aumenta a 4 al pasar el puntero."
+          ],
+          [
+            "Desplazamiento",
+            "Permanece anclado mientras se desplaza el contenido. Evita cubrir los últimos elementos."
           ],
           [
             "Visibilidad",
-            "La presencia se anima según el tema y respeta movimiento reducido."
+            "Se oculta cuando la acción no está disponible, en vez de inventar un estado deshabilitado. La presencia se anima según el tema y respeta movimiento reducido."
+          ],
+          [
+            "Transformación",
+            "Puede abrir la tarea desde su superficie mediante ContainerTransformSurface; confirmar o cancelar devuelve el foco al FAB."
           ]
         ],
         "accessibility": [
-          "Describe la acción con palabras porque sólo hay icono visible.",
-          "Mantén el FAB fuera de las zonas que la navegación o el teclado necesitan."
+          "Describe la acción con palabras porque sólo hay icono visible. El tooltip complementa el nombre.",
+          "Mantén el FAB fuera de las zonas que la navegación o el teclado necesitan.",
+          "Cuando visible es false, no debe seguir en el recorrido del teclado."
         ],
         "cautions": [
-          "No uses varios FAB de igual jerarquía para acciones sin relación."
+          "Usa una sola acción de máxima jerarquía por pantalla.",
+          "No añadas loading o disabled: no forman parte de esta API."
         ],
         "types": []
       },
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -2027,8 +2049,41 @@
       "description": "Representa acciones reconocibles mediante iconos. Puede ejecutar un comando o alternar un estado seleccionado.",
       "guidance": "Usa iconos conocidos y una etiqueta accesible precisa. El tamaño del glifo y el objetivo táctil son medidas distintas.",
       "accessibility": "Incluye un nombre para cada icono y el estado de los toggles. El tooltip complementa la etiqueta; no la sustituye.",
-      "dimensions": [],
-      "example": "import { useState } from 'react';\nimport { IconButton } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [favorite, setFavorite] = useState(false);\n  return <IconButton icon={favorite ? 'heart' : 'heart-outline'}\n    accessibilityLabel={favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}\n    mode=\"contained-tonal\" selected={favorite}\n    onPress={() => setFavorite(value => !value)} />;\n}\n",
+      "dimensions": [
+        [
+          "Tamaños · altura visual",
+          "Extra small 32 · Small 40 · Medium 56 · Large 96 · Extra large 136 dp"
+        ],
+        [
+          "Glifos",
+          "20 / 24 / 24 / 32 / 40 dp"
+        ],
+        [
+          "Anchuras · narrow / default / wide",
+          "XS 28/32/40 · S 32/40/52 · M 48/56/72 · L 64/96/128 · XL 104/136/184 dp"
+        ],
+        [
+          "Forma Square · radios",
+          "12 / 12 / 16 / 28 / 28 dp"
+        ],
+        [
+          "Forma Round",
+          "Mitad de la altura visual"
+        ],
+        [
+          "Presión · radios",
+          "8 / 8 / 12 / 16 / 16 dp"
+        ],
+        [
+          "Selección Toggle",
+          "Round cambia a Square; Square cambia a Round"
+        ],
+        [
+          "Objetivo de interacción",
+          "Mínimo 48 × 48 dp; la superficie visual conserva su tamaño"
+        ]
+      ],
+      "example": "import { useState } from 'react';\nimport { IconButton, MaterialSymbol, Tooltip } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [favorite, setFavorite] = useState(false);\n  const label = favorite ? 'Quitar de favoritos' : 'Añadir a favoritos';\n  return <Tooltip title={label}>\n    <IconButton icon={props => <MaterialSymbol {...props} name=\"favorite\" filled={favorite} />}\n      accessibilityLabel={label} mode=\"contained-tonal\" selected={favorite}\n      sizeClass=\"small\" shape=\"round\" widthVariant=\"default\"\n      onPress={() => setFavorite(value => !value)} />\n  </Tooltip>;\n}\n",
       "api": [
         {
           "name": "icon",
@@ -2155,37 +2210,50 @@
       ],
       "guide": {
         "integration": [
-          "Define icon y accessibilityLabel. sizeClass controla la escala del botón; size heredado puede afectar el glifo.",
-          "Usa selected para un toggle y onPress para actualizarlo; mode configura el tratamiento."
+          "Define icon y accessibilityLabel. sizeClass controla la escala completa; size heredado puede personalizar el glifo. Usa MaterialSymbol para controlar su relleno.",
+          "Default omite selected. Toggle recibe selected y lo actualiza en onPress. mode=\"contained\" corresponde a Filled, contained-tonal a Tonal, outlined a Outlined; omitir mode corresponde a Standard."
         ],
         "behavior": [
           [
-            "Comando",
-            "Un botón sin selected ejecuta una acción."
+            "Default",
+            "Ejecuta una acción sin selección persistente. Usa el icono relleno cuando esté disponible."
           ],
           [
             "Toggle",
-            "selected cambia su estado y tratamiento; el consumidor conserva el valor."
+            "El estado controlado cambia forma, color y relleno: contorno sin selección y relleno al seleccionar. Round cambia a Square y viceversa."
           ],
           [
-            "Superficie",
-            "shape y widthVariant configuran la geometría; el objetivo táctil puede superar la superficie visual."
+            "Presión",
+            "El radio converge al token de presión y vuelve al estado actual al soltar o cancelar, incluso con pulsaciones rápidas."
+          ],
+          [
+            "Superficie y objetivo",
+            "shape y widthVariant configuran el dibujo. El objetivo real conserva al menos 48 × 48 dp; el feedback queda limitado al dibujo. Para centrar controles de tamaños distintos dentro de Tooltip, usa anchorStyle={{alignSelf: \"center\"}} en esa composición."
+          ],
+          [
+            "Teclado y ayuda",
+            "Enter y Espacio activan una vez. El foco de teclado es visible y Tooltip describe la acción."
+          ],
+          [
+            "Carga",
+            "loading bloquea nuevas acciones y anuncia busy; disabled retira la activación. Son estados del paquete, adicionales a las configuraciones visuales."
           ]
         ],
         "accessibility": [
-          "Un icono reconocible también necesita nombre accesible.",
-          "Actualiza el nombre de acciones opuestas cuando sea necesario: añadir o quitar favorito."
+          "Un icono reconocible también necesita nombre accesible y ayuda contextual.",
+          "Actualiza el nombre de acciones opuestas: añadir o quitar favorito. Publica la selección del toggle.",
+          "No uses varios iconos decorativos como controles sin una acción real."
         ],
         "cautions": [
           "No alinees el objetivo usando la caja del glifo.",
-          "Usa pressed sólo para composiciones que mantienen abierto un popup."
+          "Usa pressed sólo para composiciones que mantienen abierto un popup; Menu ya coordina ese estado con su ancla."
         ],
         "types": []
       },
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -5713,7 +5781,7 @@
           "name": "anchorStyle",
           "type": "StyleProp<ViewStyle> | undefined",
           "required": false,
-          "description": "",
+          "description": "Estilo del contenedor que mide y coloca el disparador; permite coordinar su alineación con la fila o columna.",
           "inherited": false
         },
         {
@@ -10706,6 +10774,13 @@
               "inherited": true
             },
             {
+              "name": "anchorStyle",
+              "type": "StyleProp<ViewStyle> | undefined",
+              "required": false,
+              "description": "Estilo del contenedor que mide y coloca el disparador; permite coordinar su alineación con la fila o columna.",
+              "inherited": false
+            },
+            {
               "name": "gap",
               "type": "4 | 8 | undefined",
               "required": false,
@@ -10909,7 +10984,9 @@
       "interactiveComponents": [
         "buttons",
         "extended-fab",
-        "fab-menu"
+        "fab-menu",
+        "floating-action-button",
+        "icon-buttons"
       ]
     },
     "documentation": "Documentación con ejemplos interactivos del paquete mediante React Native Web"

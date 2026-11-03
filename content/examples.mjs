@@ -34,13 +34,20 @@ export const examples = {
         { key: 'folder', label: 'Carpeta', icon: 'folder-outline', onPress: () => Alert.alert('Nueva carpeta') },
       ]} />
   </View>;` },
-  'floating-action-button': { imports:'FAB', body:`return <FAB icon="plus" accessibilityLabel="Crear lista"
-    onPress={() => Alert.alert('Nueva lista')} />;` },
-  'icon-buttons': { imports:'IconButton', body:`const [favorite, setFavorite] = useState(false);
-  return <IconButton icon={favorite ? 'heart' : 'heart-outline'}
-    accessibilityLabel={favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
-    mode="contained-tonal" selected={favorite}
-    onPress={() => setFavorite(value => !value)} />;` },
+  'floating-action-button': { imports:'FAB, MaterialSymbol, Tooltip', body:`return <Tooltip title="Crear lista">
+    <FAB size="medium" variant="tonalPrimary"
+      icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name="add" filled />}
+      accessibilityLabel="Crear lista"
+      onPress={() => Alert.alert('Nueva lista')} />
+  </Tooltip>;` },
+  'icon-buttons': { imports:'IconButton, MaterialSymbol, Tooltip', body:`const [favorite, setFavorite] = useState(false);
+  const label = favorite ? 'Quitar de favoritos' : 'Añadir a favoritos';
+  return <Tooltip title={label}>
+    <IconButton icon={props => <MaterialSymbol {...props} name="favorite" filled={favorite} />}
+      accessibilityLabel={label} mode="contained-tonal" selected={favorite}
+      sizeClass="small" shape="round" widthVariant="default"
+      onPress={() => setFavorite(value => !value)} />
+  </Tooltip>;` },
   'segmented-buttons': { imports:'SegmentedButtons', body:`const [value, setValue] = useState('walk');
   return <SegmentedButtons value={value} onValueChange={setValue}
     buttons={[{ value: 'walk', label: 'A pie', icon: 'walk' },

@@ -46,7 +46,7 @@ export function FABMenuRuntime(){
     <label>Movimiento<select id="fab-menu-motion" value={motion} onChange={e=>setMotion(e.target.value as typeof motion)}><option value="expressive">Expressive</option><option value="standard">Standard</option></select></label>
     <div className="state-options"><label><input id="fab-menu-short" type="checkbox" checked={short} onChange={e=>configure(setShort,e.target.checked)}/>Altura limitada</label><label><input id="fab-menu-disabled" type="checkbox" checked={disabled} onChange={e=>configure(setDisabled,e.target.checked)}/>Segunda acción no disponible</label></div>
    </div>
-   <details className="example-code"><summary>Ver código</summary><pre><code>{code}</code></pre></details>
+   <section className="example-code" aria-label="Código de la configuración"><h2>Código de la configuración</h2><pre tabIndex={0}><code>{code}</code></pre></section>
    <p className="preview-guidance">{mode==='anchored'?'Adaptación web: el FAB abre un menú baseline. Usa flechas, Inicio/Fin, Escape y Enter o Espacio.':mode==='expressive'?'M3 Expressive: de 2 a 6 acciones con iconos y etiquetas. El FAB se transforma en el cierre; Tab recorre los controles.':'Extensión del paquete: la pila se desplaza con el gesto o la rueda. El cierre permanece accesible.'}</p>
    <div className="fab-menu-scene" dir={direction}><SafeAreaInsetsContext.Provider value={previewInsets}><View style={{height:short?280:460,position:'relative',overflow:'hidden'}}>
     <View style={{padding:24,gap:16}}><Text variant="headlineSmall">{scenario==='create'?'Tu espacio':'Mi colección'}</Text><Text variant="bodyMedium">{scenario==='create'?'Crea contenido desde una sola acción principal.':'Elige cómo compartir esta colección.'}</Text>

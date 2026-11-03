@@ -1,5 +1,18 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Contenido visible y pareja FABs / Icon buttons
+
+- Código de configuración, capturas, muestras y contratos TypeScript completos permanecen visibles. Se retiraron los acordeones de contenido y de grupos del catálogo. Las explicaciones usan texto normal; código, firmas e identificadores conservan tipografía de código. Los selectores de configuración siguen compactos.
+- FABs monta el componente original: tamaños 56/80/96, iconos rellenos, seis pares de color, presencia, teclado, ayuda contextual y anclaje durante el desplazamiento. Cinco tareas permiten abrir, confirmar, cancelar y recuperar el foco.
+- Icon buttons monta el original con Default/Toggle, cuatro tratamientos, cinco tamaños, tres anchuras y dos formas. Incluye selección, reproducción, llamada local y menú con copia al portapapeles; no simula una llamada ni reproducción de audio real.
+- Se corrigió el objetivo web compartido de Button/IconButton: el área real responde en los cuatro lados de los 48 × 48 mínimos, mientras la superficie y la máscara del ripple conservan las dimensiones visuales y las esquinas animadas. La rama nativa conserva hitSlop y su indicación original.
+- Tooltip permite configurar anchorStyle para que la composición centre acciones de alturas diferentes sin desplazar sus glifos. El ejemplo de reproducción comprueba ese centro común.
+- La página consume IconButton original en tema, movimiento, apertura/cierre de navegación y búsqueda, enlaces de apartados y controles de captura. Conserva un único proveedor; se comprobaron portales, retorno de foco móvil, diálogo de búsqueda, copia y reemplazos de ruta. Los enlaces, campos y filtros restantes conservan su implementación del sitio.
+- Matriz nueva: 36 configuraciones de FABs y 480 de Icon buttons. Además: colores semánticos, medición, presión/cancelación, transiciones interrumpidas, disabled/loading, teclado, tacto, RTL, movimiento reducido y anchos 320/390.
+- Regresiones de Buttons (180), Extended FABs (144), FAB menu (192) y controles de la página sobre los componentes compartidos. Total: 1,032 configuraciones entre las cinco familias; sin errores de página ni recursos fallidos en los recorridos aprobados.
+- El runtime y los 43 módulos descargables compilan contra el paquete. Verificador integral de 37 bloques aprobado; contrato de Tooltip repetido después del ajuste de composición. Son verificaciones automáticas con fronteras nativas simuladas, sin nuevo recorrido visual en dispositivo.
+- Alcance actual: cinco familias web interactivas y 31 pendientes. El navegador de verificación fue Chromium; otros motores y lectores de pantalla web no se dan por acreditados con esta matriz.
+
 ## Corrección visual del FAB menu Expressive
 
 - El token oficial `md.comp.fab-menu.menu-item.container.elevation` marca 0dp. Los ítems compartidos utilizaban erróneamente la elevación 3 del FAB; ahora son planos. El cierre conserva la elevación que le corresponde.
