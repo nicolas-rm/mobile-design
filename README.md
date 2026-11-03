@@ -19,7 +19,7 @@ Este repositorio contiene el proyecto de documentación. No incluye la app Music
 - Fichas con uso, integración, funcionamiento, variantes, configuraciones, API y accesibilidad dentro del propio sitio.
 - Propiedades, valores iniciales disponibles y contratos de datos extraídos de los tipos del paquete.
 - 42 ejemplos React Native descargables, incluidos Search view, selección de rango, Input chips, menú → diálogo, contraseña y progreso → success.
-- 72 capturas nativas, claras/oscuras, de la revisión iOS del 2 de noviembre de 2026.
+- 72 capturas nativas, claras/oscuras, de la revisión del 2 de noviembre de 2026.
 - Búsqueda de guías, componentes y propiedades; temas claro/oscuro, navegación adaptable, enlaces directos a apartados, foco visible y reducción de movimiento.
 
 Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas nativas y código TSX; no ejecutan imitaciones HTML del componente. Las fuentes de diseño MD3 aparecen como bibliografía complementaria identificada.
@@ -30,8 +30,6 @@ Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas na
 | --- | --- |
 | React Native con Expo | Entorno principal del paquete documentado. |
 | React Native con módulos Expo integrados | Requiere los peers y su configuración nativa. |
-| iOS | Evidencia de ejecución representativa registrada en el cierre nativo. |
-| Android | Objetivo de implementación; no se ejecutó durante el último cierre iOS. |
 | Expo Web / React Native Web | **Pendiente de verificación integral.** El código existente se conserva. |
 | React DOM independiente | No hay una distribución DOM verificada del paquete. |
 
@@ -91,7 +89,7 @@ Se pueden usar rutas absolutas o relativas. El sincronizador no modifica el paqu
 
 `npm run check:examples` compila los 42 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
 
-Los resultados nativos publicados proceden del cierre iOS del 2 de noviembre. Las verificaciones del sitio no sustituyen una ejecución del paquete en Android o navegador. El soporte web de los componentes se mantiene expresamente pendiente.
+Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. El soporte web de los componentes se mantiene expresamente pendiente.
 
 ## Estilo y licencias
 

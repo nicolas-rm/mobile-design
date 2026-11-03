@@ -1,5 +1,12 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Limpieza de referencias visibles
+
+- Retirado el bloque de fuentes de diseño de todas las fichas y los enlaces de referencia externos de las páginas editoriales.
+- Unificados los textos de portada, capturas, descripciones de imágenes, accesibilidad, desarrollo, soporte, verificación y búsqueda sin nombres de sistemas operativos ni modelos de dispositivo.
+- 170 rutas comprobadas en navegador: sin el bloque retirado, enlaces de referencia externos ni nombres de sistemas operativos en contenido visible o descripciones de imágenes. Se verificó también la búsqueda de soporte.
+- Navegación, temas, filtros y layout adaptable aprobados. Los registros técnicos anteriores conservan la trazabilidad de las revisiones.
+
 ## Arquitectura y estilo editorial MD3
 
 - Revisión de la portada y navegación reales de Material Design 3: destinos principales, menús por sección, guías de fundamentos y estilos, tarjetas editoriales y pie de página.
