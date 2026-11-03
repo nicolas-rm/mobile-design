@@ -24,7 +24,7 @@
 .heading-link .symbol{font-size:22px}.toc a{font-size:13px;padding:10px 12px}.toc p{font-size:12px}
 .component-tabs{margin-top:12px;min-height:74px;padding:6px;margin-bottom:52px;box-shadow:0 0 0 10px var(--surface)}
 .component-tabs a{font-size:15px;min-height:60px}.detail-heading{margin-bottom:28px}
-.detail-heading .intro{font-size:21px}.native-proof{margin-top:28px}.scope-note{margin-top:12px}
+.detail-heading .intro{font-size:21px}.native-proof{margin-top:28px}
 .editorial-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px;margin:32px 0}
 .editorial-card{display:block;border-radius:28px;min-width:0;transition:background .2s;overflow:hidden}
 .editorial-card:hover{background:var(--surface-container)}

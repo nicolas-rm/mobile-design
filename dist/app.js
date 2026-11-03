@@ -1,5 +1,5 @@
 import {illustrationMarkup} from './illustrations.js?v=2f4d505ab019';
-import {componentDocs} from './component-docs.js?v=51534a7f2601';
+import {componentDocs} from './component-docs.js?v=e8b7bd3a08b6';
 import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from './site-sections.js?v=b2fc80314fe6';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
