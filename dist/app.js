@@ -1,6 +1,6 @@
-import {illustrationMarkup} from './illustrations.js';
-import {componentDocs} from './component-docs.js';
-import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from './site-sections.js';
+import {illustrationMarkup} from './illustrations.js?v=2f4d505ab019';
+import {componentDocs} from './component-docs.js?v=138accb9df1a';
+import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from './site-sections.js?v=d4b1d72ecd20';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const icon=name=>`<span class="symbol" aria-hidden="true">${name}</span>`;

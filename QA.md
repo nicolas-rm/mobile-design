@@ -9,6 +9,7 @@
 - 11 rutas representativas revisadas a 390 px y portada a 320 px. Verificados menú móvil, fondo inerte, cierre con Escape, restauración de foco, búsqueda de guías y componentes, filtros de API, enlaces de apartados, temas e imágenes y movimiento reducido.
 - Cero errores de página y cero respuestas HTTP fallidas en el recorrido. Revisión visual de portada, Fundamentos y Color; capturas de escritorio/móvil y ambos temas guardadas fuera del repositorio.
 - `npm test` incorpora validación de destinos y enlaces editoriales, además de los contratos y recursos nativos existentes.
+- La primera apertura publicada mezcló el HTML nuevo con JavaScript almacenado de la versión anterior. Se añadieron huellas de contenido a módulos, CSS y fuente de iconos, y comprobaciones de consistencia para impedir esa mezcla entre entregas.
 - Los 42 módulos de ejemplo, las 72 capturas y el catálogo sincronizado no cambiaron. El soporte web del paquete continúa pendiente y su código se conserva.
 - No se ejecutaron pruebas nativas ni se modificó la app para esta entrega. La revisión de ejemplos queda para la siguiente etapa solicitada.
 

@@ -50,6 +50,8 @@ npm start
 
 Abre http://127.0.0.1:4317/. Las rutas utilizan hash y no necesitan reglas de rewrite. `PORT=4320 npm start` permite usar otro puerto.
 
+Después de editar JavaScript, CSS o la fuente de iconos, ejecuta `npm run assets` y `npm test`. Las huellas de contenido en las URLs impiden mezclar recursos de diferentes versiones por caché; las comprobaciones detectan huellas desactualizadas.
+
 ## Organización
 
 | Ruta | Responsabilidad |

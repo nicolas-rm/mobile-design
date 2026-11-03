@@ -3,6 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 import {illustrationMarkup} from '../dist/illustrations.js';
 import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from '../dist/site-sections.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -16,6 +17,10 @@ assert.deepEqual(JSON.parse(embedded[1]),data,'Inline and downloadable API data 
 assert.equal(new Set(data.components.map(c=>c.id)).size,36);
 const assets=['index.html','styles.css','structure.css','app.js','site-sections.js','component-docs.js','illustrations.js','assets/material-symbols.ttf','assets/icon-names.json','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
 for(const file of assets)assert.ok(fs.statSync(path.join(dist,file)).size>0,file);
+const fingerprint=file=>createHash('sha256').update(fs.readFileSync(path.join(dist,file))).digest('hex').slice(0,12);
+for(const file of ['app.js','styles.css','structure.css','assets/material-symbols.ttf'])assert.ok(html.includes(`./${file}?v=${fingerprint(file)}`),file+' cache fingerprint; run npm run assets after editing');
+for(const file of ['illustrations.js','component-docs.js','site-sections.js'])assert.ok(fs.readFileSync(path.join(dist,'app.js'),'utf8').includes(`./${file}?v=${fingerprint(file)}`),file+' module fingerprint');
+assert.ok(fs.readFileSync(path.join(dist,'styles.css'),'utf8').includes('./assets/material-symbols.ttf?v='+fingerprint('assets/material-symbols.ttf')),'Icon preload and CSS must use the same version.');
 for(const c of data.components){
  assert.ok(c.description&&c.guidance&&c.accessibility,c.id+' editorial');
  assert.ok(c.api.length>0,c.id+' API');

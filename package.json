@@ -5,6 +5,7 @@
   "type": "module",
   "engines": {"node": ">=22"},
   "scripts": {
+    "assets": "node scripts/stamp-assets.mjs",
     "start": "node scripts/serve.mjs",
     "sync": "node scripts/sync-package.mjs",
     "check:examples": "node scripts/check-examples.mjs",
