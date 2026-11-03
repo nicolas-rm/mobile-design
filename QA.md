@@ -1,5 +1,21 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Segmented buttons, Split button y Cards
+
+- Se consultaron Overview, Specs, Guidelines y Accessibility actuales de las tres familias, incluidas descripciones de imágenes y demostraciones. Segmented buttons se conserva como familia publicada; Connected button groups es la recomendación para diseños Expressive nuevos.
+- SegmentedButtons original mide las etiquetas con la fuente real en web, conserva segmentos de igual ancho y separa el objetivo de 48 dp de las cuatro alturas visuales. Incluye selección única/múltiple, iconos/check, contenido uniforme, teclado y RTL.
+- SplitButton original conserva cinco tamaños, cuatro estilos, separación de 2 dp, objetivos de 48 dp, giro y forma del chevrón y anclaje a 4 dp de la superficie visual. Bloquear un menú controlado también descarta la solicitud de apertura, evitando que reaparezca al habilitarlo.
+- Card original utiliza el ripple compartido en web, recortado al radio de 12 dp; conserva Pressable nativo. href permite enlaces reales del navegador. Se distinguen contenedores con acciones internas y superficies directamente pulsables, sin anidar controles.
+- Tres galerías interactivas y tres módulos descargables nuevos: filtros de precio, envío con alternativas y colección con archivo/deshacer. Los ejemplos de uso incluyen reservas, datos por periodo, compra, rutas, velocidad, destinos, transformación a detalle, controles independientes, expansión y siete distribuciones de colección.
+- El catálogo consume Card original con 36 enlaces reales. Los encabezados de ejemplos descargables utilizan SplitButton original para copiar, descargar y copiar el enlace. Se verificaron estas acciones y la limpieza de portales al cambiar de ruta.
+- Matriz nueva: 192 configuraciones de Segmented buttons, 120 de Split button y 72 de Cards: 384 en total. Además: selección, teclado, objetivos de presión, RTL, cancelación, foco, ripple, movimiento reducido, acciones, arrastre y deslizamiento reales, deshacer y anchos 320/390. Los resultados y capturas se guardan en .artifacts/segmented-split-cards-web/.
+- El runtime y los 46 módulos descargables compilan contra el paquete; los 37 bloques automáticos del paquete también pasan con fronteras nativas simuladas. No se realizó una nueva verificación visual en dispositivo.
+- Repetida la matriz de 180 configuraciones de Buttons sobre la exportación final: presión, tacto, teclado, cancelación, carga, temas y movimiento sin regresiones.
+- Corregida la inserción del JSON de datos en HTML para conservar literalmente secuencias como $' en ejemplos de precios. Las huellas, los datos integrados y las 170 rutas mantienen sus comprobaciones estáticas.
+- Alcance actual: ocho familias web interactivas y 28 pendientes. Las pruebas anteriores sumaban 1,032 configuraciones; esta entrega añade 384 (1,416 acumuladas). Esa cifra no representa una repetición de las matrices anteriores ni acredita otros motores o lectores de pantalla.
+
+Las secciones siguientes conservan los resultados de entregas anteriores.
+
 ## Contenido visible y pareja FABs / Icon buttons
 
 - Código de configuración, capturas, muestras y contratos TypeScript completos permanecen visibles. Se retiraron los acordeones de contenido y de grupos del catálogo. Las explicaciones usan texto normal; código, firmas e identificadores conservan tipografía de código. Los selectores de configuración siguen compactos.

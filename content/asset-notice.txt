@@ -2,5 +2,7 @@ Documentation website assets: material-symbols.ttf is a local subset served by t
 
 The interactive runtime uses lossless WOFF2 copies of Mobile Design's complete original fonts, preserving glyphs, metrics and all variable axes. Runtime dependency licenses are included in runtime/components/THIRD_PARTY_NOTICES.txt.
 
+The sample photographs in assets/examples are unchanged, bounded art regions from Google Material Design public examples. Their original URLs, crop provenance and hashes are recorded in assets/examples/sources.json. They illustrate local content; the controls are rendered by Mobile Design.
+
 The following notices describe the documented package and its included resources:
 

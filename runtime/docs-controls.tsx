@@ -1,9 +1,9 @@
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {createPortal,flushSync} from 'react-dom';
-import {Button,IconButton,MaterialSymbol,Tooltip,MobileDesignProvider,type ButtonVariant,type ButtonSize,type IconButtonProps} from 'mobile-design';
+import {Button,Card,IconButton,MaterialSymbol,SplitButton,Tooltip,MobileDesignProvider,type ButtonVariant,type ButtonSize,type IconButtonProps} from 'mobile-design';
 
-type Configuration={theme:'light'|'dark';reduced:boolean;onAction:(host:HTMLElement)=>void|Promise<void>};
+type Configuration={theme:'light'|'dark';reduced:boolean;onAction:(host:HTMLElement,action?:string)=>void|Promise<void>};
 export type DocsControls={configure:(config:Configuration)=>void;mount:()=>void;clear:(container:Element)=>void};
 declare global{interface Window{mobileDesignDocsControls?:DocsControls}}
 
@@ -16,6 +16,11 @@ function Action({host,onAction}:{host:HTMLElement;onAction:Configuration['onActi
   try{await onAction(host);}finally{pending.current=false;if(alive.current)setBusy(false);}
  };
  const label=host.dataset.accessibilityLabel??host.dataset.label??'';
+ if(host.dataset.kind==='card')return <Card variant="filled" href={host.dataset.href} accessibilityLabel={label} testID={'docs-card-'+host.dataset.component} style={{width:'100%'}}><div dangerouslySetInnerHTML={{__html:host.dataset.markup??''}}/></Card>;
+ if(host.dataset.kind==='split')return <SplitButton label="Copiar" icon="content_copy" variant="tonal" size="small" primaryAccessibilityLabel="Copiar código" menuAccessibilityLabel="Más acciones del ejemplo" onPress={()=>{void activate();}} actions={[
+  {key:'download',label:'Descargar ejemplo',icon:'download',onPress:()=>{void onAction(host,'download-example');}},
+  {key:'link',label:'Copiar enlace al ejemplo',icon:'link',onPress:()=>{void onAction(host,'copy-example-link');}},
+ ]} testID="docs-code-actions"/>;
  if(host.dataset.kind==='icon'){
   const control=<IconButton icon={p=><MaterialSymbol {...p} name={host.dataset.icon??'more_vert'} filled/>}
    sizeClass={(host.dataset.size??'small') as ButtonSize} shape={host.dataset.shape==='square'?'square':'round'}

@@ -2290,7 +2290,32 @@
       "description": "Permite elegir una o varias alternativas de un conjunto pequeño y relacionado.",
       "guidance": "Usa selección única para alternativas excluyentes y múltiple para filtros combinables. MD3 Expressive también propone Connected button groups.",
       "accessibility": "Asocia el grupo con su propósito y publica la selección. No uses una etiqueta vacía sin nombre accesible.",
-      "dimensions": [],
+      "dimensions": [
+        [
+          "Segmentos",
+          "De 2 a 5 · anchos iguales según las etiquetas"
+        ],
+        [
+          "Altura visual",
+          "Regular 40 · Small 36 · Medium 32 · High 28 dp"
+        ],
+        [
+          "Objetivo real",
+          "Mínimo 48 × 48 dp por segmento"
+        ],
+        [
+          "Contorno y esquinas",
+          "1 dp · extremos redondeados a la mitad de la altura"
+        ],
+        [
+          "Contenido",
+          "Label Large · icono/check 18 dp · separación 8 dp · padding lateral mínimo 12 dp"
+        ],
+        [
+          "Selección",
+          "Secondary container / On secondary container; resto On surface / Outline"
+        ]
+      ],
       "example": "import { useState } from 'react';\nimport { SegmentedButtons } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [value, setValue] = useState('walk');\n  return <SegmentedButtons value={value} onValueChange={setValue}\n    buttons={[{ value: 'walk', label: 'A pie', icon: 'walk' },\n      { value: 'bike', label: 'Bici', icon: 'bike' },\n      { value: 'car', label: 'Auto', icon: 'car-outline' }]} />;\n}\n",
       "api": [
         {
@@ -2366,29 +2391,43 @@
       ],
       "guide": {
         "integration": [
-          "Define buttons con value y etiquetas; pasa value y onValueChange al grupo.",
-          "Para selección múltiple, activa multiSelect y utiliza un array de valores."
+          "Define de dos a cinco buttons con valores únicos, etiquetas breves y un mismo tipo de contenido: iconos, etiquetas o ambos.",
+          "Single-select recibe un valor; multiSelect recibe un array que puede quedar vacío. En diseños Expressive nuevos, la alternativa recomendada es Connected button groups."
         ],
         "behavior": [
           [
-            "Una alternativa",
-            "Seleccionar otra opción reemplaza el valor anterior."
+            "Selección única",
+            "Elegir otra opción reemplaza el valor anterior. La opción seleccionada no queda vacía al volver a activarla."
           ],
           [
-            "Varias alternativas",
-            "Cada opción puede añadirse o retirarse de la selección."
+            "Selección múltiple",
+            "Cada opción se añade o retira; pueden seleccionarse todas o ninguna."
           ],
           [
-            "Densidad",
-            "density ajusta la superficie conservando la interacción y el contenido."
+            "Icono y check",
+            "Con etiqueta e icono, el check sustituye al icono mediante una transición. Con sólo etiqueta, el check entra y el texto se recentra."
+          ],
+          [
+            "Densidad y medidas",
+            "La superficie baja de 40 a 36, 32 o 28 dp. El objetivo real conserva 48 dp; los segmentos tienen el mismo ancho y permanecen en una línea."
+          ],
+          [
+            "Teclado",
+            "Tab entra por el primer segmento; flechas, Inicio y Fin mueven el foco sin cambiar la selección. Espacio o Enter confirman la opción enfocada."
+          ],
+          [
+            "Contenido adaptable",
+            "Las etiquetas se miden con la fuente real. El grupo conserva un ancho intrínseco y evita extender sus opciones por toda una ventana amplia."
           ]
         ],
         "accessibility": [
-          "Publica el propósito del grupo y la etiqueta de cada alternativa.",
-          "Conserva la selección visible sin depender sólo del color."
+          "El grupo de selección única expone radio y radiogroup; cada opción múltiple expone checkbox.",
+          "Los iconos sin texto necesitan accessibilityLabel y las opciones deshabilitadas no se activan.",
+          "En RTL se invierte el orden visual y la dirección de las flechas. La selección sigue siendo independiente del foco."
         ],
         "cautions": [
-          "Connected Button groups es otra composición disponible; no cambies una API por la otra sin migrar el consumidor."
+          "La referencia conserva esta familia, pero recomienda Connected button groups para interfaces Expressive nuevas.",
+          "No mezcles segmentos de sólo icono con otros de sólo texto ni uses más de cinco opciones."
         ],
         "types": [
           "SegmentedButtonOption"
@@ -2485,9 +2524,16 @@
           ]
         }
       ],
-      "recipes": [],
+      "recipes": [
+        {
+          "id": "segmented-price-filter",
+          "title": "Filtro de precio con selección múltiple",
+          "description": "El array puede contener todas, algunas o ninguna de las opciones. La lista refleja la selección controlada.",
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { SegmentedButtons, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [prices, setPrices] = useState<string[]>(['2']);\n  const places = [{ id: 'cafe', name: 'Café del centro', price: '1' },\n    { id: 'casa', name: 'Casa verde', price: '2' }, { id: 'terraza', name: 'La terraza', price: '3' }];\n  return <View style={{ padding: 24, gap: 16 }}>\n    <SegmentedButtons multiSelect value={prices} onValueChange={setPrices}\n      accessibilityLabel=\"Precio por persona\"\n      buttons={[1, 2, 3, 4].map(price => ({ value: String(price), label: '$'.repeat(price),\n        accessibilityLabel: ['Económico', 'Moderado', 'Alto', 'Muy alto'][price - 1] }))} />\n    {places.filter(place => prices.includes(place.price)).map(place => <Text key={place.id}>{place.name}</Text>)}\n    {!places.some(place => prices.includes(place.price)) ? <Text>Sin coincidencias.</Text> : null}\n  </View>;\n}\n"
+        }
+      ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -2524,7 +2570,40 @@
       "description": "Combina una acción directa con un menú de opciones relacionadas. Cada región conserva su función independiente.",
       "guidance": "La zona principal ejecuta el comando habitual; el chevrón abre las alternativas. Cierra el menú antes de presentar el destino de una acción.",
       "accessibility": "Nombra por separado el comando principal y la apertura del menú. Publica el estado expandido de la segunda región.",
-      "dimensions": [],
+      "dimensions": [
+        [
+          "Tamaños · altura visual",
+          "XS 32 · S 40 · M 56 · L 96 · XL 136 dp"
+        ],
+        [
+          "Separación entre mitades",
+          "2 dp"
+        ],
+        [
+          "Esquinas interiores",
+          "4 / 4 / 4 / 8 / 12 dp"
+        ],
+        [
+          "Objetivo real",
+          "Mínimo 48 × 48 dp para cada mitad"
+        ],
+        [
+          "Icono principal",
+          "20 / 20 / 24 / 32 / 40 dp"
+        ],
+        [
+          "Icono de menú",
+          "22 / 22 / 26 / 38 / 50 dp; desplazamiento óptico −1 / −1 / −2 / −3 / −6 dp"
+        ],
+        [
+          "Menú abierto",
+          "Icono centrado y giro interior 180° · capa 10 % · separación 4 dp desde la superficie"
+        ],
+        [
+          "Movimiento",
+          "Default Effects sin rebote; misma rotación con ambos perfiles del proveedor"
+        ]
+      ],
       "example": "import { Alert } from 'react-native';\nimport { SplitButton } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <SplitButton label=\"Enviar\" icon=\"send-outline\"\n    onPress={() => Alert.alert('Mensaje enviado')}\n    menuAccessibilityLabel=\"Más opciones de envío\"\n    actions={[\n      { key: 'later', label: 'Programar envío', icon: 'clock-outline', onPress: () => Alert.alert('Programar envío') },\n      { key: 'draft', label: 'Guardar borrador', icon: 'content-save-outline', onPress: () => Alert.alert('Borrador guardado') },\n    ]} />;\n}\n",
       "api": [
         {
@@ -2633,29 +2712,44 @@
       ],
       "guide": {
         "integration": [
-          "Define label y onPress para la acción primaria, y actions para sus alternativas.",
-          "Cada alternativa necesita key, label y onPress. expanded/onExpandedChange permiten coordinar la apertura."
+          "Define label, icon opcional y onPress para el comando principal. Las actions contienen alternativas relacionadas con key, label y onPress.",
+          "La mitad principal admite texto, icono o ambos; conserva un nombre accesible explícito si no hay texto. expanded/onExpandedChange permiten coordinar el menú."
         ],
         "behavior": [
           [
-            "Zona principal",
-            "Ejecuta directamente la acción habitual."
+            "Comando principal",
+            "La primera mitad ejecuta su comando sin abrir el menú."
           ],
           [
-            "Zona secundaria",
-            "El chevrón abre o cierra el menú relacionado."
+            "Alternativas",
+            "El chevrón abre el menú sin ejecutar el comando principal. La opción elegida se ejecuta una vez después del cierre."
           ],
           [
-            "Destino",
-            "La alternativa seleccionada se entrega después del cierre del menú para evitar mezclar superficies."
+            "Forma y giro",
+            "Las esquinas interiores responden a hover, foco y presión. Al abrir, la mitad secundaria se redondea, centra el icono y gira 180° hacia dentro."
+          ],
+          [
+            "Color",
+            "La selección añade una capa de estado; mantiene el mismo par de colores del estilo elegido."
+          ],
+          [
+            "Colocación",
+            "El menú se mide desde la superficie secundaria y deja 4 dp. Puede colocarse arriba si no cabe debajo."
+          ],
+          [
+            "Cancelación",
+            "Escape, salida del menú, bloqueo o desmontaje descartan acciones pendientes. El cierre devuelve el foco al disparador."
           ]
         ],
         "accessibility": [
-          "Usa primaryAccessibilityLabel y menuAccessibilityLabel cuando las etiquetas visibles no basten.",
-          "Las dos regiones representan acciones diferentes y conservan objetivos independientes."
+          "Nombra el comando principal y la apertura del menú por separado: Enviar y Más opciones de envío.",
+          "Las dos mitades tienen objetivos de al menos 48 × 48 dp. Tab recorre ambas; Enter o Espacio activan la enfocada.",
+          "El control secundario comunica expanded y dispone de navegación de menú por flechas, Inicio/Fin y búsqueda por prefijo."
         ],
         "cautions": [
-          "No abras otro diálogo antes de que haya salido el menú."
+          "No cambies el chevrón por un icono de otra acción ni uses etiquetas largas.",
+          "Las alternativas son opciones relacionadas; no añadas botones independientes dentro de una mitad.",
+          "La rotación utiliza el movimiento estándar de efectos, incluso con un proveedor Expressive."
         ],
         "types": [
           "SplitButtonAction"
@@ -2710,9 +2804,16 @@
           ]
         }
       ],
-      "recipes": [],
+      "recipes": [
+        {
+          "id": "split-message-actions",
+          "title": "Comando principal y alternativas de un mensaje",
+          "description": "Enviar, guardar borrador y descartar tienen resultados locales distintos. La alternativa se entrega después del cierre del menú.",
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { SplitButton, TextField, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [message, setMessage] = useState('Nos vemos mañana.');\n  const [draft, setDraft] = useState('');\n  const [result, setResult] = useState('');\n  return <View style={{ padding: 24, gap: 20 }}>\n    <TextField label=\"Mensaje\" value={message} onChangeText={setMessage} />\n    <SplitButton label=\"Enviar\" icon=\"send\" disabled={!message.trim()}\n      onPress={() => { setResult('Mensaje enviado: ' + message); setMessage(''); }}\n      menuAccessibilityLabel=\"Más opciones de envío\" actions={[\n        { key: 'draft', label: 'Guardar borrador', icon: 'draft',\n          onPress: () => { setDraft(message); setResult('Borrador guardado.'); } },\n        { key: 'discard', label: 'Descartar mensaje', icon: 'delete',\n          onPress: () => { setMessage(''); setResult('Mensaje descartado.'); } },\n      ]} />\n    <Text accessibilityLiveRegion=\"polite\">{result}</Text>\n    {draft ? <Text>Borrador: {draft}</Text> : null}\n  </View>;\n}\n"
+        }
+      ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -2754,7 +2855,48 @@
       "description": "Agrupa contenido y acciones que pertenecen a una misma entidad, con tratamientos Elevated, Filled u Outlined.",
       "guidance": "Da prioridad al contenido y conserva una jerarquía clara. Las acciones internas siguen teniendo objetivos independientes.",
       "accessibility": "Una tarjeta interactiva necesita un propósito claro. Evita duplicar la lectura del contenido y de los controles que contiene.",
-      "dimensions": [],
+      "dimensions": [
+        [
+          "Esquinas",
+          "Radio 12 dp"
+        ],
+        [
+          "Padding de contenido",
+          "16 dp laterales"
+        ],
+        [
+          "Colecciones",
+          "Separación 8 dp"
+        ],
+        [
+          "Elevated",
+          "Surface container low · elevación 1"
+        ],
+        [
+          "Filled",
+          "Surface container highest · elevación 0"
+        ],
+        [
+          "Outlined",
+          "Surface · Outline variant de 1 dp · elevación 0"
+        ],
+        [
+          "Hover",
+          "Elevated sube a nivel 2; Filled/Outlined a nivel 1"
+        ],
+        [
+          "Presión y foco",
+          "Elevación de reposo · capa de estado 10 %"
+        ],
+        [
+          "Arrastre",
+          "Elevated nivel 4; Filled/Outlined nivel 3 · capa 16 %"
+        ],
+        [
+          "Geometría",
+          "Altura determinada por contenido; conserva acciones y texto al adaptarse"
+        ]
+      ],
       "example": "import { Alert } from 'react-native';\nimport { Card, Text, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <Card variant=\"filled\">\n    <Card.Title title=\"En buena compañía\" subtitle=\"Una colección para descubrir\" />\n    <Card.Content><Text variant=\"bodyMedium\">Contenido y acciones de una misma idea.</Text></Card.Content>\n    <Card.Actions><Button variant=\"text\" onPress={() => Alert.alert('Colección abierta')}>Explorar</Button></Card.Actions>\n  </Card>;\n}\n",
       "api": [
         {
@@ -2776,6 +2918,13 @@
           "type": "0 | Animated.Value | 1 | 3 | 2 | 4 | 5 | undefined",
           "required": false,
           "description": "",
+          "inherited": false
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Link destination in a browser. Native navigation remains in onPress.",
           "inherited": false
         },
         {
@@ -2893,36 +3042,58 @@
       ],
       "guide": {
         "integration": [
-          "Escoge Elevated, Filled u Outlined y compón Card.Title, Card.Content, Card.Cover y Card.Actions.",
-          "Si la tarjeta tiene una acción primaria usa onPress; los botones internos conservan callbacks propios."
+          "Escoge Elevated, Filled u Outlined y compón Card.Title, Card.Content, Card.Cover y Card.Actions. El contenedor es el único elemento obligatorio.",
+          "Usa una tarjeta informativa con controles internos, o una superficie directamente pulsable sin otros controles dentro. En navegador, href crea un enlace real; onPress permite coordinar navegación en la aplicación."
         ],
         "behavior": [
           [
             "Contenido",
-            "Los slots organizan una misma entidad sin imponer una ruta."
+            "Título, subtítulo, texto, imagen y acciones son opcionales. La altura se adapta al contenido; Card.Content utiliza padding lateral de 16 dp."
           ],
           [
-            "Activación",
-            "La región primaria responde a su propio gesto; las acciones secundarias se resuelven por separado."
+            "Interacción",
+            "Las tarjetas informativas no reciben presión ni foco como acción. Los botones internos tienen sus propios objetivos; la tarjeta completa no los envuelve en otro botón."
           ],
           [
             "Estados",
-            "disabled, dragged y los estados de interacción modifican la superficie según el tema."
+            "Hover, foco, presión y arrastre usan sus propios niveles de elevación y capas de estado, sin copiar las reglas de otros botones."
+          ],
+          [
+            "Detalle y expansión",
+            "La tarea puede expandirse desde la tarjeta usando ContainerTransformSurface. Volver y Escape cierran la vista y recuperan el foco. La expansión de información usa el desplazamiento de la página."
+          ],
+          [
+            "Colecciones",
+            "Cuadrícula, lista, fila horizontal, mosaico y disposición escalonada organizan varias tarjetas. Filtro y orden se colocan fuera de ellas."
+          ],
+          [
+            "Gestos",
+            "Deslizar mueve la tarjeta completa para una sola acción. El arrastre eleva la tarjeta; un menú ofrece las mismas acciones sin arrastrar."
           ]
         ],
         "accessibility": [
-          "Conserva el orden de lectura de título, contenido y acciones.",
-          "Evita que una etiqueta global oculte controles internos que tienen acciones propias."
+          "Cada acción necesita nombre y orden de foco. Una tarjeta informativa no añade una parada de Tab.",
+          "Una tarjeta directamente pulsable puede tener rol de botón o enlace; las imágenes decorativas no añaden lectura duplicada.",
+          "Incluye alternativas de un solo puntero para archivar o reordenar y conserva una vía para deshacer."
         ],
         "cautions": [
-          "No conviertas toda tarjeta informativa en un botón."
+          "No anides botones o enlaces dentro de una tarjeta que ya es una acción completa.",
+          "No conviertas en tarjetas datos que se entienden mejor con espacio, títulos o divisores.",
+          "Los filtros, gestos, navegación y selección pertenecen a la composición; no son variantes visuales adicionales de Card."
         ],
         "types": []
       },
       "relatedTypes": [],
-      "recipes": [],
+      "recipes": [
+        {
+          "id": "cards-collection-actions",
+          "title": "Colección con guardado, archivo y deshacer",
+          "description": "Las tarjetas son contenedores informativos. Sus controles son independientes y el menú actualiza los datos de la colección.",
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Card, Menu, IconButton, Button, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [items, setItems] = useState([{ id: 'bread', title: 'Pan de masa madre', saved: false },\n    { id: 'bao', title: 'Bao al vapor', saved: true }]);\n  const [menu, setMenu] = useState<string | null>(null);\n  const [removed, setRemoved] = useState<(typeof items)[number] | null>(null);\n  return <View style={{ padding: 24, gap: 8 }}>\n    {items.map(item => <Card key={item.id} variant=\"filled\">\n      <Card.Title title={item.title} subtitle={item.saved ? 'Guardada' : 'Receta'} right={() =>\n        <Menu visible={menu === item.id} onDismiss={() => setMenu(null)}\n          anchor={<IconButton icon=\"more_vert\" accessibilityLabel={'Opciones de ' + item.title}\n            onPress={() => setMenu(item.id)} />}>\n          <Menu.Item title=\"Archivar\" leadingIcon=\"archive\" onPress={() => {\n            setRemoved(item); setItems(value => value.filter(row => row.id !== item.id));\n          }} />\n        </Menu>} />\n      <Card.Content><Text variant=\"bodyMedium\">Una idea para volver a disfrutar.</Text></Card.Content>\n      <Card.Actions><Button variant=\"text\" onPress={() => setItems(value => value.map(row =>\n        row.id === item.id ? { ...row, saved: !row.saved } : row))}>\n        {item.saved ? 'Quitar de guardadas' : 'Guardar'}\n      </Button></Card.Actions>\n    </Card>)}\n    {removed ? <Button variant=\"text\" onPress={() => {\n      setItems(value => value.some(item => item.id === removed.id) ? value : [...value, removed]); setRemoved(null);\n    }}>Deshacer archivo</Button> : null}\n  </View>;\n}\n"
+        }
+      ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -10986,7 +11157,10 @@
         "extended-fab",
         "fab-menu",
         "floating-action-button",
-        "icon-buttons"
+        "icon-buttons",
+        "segmented-buttons",
+        "split-button",
+        "cards"
       ]
     },
     "documentation": "Documentación con ejemplos interactivos del paquete mediante React Native Web"

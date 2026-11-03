@@ -1,0 +1,53 @@
+{
+  "sourceInventory": "Buttons reference artwork, retained without image modification",
+  "assets": [
+    {
+      "file": "bao.png",
+      "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmlqs2ix-05-do.png?alt=media",
+      "section": "Guidelines",
+      "chunkId": "e03c39c7-87e8-4901-a96c-0c411a4d2b1f",
+      "sourceFile": "G05.png",
+      "sourceDimensions": [
+        656,
+        600
+      ],
+      "crop": [
+        58,
+        0,
+        540,
+        186
+      ],
+      "dimensions": [
+        540,
+        186
+      ],
+      "sha256": "43f8abbbaf59ed90fb12f95c62778855916c64a7c73fa4676650a8b9c74b89dd",
+      "frameTimeSeconds": null,
+      "bundledFile": "bao.png"
+    },
+    {
+      "file": "bread-hero.png",
+      "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmltpyn5-26.png?alt=media",
+      "section": "Guidelines",
+      "chunkId": "8aa95a3b-2a2d-4dbc-ad72-c5b345f265a6",
+      "sourceFile": "G26.png",
+      "sourceDimensions": [
+        1352,
+        600
+      ],
+      "crop": [
+        264,
+        120,
+        824,
+        126
+      ],
+      "dimensions": [
+        824,
+        126
+      ],
+      "sha256": "95f33614020ae8f8365431f0148d1f8376ad82a306a6072e41adafaf5a804498",
+      "frameTimeSeconds": null,
+      "bundledFile": "bread.png"
+    }
+  ]
+}

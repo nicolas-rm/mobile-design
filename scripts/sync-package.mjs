@@ -89,7 +89,9 @@ if(fs.existsSync(htmlPath)) {
   const payload=JSON.stringify(data).replace(/</g,'\\u003c');
   const embedded=`<script id="documentation-data" type="application/json">${payload}</script>`;
   const html=fs.readFileSync(htmlPath,'utf8').replace(/\s*<script id="documentation-data" type="application\/json">[\s\S]*?<\/script>/,'');
-  fs.writeFileSync(htmlPath,html.replace('</body>',`  ${embedded}\n</body>`));
+  // Example source can contain $', $& or $`. A replacement callback preserves
+  // those literal TypeScript strings instead of treating them as substitutions.
+  fs.writeFileSync(htmlPath,html.replace('</body>',()=>`  ${embedded}\n</body>`));
 }
 fs.mkdirSync(path.join(output,'examples'),{recursive:true});
 for(const entry of data.components) fs.writeFileSync(path.join(output,'examples',entry.id+'.tsx'),entry.example);

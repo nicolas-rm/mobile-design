@@ -14,11 +14,12 @@
     "check:examples": "node scripts/check-examples.mjs",
     "check": "node scripts/check-site.mjs",
     "test": "npm run check",
-    "test:web": "node scripts/check-web.mjs && node scripts/check-extended-fab-web.mjs && node scripts/check-fab-menu-web.mjs && node scripts/check-page-controls.mjs && node scripts/check-fab-icon-web.mjs",
+    "test:web": "node scripts/check-web.mjs && node scripts/check-extended-fab-web.mjs && node scripts/check-fab-menu-web.mjs && node scripts/check-page-controls.mjs && node scripts/check-fab-icon-web.mjs && node scripts/check-segmented-split-cards-web.mjs",
     "test:web:extended-fab": "node scripts/check-extended-fab-web.mjs",
     "test:web:fab-menu": "node scripts/check-fab-menu-web.mjs",
     "test:web:page-controls": "node scripts/check-page-controls.mjs",
-    "test:web:fab-icon": "node scripts/check-fab-icon-web.mjs"
+    "test:web:fab-icon": "node scripts/check-fab-icon-web.mjs",
+    "test:web:segmented-split-cards": "node scripts/check-segmented-split-cards-web.mjs"
   },
   "devDependencies": {
     "playwright-core": "1.64.1"
