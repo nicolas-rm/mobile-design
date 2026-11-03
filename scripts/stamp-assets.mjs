@@ -11,6 +11,6 @@ const write=(file,transform)=>{
 };
 write('styles.css',source=>source.replace(/\.\/assets\/material-symbols\.ttf(?:\?v=[a-f0-9]+)?/g,'./assets/material-symbols.ttf?v='+assetHash('assets/material-symbols.ttf')));
 write('component-docs.js',source=>source.replace(/from '\.\/web-examples\.js(?:\?v=[a-f0-9]+)?'/g,`from './web-examples.js?v=${assetHash('web-examples.js')}'`));
-write('app.js',source=>source.replace(/from '\.\/(illustrations|component-docs|site-sections)\.js(?:\?v=[a-f0-9]+)?'/g,(_,name)=>`from './${name}.js?v=${assetHash(name+'.js')}'`));
+write('app.js',source=>source.replace(/from '\.\/(illustrations|component-docs|site-sections|web-examples)\.js(?:\?v=[a-f0-9]+)?'/g,(_,name)=>`from './${name}.js?v=${assetHash(name+'.js')}'`));
 write('index.html',source=>source.replace(/(?:href|src)="\.\/(styles\.css|structure\.css|app\.js|assets\/material-symbols\.ttf)(?:\?v=[a-f0-9]+)?"/g,(_,file)=>`${file==='app.js'?'src':'href'}="./${file}?v=${assetHash(file)}"`));
 console.log('Asset fingerprints updated.');

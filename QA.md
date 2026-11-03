@@ -1,5 +1,20 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## FAB menu: tercera familia y consumo en la página
+
+- FAB menu monta `FAB.Menu` original. El patrón web utiliza Menu baseline anclado; `overflow="scroll"` muestra por separado la extensión de pila desplazable del paquete.
+- 102 configuraciones verificadas: 36 combinaciones de tema/tamaño/color, 60 de tema/tamaño/número de acciones/escenario y seis de tamaño/altura para la pila. Además, teclado, Escape inmediato durante apertura, Tab, flechas, Inicio/Fin, búsqueda por prefijo y retorno de foco.
+- Corregidos en los originales compartidos: colocación al extremo final y RTL sin doble inversión, semántica expandida/de menú, descubrimiento de comandos deshabilitados, medición web de pastillas, cierre único por acción y exclusión de elementos ocultos del teclado. El cierre no roba un foco que ya salió del menú.
+- Popup utiliza el viewport visual del navegador en lugar de `Keyboard.metrics`, y su área de cierre exterior no añade una parada invisible de Tab.
+- Los ejemplos crean contenido local o copian datos reales al portapapeles. La pila conserva el cierre dentro del área de ejemplo y permite desplazar sus 12 acciones sin botones extra. Comprobados altura limitada, RTL, movimiento reducido y anchos de 390/320.
+- La página ya consume `Button` original para copiar código, limpiar filtros y las acciones con etiqueta de tema/movimiento. Un único proveedor y portales mantienen el control en su posición del artículo. Veinte reemplazos de ruta, copia pendiente al salir, foco, temas y adaptación comprobados sin duplicación ni errores.
+- La migración de los demás controles de la página sigue pendiente: navegación, búsqueda, filtros e iconos conservan su implementación del sitio. Las ilustraciones del catálogo continúan siendo decorativas.
+- TypeScript del runtime, 43 ejemplos TSX y el verificador integral del paquete aprobados. El contrato de Menu se repitió tras el ajuste final de Escape. Estas comprobaciones utilizan fronteras nativas simuladas; no se ejecutaron recorridos visuales nativos en esta entrega.
+- Regresiones aprobadas sobre la misma exportación final: 180 configuraciones de Buttons, 144 de Extended FABs y los controles originales de la página; 426 configuraciones entre las tres familias.
+- Alcance web actual: tres familias interactivas y 33 pendientes. La ejecución automatizada se realizó en Chromium; los lectores de pantalla y los demás motores de navegador siguen pendientes.
+
+Los apartados siguientes conservan el registro de entregas anteriores; sus cifras de soporte describen el alcance en cada entrega.
+
 ## Extended FABs: segunda familia interactiva
 
 - El runtime compartido monta Buttons y Extended FABs desde el paquete original. La exportación pasa a `runtime/components`; se retira la exportación anterior para evitar dos implementaciones o recursos duplicados.
@@ -12,7 +27,7 @@
 - Nuevo ejemplo TSX descargable de colapso al desplazar y creación de una nota. Los 43 ejemplos compilan contra la API del paquete.
 - El alcance web sigue siendo parcial: dos familias interactivas y 34 pendientes. No se ejecutaron recorridos visuales nativos en esta entrega.
 
-## Integración web vigente: Buttons
+## Buttons: primera familia interactiva
 
 - El ejemplo interactivo monta `Button` del paquete original mediante Expo y React Native Web. Mantiene su proveedor, tokens, fuentes, iconos y animación; no utiliza una recreación HTML del botón.
 - 180 configuraciones aprobadas: Default/Toggle, cinco estilos (cuatro en Toggle), cinco tamaños, dos formas y ambos temas.

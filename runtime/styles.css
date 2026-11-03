@@ -27,3 +27,5 @@ pre{margin:0 0 20px;padding:20px;border-radius:16px;background:var(--low);overfl
 .fab-example-form{display:flex;flex-direction:column;gap:20px;padding:24px;height:100%;overflow:auto}.fab-example-form label{display:flex;flex-direction:column;gap:8px;color:var(--muted)}.fab-example-form textarea{resize:vertical;width:100%;min-height:96px;background:var(--surface);color:var(--ink);border:1px solid var(--outline);border-radius:12px;padding:12px;font:inherit}.fab-form-actions{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-top:auto}.fab-example-form textarea:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
 #fab-usage-result{margin-top:16px;font-size:14px;color:var(--muted)}
 @media(max-width:620px){.fab-scene{height:500px}.fab-example-rail{width:180px;padding-inline:12px}.with-rail .fab-scroll-content{margin-inline-start:180px}.fab-example-form{padding:20px}.fab-example-row{gap:12px}.fab-scene header{padding-inline:16px}}
+
+.fab-menu-scene{border:1px solid var(--outline);border-radius:24px;background:var(--low);overflow:hidden;isolation:isolate}

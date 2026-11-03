@@ -1,4 +1,4 @@
-import {webExamples} from './web-examples.js?v=17234b198ece';
+import {webExamples} from './web-examples.js?v=1ec1bcd432ee';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icon=name=>`<span class="symbol" aria-hidden="true">${name}</span>`;

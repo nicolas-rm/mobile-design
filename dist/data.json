@@ -1232,6 +1232,13 @@
           "inherited": false
         },
         {
+          "name": "aria-haspopup",
+          "type": "\"menu\" | undefined",
+          "required": false,
+          "description": "Identifica un FAB que abre un menú en el árbol accesible web.",
+          "inherited": false
+        },
+        {
           "name": "background",
           "type": "PressableAndroidRippleConfig | undefined",
           "required": false,
@@ -1422,7 +1429,28 @@
       "description": "Expande el FAB para mostrar un conjunto de acciones relacionadas con la tarea principal de la pantalla.",
       "guidance": "Agrupa de dos a seis acciones en el patrón MD3. La extensión overflow=\"scroll\" permite una pila mayor, acotada y desplazable.",
       "accessibility": "Expone apertura/cierre y etiquetas completas. Al cerrar, devuelve el acceso al disparador. El scroll adicional es una extensión de Mobile Design.",
-      "dimensions": [],
+      "dimensions": [
+        [
+          "Acciones del patrón",
+          "De 2 a 6, con icono y etiqueta"
+        ],
+        [
+          "Objetivo de interacción",
+          "Mínimo 48 × 48"
+        ],
+        [
+          "Margen al extremo final",
+          "16; 24 en ventanas grandes"
+        ],
+        [
+          "Disparador",
+          "FAB Small 56 / Medium 80 / Large 96"
+        ],
+        [
+          "Extensión desplazable",
+          "overflow=\"scroll\"; maxHeight acota la pila sin añadir controles de paginación"
+        ]
+      ],
       "example": "import { useState } from 'react';\nimport { View, Alert } from 'react-native';\nimport { FAB } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [expanded, setExpanded] = useState(false);\n  return <View style={{ minHeight: 280, justifyContent: 'flex-end', alignItems: 'flex-end' }}>\n    <FAB.Menu expanded={expanded} onDismiss={() => setExpanded(false)}\n      trigger={{ icon: 'plus', accessibilityLabel: 'Crear', onPress: () => setExpanded(true) }}\n      items={[\n        { key: 'note', label: 'Nota', icon: 'pencil-outline', onPress: () => Alert.alert('Nueva nota') },\n        { key: 'folder', label: 'Carpeta', icon: 'folder-outline', onPress: () => Alert.alert('Nueva carpeta') },\n      ]} />\n  </View>;\n}\n",
       "api": [
         {
@@ -1533,30 +1561,37 @@
       ],
       "guide": {
         "integration": [
-          "Controla expanded y ciérralo desde onDismiss. trigger define el FAB que abre la pila.",
-          "Define items con label e icon; una entrada ejecutable usa onPress y una rama usa items."
+          "Controla expanded y ciérralo desde onDismiss. trigger define el FAB y su nombre accesible.",
+          "Define de dos a seis items relacionados, con label e icon; cada comando usa onPress.",
+          "El ejemplo de menú anclado utiliza la composición FAB + Menu. overflow=\"scroll\" habilita una extensión independiente con pila desplazable."
         ],
         "behavior": [
           [
             "Abrir y cerrar",
-            "El disparador abre el conjunto; la X cierra todos los niveles. La siguiente apertura empieza en la raíz."
+            "El FAB abre el menú anclado. Escape o una pulsación fuera lo cierran y devuelven el foco al disparador."
           ],
           [
-            "Submenús",
-            "Una rama abre sus opciones dentro de la pila. Volver regresa un nivel."
+            "Elegir una acción",
+            "La selección ejecuta un solo comando y solicita el cierre una sola vez. Las acciones no disponibles siguen siendo descubribles con el teclado."
           ],
           [
-            "Listas largas",
-            "overflow=\"scroll\" habilita la extensión desplazable y maxHeight puede acotar el espacio disponible."
+            "Teclado",
+            "Flechas, Inicio/Fin y escritura por prefijo recorren las opciones del menú. Enter o Espacio ejecutan la opción enfocada."
+          ],
+          [
+            "Pila desplazable",
+            "La extensión mantiene accesible el botón de cierre; el gesto y la rueda desplazan las acciones cuando no caben."
           ]
         ],
         "accessibility": [
-          "Incluye nombre del disparador, cierre y acciones.",
-          "Las acciones de desplazamiento accesible complementan el gesto cuando la pila no cabe."
+          "Describe el menú que abre el FAB. El disparador expone que abre un menú y su estado expandido.",
+          "Los comandos conservan etiquetas, rol de elemento de menú y estado no disponible. La pila usa botones con nombre propio.",
+          "Al cerrar o elegir un comando, recupera el foco del FAB. Los elementos ocultos salen de la navegación con teclado."
         ],
         "cautions": [
-          "El patrón MD3 base admite de dos a seis acciones. Scroll y submenús son extensiones locales.",
-          "Se conserva la rama web del componente; su validación queda pendiente."
+          "El patrón base admite de dos a seis acciones relacionadas; no se abre desde un FAB extendido ni se combina con un rail o toolbar flotante.",
+          "Respeta el extremo final lógico y márgenes de 16, o de 24 en ventanas grandes.",
+          "Las listas de más de seis acciones y los submenús son extensiones del paquete."
         ],
         "types": [
           "FABMenuItemProps",
@@ -1650,6 +1685,13 @@
               "inherited": false
             },
             {
+              "name": "aria-haspopup",
+              "type": "\"menu\" | undefined",
+              "required": false,
+              "description": "Identifica un FAB que abre un menú en el árbol accesible web.",
+              "inherited": false
+            },
+            {
               "name": "background",
               "type": "PressableAndroidRippleConfig | undefined",
               "required": false,
@@ -1717,7 +1759,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -1792,6 +1834,13 @@
           "type": "AccessibilityState | undefined",
           "required": false,
           "description": "",
+          "inherited": false
+        },
+        {
+          "name": "aria-haspopup",
+          "type": "\"menu\" | undefined",
+          "required": false,
+          "description": "Identifica un FAB que abre un menú en el árbol accesible web.",
           "inherited": false
         },
         {
@@ -10831,7 +10880,8 @@
       "implementationPreserved": true,
       "interactiveComponents": [
         "buttons",
-        "extended-fab"
+        "extended-fab",
+        "fab-menu"
       ]
     },
     "documentation": "Documentación con ejemplos interactivos del paquete mediante React Native Web"

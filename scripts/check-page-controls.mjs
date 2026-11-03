@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawn} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {chromium} from 'playwright-core';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),out=path.join(root,'.artifacts/page-controls');fs.mkdirSync(out,{recursive:true});
+const server=process.env.WEB_TEST_BASE_URL?undefined:spawn(process.execPath,['scripts/serve.mjs'],{cwd:root,env:{...process.env,PORT:'4324'},stdio:['ignore','pipe','pipe']});
+const base=process.env.WEB_TEST_BASE_URL??await new Promise((resolve,reject)=>{server.once('error',reject);server.once('exit',code=>reject(Error('Server exited: '+code)));server.stdout.on('data',chunk=>{const url=String(chunk).match(/http:\/\/[^\s]+/);if(url)resolve(url[0]);});});
+const executablePath=process.env.CHROME_PATH??['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome','/usr/bin/chromium'].find(fs.existsSync);
+const browser=await chromium.launch({executablePath,headless:true});
+const errors=[];
+try{
+ const context=await browser.newContext({viewport:{width:1440,height:1000},permissions:['clipboard-read','clipboard-write']}),page=await context.newPage();
+ page.on('pageerror',e=>errors.push(String(e)));page.on('response',r=>{if(r.status()>=400)errors.push(r.status()+' '+r.url());});
+ await page.goto(base+'#/components/buttons/api');const copy=page.getByTestId('docs-copy').first();await copy.waitFor();
+ assert.equal(await copy.getAttribute('aria-label'),'Copiar código');assert.equal(await copy.locator('[style*="font-family: MobileDesign"]').count(),1,'Package icon renders in the page.');
+ const expected=await copy.locator('xpath=ancestor::*[contains(@class,"code-card")]').locator('code').innerText();
+ await copy.click();assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),expected);
+ await page.waitForFunction(()=>document.querySelector('[data-testid=docs-copy]')?.getAttribute('aria-busy')==='false');
+ await copy.focus();const before=await page.locator('#toast').innerText();await copy.press('Enter');assert.equal(await page.locator('#toast').innerText(),before);assert.ok(await copy.evaluate(el=>el===document.activeElement),'Copy retains keyboard focus.');
+ for(let i=0;i<4;i++)for(const route of ['develop/installation','components/fab-menu/api','styles/color','styles/motion','components/buttons/overview']){
+  await page.goto(base+'#/'+route);await page.waitForFunction(route=>document.body.dataset.route===route,route);await page.locator('[data-mobile-design-mounted]').first().waitFor();
+  const hosts=await page.locator('[data-mobile-design-host]').count(),buttons=await page.locator('[data-mobile-design-host] button').count();assert.equal(buttons,hosts,'Exactly one package Button per mount point after navigation.');
+  assert.equal(await page.locator('#mobile-design-controls-root').count(),1,'One provider root.');
+ }
+ await page.goto(base+'#/styles/color');const toggle=page.getByTestId('docs-theme');await toggle.waitFor();const theme=await page.locator('html').getAttribute('data-theme');await toggle.click();await page.waitForFunction(old=>document.documentElement.dataset.theme!==old,theme);assert.ok(await page.getByTestId('docs-theme').isVisible());
+ await page.goto(base+'#/styles/motion');const motion=page.getByTestId('docs-motion');await motion.waitFor();const reduced=await motion.getAttribute('aria-pressed');await motion.click();assert.notEqual(await motion.getAttribute('aria-pressed'),reduced);
+ await page.goto(base+'#/components');await page.locator('#catalog-filter').fill('xyz-no-such-component');const clear=page.getByTestId('docs-reset-filter');await clear.waitFor();await clear.click();assert.equal(await page.locator('#catalog-filter').inputValue(),'');assert.equal(await page.locator('.component-card').count(),36);
+ // Dispose a pending copy before replacing the article tree.
+ await page.goto(base+'#/components/buttons/api');await page.getByTestId('docs-copy').first().waitFor();
+ await page.evaluate(()=>{const original=navigator.clipboard.writeText.bind(navigator.clipboard);navigator.clipboard.writeText=text=>new Promise(resolve=>setTimeout(()=>{original(text).then(resolve);},200));});
+ await page.getByTestId('docs-copy').first().click();await page.goto(base+'#/components/fab-menu/overview');await page.waitForTimeout(250);
+ await page.setViewportSize({width:390,height:844});await page.goto(base+'#/develop/installation');await page.getByTestId('docs-copy').first().waitFor();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ await page.screenshot({path:path.join(out,'page-controls-mobile.png'),fullPage:true});assert.deepEqual(errors,[]);
+ fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks:['original-package-icon','copy','keyboard','20-route-replacements','single-root','theme-rerender','motion-toggle','clear-filters','pending-copy-unmount','responsive'],errors},null,2));
+ console.log('PASS: Original Buttons in documentation, actions, navigation cleanup, theme, focus and responsive layout.');
+}finally{await browser.close();server?.kill('SIGTERM');}

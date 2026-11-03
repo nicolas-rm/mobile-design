@@ -6,7 +6,7 @@ import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {illustrationMarkup} from '../dist/illustrations.js';
 import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from '../dist/site-sections.js';
-import {webExamples} from '../dist/web-examples.js';
+import {webExamples,webRuntime} from '../dist/web-examples.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const dist=path.join(root,'dist');
 const data=JSON.parse(fs.readFileSync(path.join(dist,'data.json'),'utf8'));
@@ -20,8 +20,11 @@ const assets=['index.html','styles.css','structure.css','app.js','site-sections.
 for(const file of assets)assert.ok(fs.statSync(path.join(dist,file)).size>0,file);
 const fingerprint=file=>createHash('sha256').update(fs.readFileSync(path.join(dist,file))).digest('hex').slice(0,12);
 for(const file of ['app.js','styles.css','structure.css','assets/material-symbols.ttf'])assert.ok(html.includes(`./${file}?v=${fingerprint(file)}`),file+' cache fingerprint; run npm run assets after editing');
-for(const file of ['illustrations.js','component-docs.js','site-sections.js'])assert.ok(fs.readFileSync(path.join(dist,'app.js'),'utf8').includes(`./${file}?v=${fingerprint(file)}`),file+' module fingerprint');
+for(const file of ['illustrations.js','component-docs.js','site-sections.js','web-examples.js'])assert.ok(fs.readFileSync(path.join(dist,'app.js'),'utf8').includes(`./${file}?v=${fingerprint(file)}`),file+' module fingerprint');
 assert.ok(fs.readFileSync(path.join(dist,'component-docs.js'),'utf8').includes(`./web-examples.js?v=${fingerprint('web-examples.js')}`),'Interactive runtime manifest fingerprint');
+assert.match(webRuntime.script,/^\/runtime\/components\/_expo\/static\/js\/web\/index-[a-f0-9]+\.js$/,'Same-origin package runtime for page controls');
+assert.ok(fs.statSync(path.join(dist,webRuntime.script)).size>0,'Package runtime for page controls exists');
+assert.ok(fs.readFileSync(path.join(dist,'runtime/components/index.html'),'utf8').includes(webRuntime.script),'Page and examples use the same exported runtime');
 for(const [id,example] of Object.entries(webExamples)){
  assert.ok(data.components.some(c=>c.id===id),'Runtime must belong to a documented family.');
  assert.equal(example.runtime,'react-native-web');
@@ -67,5 +70,5 @@ assert.ok(!html.includes('href="https://m3.material.io/components"'),'Navigation
 assert.equal(data.platformSupport.web.status,'partial');
 assert.equal(data.colors.light.primary,'rgba(103, 80, 164, 1)');
 assert.equal(data.verification.nativeCases,65);
-console.log(`PASS: 36 self-contained native documentation entries, 72 native captures, ${36+data.components.reduce((n,c)=>n+c.recipes.length,0)} downloadable examples, related types, web-pending status, decorative illustrations, palette and JavaScript syntax.`);
+console.log(`PASS: 36 documentation entries, 72 native captures, ${36+data.components.reduce((n,c)=>n+c.recipes.length,0)} downloadable examples, ${Object.keys(webExamples).length} interactive web families, shared page runtime, related types, palette and JavaScript syntax.`);
 console.log(`PASS: ${Object.keys(guides).length} editorial guides, ${areas.length} main destinations, style topics and internal route coverage (${routes.size} routes).`);

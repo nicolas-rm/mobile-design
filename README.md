@@ -22,7 +22,7 @@ Este repositorio contiene el proyecto de documentación. No incluye la app Music
 - 72 capturas nativas, claras/oscuras, de la revisión del 2 de noviembre de 2026.
 - Búsqueda de guías, componentes y propiedades; temas claro/oscuro, navegación adaptable, enlaces directos a apartados, foco visible y reducción de movimiento.
 
-Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y código TSX. Buttons y Extended FABs montan los componentes originales mediante React Native Web y permite explorar sus propiedades; no son réplicas HTML.
+Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y código TSX. Buttons, Extended FABs y FAB menu montan los componentes originales mediante React Native Web y permiten explorar sus propiedades; no son réplicas HTML. Los botones de copiar código, limpiar filtros y las acciones de tema/movimiento de las guías también usan Button original dentro de la página. Navegación, buscador y los demás controles del sitio se integrarán al revisar sus familias.
 
 ## Plataformas
 
@@ -30,7 +30,7 @@ Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y 
 | --- | --- |
 | React Native con Expo | Entorno principal del paquete documentado. |
 | React Native con módulos Expo integrados | Requiere los peers y su configuración nativa. |
-| Expo Web / React Native Web | Integración de Buttons y Extended FABs con ejecución y matrices de navegador. Las demás familias continúan pendientes. |
+| Expo Web / React Native Web | Integración de Buttons, Extended FABs y FAB menu con ejecución y matrices de navegador. Las demás familias continúan pendientes. |
 | React DOM independiente | No hay una distribución DOM verificada del paquete. |
 
 La compatibilidad del sitio web de documentación no acredita la compatibilidad web de los componentes.
@@ -56,7 +56,7 @@ Después de editar JavaScript, CSS o la fuente de iconos, ejecuta `npm run asset
 | --- | --- |
 | `dist/` | Sitio estático listo para servir. |
 | `dist/component-docs.js` | Presentación de las fichas y montaje de ejemplos reales. |
-| `runtime/` | Host React/Expo de los ejemplos interactivos. |
+| `runtime/` | Host React/Expo de ejemplos interactivos y controles de la página. |
 | `dist/runtime/` | Exportación precompilada, fuentes y recursos listos para servir. |
 | `dist/web-examples.js` | Registro de ejemplos y huella del código del paquete utilizado. |
 | `dist/site-sections.js` | Portada, contenido editorial, arquitectura de navegación y pie del sitio. |
@@ -78,7 +78,7 @@ npm run assets
 npm test
 ```
 
-La exportación utiliza el componente original y su proveedor, con fuentes locales WOFF2 completas. El host se monta en un iframe del mismo origen para aislar estilos y sincronizar tema, movimiento y altura sin recargar el estado del ejemplo.
+La exportación utiliza el componente original y su proveedor, con fuentes locales WOFF2 completas. Los ejemplos se montan en un iframe del mismo origen para aislar estilos y sincronizar tema, movimiento y altura sin recargar su estado. Los controles de la página se montan con portales bajo un único MobileDesignProvider; se desmontan antes de sustituir el contenido de una ruta.
 
 Para ejecutar la matriz de navegador sobre esa exportación:
 
@@ -87,7 +87,7 @@ npm ci
 npm run test:web
 ```
 
-Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). El ejecutor abre un servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/buttons-web/`. No utiliza el perfil del usuario. `npm run test:web:extended-fab` ejecuta sólo la segunda familia. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho. Extended FABs añade 144 configuraciones y casos de desplazamiento, presencia, colocación, medición de texto, cinco tareas y transformación de contenedor.
+Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). Cada ejecutor abre su propio servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/` por familia. No utiliza el perfil del usuario. `npm run test:web:extended-fab`, `npm run test:web:fab-menu` y `npm run test:web:page-controls` permiten ejecutarlos por separado. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho. Extended FABs añade 144 configuraciones y casos de desplazamiento, presencia, colocación, medición de texto, cinco tareas y transformación de contenedor. FAB menu añade 102 configuraciones: menú anclado, teclado, foco, acciones, portapapeles, RTL y pila desplazable opcional. El ejecutor de controles verifica copia, foco, limpieza de filtros y 20 reemplazos de ruta sin duplicar controles.
 
 ## Sincronizar con el paquete nativo
 
@@ -113,7 +113,7 @@ Se pueden usar rutas absolutas o relativas. El sincronizador no modifica el paqu
 
 `npm run check:examples` compila los 43 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
 
-Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. La cobertura web se registra por familias: Buttons y Extended FABs tienen ejemplos interactivos y matrices de navegador; las otras 34 familias siguen pendientes.
+Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. La cobertura web se registra por familias: Buttons, Extended FABs y FAB menu tienen ejemplos interactivos y matrices de navegador; las otras 33 familias siguen pendientes. La revisión automatizada de foco y teclado no sustituye una comprobación con lectores de pantalla.
 
 ## Estilo y licencias
 
