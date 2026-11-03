@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fef7ff">
+  <title>Mobile Design · Componentes para React Native</title>
+  <meta name="description" content="La documentación de Mobile Design. Explora 36 familias de componentes para React Native inspirados en Material Design 3: variantes, propiedades, tema y ejemplos de uso.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="preload" href="./assets/roboto-regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="./assets/material-symbols.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('md-docs-theme')||'light';if(localStorage.getItem('md-docs-reduced')==='true')document.documentElement.dataset.reduced='true'}catch{}</script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Ir al contenido</a>
+  <nav class="rail" aria-label="Navegación principal">
+    <a class="brand-mark" href="#/components" aria-label="Mobile Design, componentes"><span>m</span><span class="brand-dot"></span></a>
+    <button class="rail-search icon-button" data-action="search" aria-label="Buscar en la documentación"><span class="symbol" aria-hidden="true">search</span></button>
+    <div class="rail-links">
+      <a href="#/start" data-rail="start"><span class="rail-icon"><span class="symbol" aria-hidden="true">home</span></span><span>Comenzar</span></a>
+      <a href="#/styles" data-rail="styles"><span class="rail-icon"><span class="symbol" aria-hidden="true">palette</span></span><span>Estilos</span></a>
+      <a href="#/components" data-rail="components"><span class="rail-icon"><span class="symbol" aria-hidden="true">apps</span></span><span>Componentes</span></a>
+      <a href="#/verification" data-rail="verification"><span class="rail-icon"><span class="symbol" aria-hidden="true">verified</span></span><span>Verificación</span></a>
+    </div>
+    <div class="rail-bottom">
+      <button class="icon-button outlined-icon" data-action="motion" aria-label="Reducir animaciones" aria-pressed="false"><span class="symbol" aria-hidden="true">pause</span></button>
+      <button class="icon-button outlined-icon" data-action="theme" aria-label="Activar tema oscuro"><span class="symbol theme-symbol" aria-hidden="true">dark_mode</span></button>
+    </div>
+  </nav>
+  <aside class="sidebar" id="sidebar" aria-label="Índice de documentación">
+    <a class="sidebar-brand" href="#/components">Mobile Design <span class="version">0.1.0</span></a>
+    <button class="icon-button sidebar-close" data-action="close-sidebar" aria-label="Cerrar navegación"> <span class="symbol" aria-hidden="true">close</span></button>
+    <p class="sidebar-caption">REACT NATIVE · MATERIAL 3</p>
+    <button class="sidebar-search" data-action="search"><span class="symbol" aria-hidden="true">search</span><span>Buscar</span><kbd>⌘ K</kbd></button>
+    <div class="sidebar-scroll"><nav id="component-navigation" aria-label="Componentes"><p class="loading-label">Cargando componentes…</p></nav></div>
+    <a class="sidebar-reference" href="https://m3.material.io/components" target="_blank" rel="noopener noreferrer">Referencia Material 3<span class="symbol" aria-hidden="true">open_in_new</span></a>
+  </aside>
+  <button class="sidebar-scrim" data-action="close-sidebar" aria-hidden="true" tabindex="-1"></button>
+  <header class="mobile-header"><button class="icon-button" data-action="sidebar" aria-label="Abrir navegación" aria-expanded="false"><span class="symbol" aria-hidden="true">menu</span></button><a href="#/components">Mobile Design</a><button class="icon-button" data-action="search" aria-label="Buscar"><span class="symbol" aria-hidden="true">search</span></button></header>
+  <div class="workspace">
+    <header class="utility"><div id="breadcrumbs" class="breadcrumbs">Documentación <span>/</span> Componentes</div><a class="native-label" href="#/start"><span class="symbol" aria-hidden="true">code</span> Para React Native <span class="symbol" aria-hidden="true">arrow_outward</span></a></header>
+    <main id="main-content" tabindex="-1"><div class="page-loading"><span class="loading-flower" aria-hidden="true"></span><p>Preparando Mobile Design</p></div></main>
+    <footer class="site-footer"><a class="footer-brand" href="#/components">Mobile Design<span class="brand-dot"></span></a><p>Hecho para React Native. Inspirado en Material Design 3.</p><div><a href="#/start">Comenzar</a><a href="#/verification">Alcance de verificación</a><a href="./assets/NOTICE" download>Licencias</a></div><p class="footer-note">Documentación del paquete local · v0.1.0 · Proyecto independiente de Google.</p></footer>
+  </div>
+  <dialog class="search-dialog" id="search-dialog" aria-labelledby="search-title"><div class="search-heading"><span class="symbol" aria-hidden="true">search</span><h2 id="search-title" class="sr-only">Buscar documentación</h2><input id="global-search" type="search" placeholder="Busca un componente, variante o propiedad" autocomplete="off" aria-label="Buscar documentación"><button class="icon-button" data-action="close-search" aria-label="Cerrar búsqueda"><span class="symbol" aria-hidden="true">close</span></button></div><div class="search-results" id="search-results"></div><div class="search-footer"><span><kbd>↑</kbd> <kbd>↓</kbd> para recorrer</span><span><kbd>esc</kbd> para cerrar</span></div></dialog>
+  <dialog class="demo-dialog" id="demo-dialog" aria-labelledby="demo-title"><div id="demo-dialog-content"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p>Activa JavaScript para explorar la documentación interactiva de Mobile Design.</p></noscript>
+</body>
+</html>
