@@ -1,5 +1,14 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Corrección visual del FAB menu Expressive
+
+- El token oficial `md.comp.fab-menu.menu-item.container.elevation` marca 0dp. Los ítems compartidos utilizaban erróneamente la elevación 3 del FAB; ahora son planos. El cierre conserva la elevación que le corresponde.
+- Se mantiene altura de ítem 56, radio 28, icono 24, tipografía titleMedium, padding lateral 24, separación icono/etiqueta 8 y separación entre ítems 4. El cierre mide 56 y conserva la esquina superior final del FAB Small/Medium/Large.
+- La galería inicia con M3 Expressive. `presentation="expressive"` permite mostrar el motor original de pastillas también en web. `adaptive` mantiene la adaptación baseline de navegador indicada por la referencia; no se confunde el cambio de perfil de movimiento con la presentación visual.
+- Matriz ampliada con 90 configuraciones Expressive en ambos temas. Comprueba geometría, ausencia de sombras, cierre, anclaje y orden de Tab. Junto con los 102 casos existentes cubre 192 configuraciones de FAB menu.
+- La lista de ejemplos de App bars utiliza iconos propios de cada destino y etiquetas breves. El nombre accesible conserva el título completo. Sus más de seis opciones siguen siendo una extensión solicitada para navegar por las demostraciones.
+- El runtime y los 43 ejemplos compilan contra el paquete. Aprobados el verificador integral, los 161 contratos de acciones y los 45 escenarios de App bars con fronteras nativas simuladas. No se realizó un recorrido visual en dispositivo en esta corrección.
+
 ## FAB menu: tercera familia y consumo en la página
 
 - FAB menu monta `FAB.Menu` original. El patrón web utiliza Menu baseline anclado; `overflow="scroll"` muestra por separado la extensión de pila desplazable del paquete.

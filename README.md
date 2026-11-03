@@ -87,7 +87,7 @@ npm ci
 npm run test:web
 ```
 
-Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). Cada ejecutor abre su propio servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/` por familia. No utiliza el perfil del usuario. `npm run test:web:extended-fab`, `npm run test:web:fab-menu` y `npm run test:web:page-controls` permiten ejecutarlos por separado. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho. Extended FABs añade 144 configuraciones y casos de desplazamiento, presencia, colocación, medición de texto, cinco tareas y transformación de contenedor. FAB menu añade 102 configuraciones: menú anclado, teclado, foco, acciones, portapapeles, RTL y pila desplazable opcional. El ejecutor de controles verifica copia, foco, limpieza de filtros y 20 reemplazos de ruta sin duplicar controles.
+Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). Cada ejecutor abre su propio servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/` por familia. No utiliza el perfil del usuario. `npm run test:web:extended-fab`, `npm run test:web:fab-menu` y `npm run test:web:page-controls` permiten ejecutarlos por separado. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho. Extended FABs añade 144 configuraciones y casos de desplazamiento, presencia, colocación, medición de texto, cinco tareas y transformación de contenedor. FAB menu añade 192 configuraciones: pila Expressive de 2–6 acciones y menú anclado, teclado, foco, acciones, portapapeles, RTL y pila desplazable opcional. El ejecutor de controles verifica copia, foco, limpieza de filtros y 20 reemplazos de ruta sin duplicar controles.
 
 ## Sincronizar con el paquete nativo
 
@@ -120,3 +120,5 @@ Los resultados publicados corresponden a los casos registrados en la revisión. 
 Se conservan MD3 Baseline, Roboto y Material Symbols Rounded. Los nuevos cambios deben usar los roles semánticos y componentes de documentación existentes; consulta [CONTRIBUTING.md](CONTRIBUTING.md).
 
 El código de documentación se distribuye bajo [MIT](LICENSE). Las fuentes y recursos mantienen sus licencias y atribuciones en `dist/assets/`. Este proyecto es independiente de Google; Material Design 3 es su referencia de diseño.
+
+La galería de FAB menu abre con la presentación Expressive: pastillas sin sombra y cierre circular. `presentation="expressive"` permite usar esa presentación en web; `adaptive` conserva el menú baseline de navegador indicado por la referencia. La lista de más de seis acciones permanece identificada como extensión.

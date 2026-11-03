@@ -14,6 +14,28 @@ const poll=async(read,accept,label)=>{let value;const start=Date.now();do{value=
 try{
  const context=await browser.newContext({viewport:{width:1440,height:1000},permissions:['clipboard-read','clipboard-write']}),page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));page.on('response',r=>{if(r.status()>=400)errors.push(r.status()+' '+r.url());});
  await page.goto(base+'#/components/fab-menu/overview');await page.waitForFunction(()=>document.querySelector('[data-component-runtime]')?.getAttribute('aria-busy')==='false');const frame=page.frameLocator('[data-component-runtime]'),trigger=frame.getByTestId('fab-menu-trigger'),items=frame.getByRole('menuitem');
+ assert.equal(await frame.locator('#fab-menu-mode').inputValue(),'expressive','The gallery starts with the Expressive presentation.');
+ for(const theme of ['light','dark']){
+  if(await page.locator('html').getAttribute('data-theme')!==theme)await page.locator('.rail [data-action=theme]').click();
+  await poll(()=>frame.locator('html').getAttribute('data-theme'),v=>v===theme,'Expressive theme');
+  for(const size of ['default','medium','large'])for(const variant of ['tonalPrimary','tonalSecondary','tonalTertiary'])for(const count of [2,3,4,5,6]){
+   await frame.locator('#fab-menu-size').selectOption(size);await frame.locator('#fab-menu-variant').selectOption(variant);await frame.locator('#fab-menu-count').selectOption(String(count));
+   const original=await trigger.evaluate(el=>el.getBoundingClientRect().toJSON());await trigger.click();
+   const pills=frame.locator('[data-testid^="fab-menu-action-"]');assert.equal(await pills.count(),count);
+   await poll(()=>trigger.boundingBox(),b=>Math.abs(b.width-56)<.1&&Math.abs(b.height-56)<.1,'Expressive close reaches 56dp');
+   await poll(()=>pills.evaluateAll(nodes=>nodes.every(el=>Math.abs(el.getBoundingClientRect().width-el.parentElement.parentElement.parentElement.getBoundingClientRect().width)<.2)),v=>v,'Expressive pills settle');
+   const closed=await trigger.evaluate(el=>el.getBoundingClientRect().toJSON());assert.ok(Math.abs(closed.y-original.y)<1&&Math.abs(closed.x+closed.width-original.x-original.width)<1,'Close shares original top trailing corner');
+   for(const pill of await pills.all()){
+    const geometry=await pill.evaluate(el=>{const surface=el.parentElement.parentElement.parentElement,cs=getComputedStyle(surface);return {height:surface.getBoundingClientRect().height,radius:parseFloat(cs.borderRadius),shadow:cs.boxShadow};});
+    assert.ok(Math.abs(geometry.height-56)<.2);assert.equal(geometry.radius,28);assert.equal(geometry.shadow,'none','Menu item has level 0 elevation');
+   }
+   assert.equal(await trigger.getAttribute('aria-label'),'Cerrar menú');await trigger.click();await poll(()=>trigger.getAttribute('aria-expanded'),v=>v==='false','Expressive close');
+   cases.push({theme,size,variant,count,check:'expressive'});
+  }
+ }
+ await frame.locator('#fab-menu-size').selectOption('default');await frame.locator('#fab-menu-count').selectOption('4');await trigger.click();await trigger.focus();await page.keyboard.press('Tab');await poll(()=>frame.getByTestId('fab-menu-action-0').evaluate(el=>el===document.activeElement),v=>v,'Expressive close-to-first-action Tab order');await page.keyboard.press('Escape');await poll(()=>trigger.getAttribute('aria-expanded'),v=>v==='false','Expressive Escape');
+ console.log('PASS: 90 Expressive configurations, flat pills, 56dp close and original corner anchoring.');
+ await frame.locator('#fab-menu-mode').selectOption('anchored');
  const close=async()=>{await page.keyboard.press('Escape');await poll(()=>trigger.getAttribute('aria-expanded'),v=>v==='false','close state');await poll(()=>trigger.evaluate(el=>el===document.activeElement),v=>v,'focus restored to FAB');};
  for(const theme of ['light','dark']){
   if(await page.locator('html').getAttribute('data-theme')!==theme)await page.locator('.rail [data-action=theme]').click();await poll(()=>frame.locator('html').getAttribute('data-theme'),v=>v===theme,'theme');
@@ -51,5 +73,5 @@ try{
  await frame.locator('#fab-menu-size').selectOption('default');await frame.locator('#fab-menu-mode').selectOption('anchored');await frame.locator('#fab-menu-short').uncheck();await page.locator('.rail [data-action=motion]').click();await trigger.click();await items.first().waitFor();assert.equal(await items.first().locator('[data-paper-ripple]').count(),0);await close();await page.locator('.rail [data-action=motion]').click();
  await trigger.click();await page.screenshot({path:path.join(out,'fab-menu-desktop.png'),fullPage:true});await close();
  for(const width of [390,320]){await page.setViewportSize({width,height:844});await trigger.click();await items.first().waitFor();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await close();}
- await page.screenshot({path:path.join(out,'fab-menu-mobile.png'),fullPage:true});assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({configurations:cases.length,cases,checks:['trigger-sizes-colors','2-to-6-actions','two-scenarios','menu-role','keyboard','disabled-discovery','one-dismiss','return-focus','Tab','outside','clipboard','RTL','short-height','scroll-extension','reduce-motion','responsive'],errors},null,2));console.log('PASS: '+cases.length+' FAB menu configurations and keyboard/action checks.');
+ await page.screenshot({path:path.join(out,'fab-menu-mobile.png'),fullPage:true});assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({configurations:cases.length,cases,checks:['expressive-presentation','flat-pills','56dp-close','top-trailing-morph','expressive-tab-order','trigger-sizes-colors','2-to-6-actions','two-scenarios','menu-role','keyboard','disabled-discovery','one-dismiss','return-focus','Tab','outside','clipboard','RTL','short-height','scroll-extension','reduce-motion','responsive'],errors},null,2));console.log('PASS: '+cases.length+' FAB menu configurations and keyboard/action checks.');
 }catch(error){console.error(errors);throw error;}finally{await browser.close();server?.kill('SIGTERM');}

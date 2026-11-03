@@ -27,7 +27,7 @@ export const examples = {
     onPress={() => Alert.alert('Nueva nota', 'Aquí comienza la tarea principal')} />;` },
   'fab-menu': { imports:'FAB', body:`const [expanded, setExpanded] = useState(false);
   return <View style={{ minHeight: 280, justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-    <FAB.Menu expanded={expanded} onDismiss={() => setExpanded(false)}
+    <FAB.Menu presentation="expressive" expanded={expanded} onDismiss={() => setExpanded(false)}
       trigger={{ icon: 'plus', accessibilityLabel: 'Crear', onPress: () => setExpanded(true) }}
       items={[
         { key: 'note', label: 'Nota', icon: 'pencil-outline', onPress: () => Alert.alert('Nueva nota') },

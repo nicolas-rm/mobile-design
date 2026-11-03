@@ -1431,6 +1431,22 @@
       "accessibility": "Expone apertura/cierre y etiquetas completas. Al cerrar, devuelve el acceso al disparador. El scroll adicional es una extensión de Mobile Design.",
       "dimensions": [
         [
+          "Ítem Expressive",
+          "Altura 56 · radio 28 · elevación 0 · icono 24 · titleMedium"
+        ],
+        [
+          "Cierre Expressive",
+          "56 × 56 · radio 28 · anclaje en la esquina superior final"
+        ],
+        [
+          "Espaciado Expressive",
+          "24 laterales · 8 entre icono y etiqueta · 4 entre ítems · 8 hasta el cierre"
+        ],
+        [
+          "Presentación",
+          "Expressive en la galería; adaptive conserva el menú baseline web"
+        ],
+        [
           "Acciones del patrón",
           "De 2 a 6, con icono y etiqueta"
         ],
@@ -1451,7 +1467,7 @@
           "overflow=\"scroll\"; maxHeight acota la pila sin añadir controles de paginación"
         ]
       ],
-      "example": "import { useState } from 'react';\nimport { View, Alert } from 'react-native';\nimport { FAB } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [expanded, setExpanded] = useState(false);\n  return <View style={{ minHeight: 280, justifyContent: 'flex-end', alignItems: 'flex-end' }}>\n    <FAB.Menu expanded={expanded} onDismiss={() => setExpanded(false)}\n      trigger={{ icon: 'plus', accessibilityLabel: 'Crear', onPress: () => setExpanded(true) }}\n      items={[\n        { key: 'note', label: 'Nota', icon: 'pencil-outline', onPress: () => Alert.alert('Nueva nota') },\n        { key: 'folder', label: 'Carpeta', icon: 'folder-outline', onPress: () => Alert.alert('Nueva carpeta') },\n      ]} />\n  </View>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View, Alert } from 'react-native';\nimport { FAB } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [expanded, setExpanded] = useState(false);\n  return <View style={{ minHeight: 280, justifyContent: 'flex-end', alignItems: 'flex-end' }}>\n    <FAB.Menu presentation=\"expressive\" expanded={expanded} onDismiss={() => setExpanded(false)}\n      trigger={{ icon: 'plus', accessibilityLabel: 'Crear', onPress: () => setExpanded(true) }}\n      items={[\n        { key: 'note', label: 'Nota', icon: 'pencil-outline', onPress: () => Alert.alert('Nueva nota') },\n        { key: 'folder', label: 'Carpeta', icon: 'folder-outline', onPress: () => Alert.alert('Nueva carpeta') },\n      ]} />\n  </View>;\n}\n",
       "api": [
         {
           "name": "expanded",
@@ -1524,6 +1540,13 @@
           "inherited": false
         },
         {
+          "name": "presentation",
+          "type": "\"adaptive\" | \"expressive\" | undefined",
+          "required": false,
+          "description": "Adaptive follows the web Menu pattern; expressive keeps the animated pill stack on every platform.",
+          "inherited": false
+        },
+        {
           "name": "scrollDownAccessibilityLabel",
           "type": "string | undefined",
           "required": false,
@@ -1563,30 +1586,35 @@
         "integration": [
           "Controla expanded y ciérralo desde onDismiss. trigger define el FAB y su nombre accesible.",
           "Define de dos a seis items relacionados, con label e icon; cada comando usa onPress.",
-          "El ejemplo de menú anclado utiliza la composición FAB + Menu. overflow=\"scroll\" habilita una extensión independiente con pila desplazable."
+          "presentation=\"expressive\" muestra la pila animada en todas las plataformas. La presentación adaptive utiliza el menú baseline en web.",
+          "overflow=\"scroll\" y maxHeight habilitan una pila extendida; más de seis acciones es una extensión del paquete."
         ],
         "behavior": [
           [
+            "Presentación Expressive",
+            "El FAB se transforma en un cierre circular de 56. Las pastillas de altura 56 y radio 28 se ajustan al contenido y tienen elevación 0."
+          ],
+          [
             "Abrir y cerrar",
-            "El FAB abre el menú anclado. Escape o una pulsación fuera lo cierran y devuelven el foco al disparador."
+            "La pila conserva la esquina superior final del FAB, incluso al partir de Medium o Large. El cierre y Escape cierran el conjunto."
           ],
           [
             "Elegir una acción",
-            "La selección ejecuta un solo comando y solicita el cierre una sola vez. Las acciones no disponibles siguen siendo descubribles con el teclado."
+            "La selección ejecuta un solo comando y solicita el cierre una sola vez."
           ],
           [
             "Teclado",
-            "Flechas, Inicio/Fin y escritura por prefijo recorren las opciones del menú. Enter o Espacio ejecutan la opción enfocada."
+            "En Expressive, el foco permanece en el cierre y Tab recorre las acciones. La adaptación web añade flechas, Inicio/Fin y búsqueda por prefijo."
           ],
           [
-            "Pila desplazable",
-            "La extensión mantiene accesible el botón de cierre; el gesto y la rueda desplazan las acciones cuando no caben."
+            "Desplazamiento",
+            "La pila puede desplazarse en alturas limitadas sin obstruir el cierre."
           ]
         ],
         "accessibility": [
-          "Describe el menú que abre el FAB. El disparador expone que abre un menú y su estado expandido.",
-          "Los comandos conservan etiquetas, rol de elemento de menú y estado no disponible. La pila usa botones con nombre propio.",
-          "Al cerrar o elegir un comando, recupera el foco del FAB. Los elementos ocultos salen de la navegación con teclado."
+          "Describe la acción del FAB y conserva el estado expandido.",
+          "Expressive expone botones con nombre; la adaptación web usa elementos de menú y descubre comandos deshabilitados.",
+          "Al cerrar o elegir un comando, recupera el foco del FAB. Los elementos ocultos salen del teclado."
         ],
         "cautions": [
           "El patrón base admite de dos a seis acciones relacionadas; no se abre desde un FAB extendido ni se combina con un rail o toolbar flotante.",
