@@ -1,5 +1,17 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Extended FABs: segunda familia interactiva
+
+- El runtime compartido monta Buttons y Extended FABs desde el paquete original. La exportación pasa a `runtime/components`; se retira la exportación anterior para evitar dos implementaciones o recursos duplicados.
+- Revisados Overview, Specs, Guidelines y Accessibility de la referencia actual. Se conservan Small/Medium/Large (56/80/96), seis pares de color, icono opcional, etiqueta breve, márgenes y colocación. No se agregan estados loading/disabled a la API del FAB.
+- Correcciones en el original compartido: medición web de texto con `onLayout`, efecto de pulsación compartido, foco de teclado y retirada de interacción/semántica cuando está oculto. El icono Large se centra al contraerse sin cambiar sus dimensiones.
+- Matriz de 144 configuraciones: tres tamaños × seis colores × icono presente/ausente × expandido/contraído × ambos temas. Se comprueban medidas, radios, colores, tipografía, alineación, nombre accesible y activación única.
+- Ejemplos locales de correo, carrito, publicación, tareas y vuelos; apertura, confirmación, cancelación, Escape y retorno de foco. La transformación utiliza `ContainerTransformSurface` del paquete y sus tokens de duración/easing, conservando el contenido a su tamaño final.
+- Desplazamiento hacia abajo/arriba, colocación centrada/final y navegación expandida con elevación cero. El rail sólo se ofrece cuando el ancho permite mostrarlo.
+- Comprobados ocultación, teclado, ripple, animación interrumpida, RTL, movimiento reducido, tacto y anchos de 390/320. No se sustituyen etiquetas largas por texto truncado; el área de exploración permite desplazamiento local.
+- Nuevo ejemplo TSX descargable de colapso al desplazar y creación de una nota. Los 43 ejemplos compilan contra la API del paquete.
+- El alcance web sigue siendo parcial: dos familias interactivas y 34 pendientes. No se ejecutaron recorridos visuales nativos en esta entrega.
+
 ## Integración web vigente: Buttons
 
 - El ejemplo interactivo monta `Button` del paquete original mediante Expo y React Native Web. Mantiene su proveedor, tokens, fuentes, iconos y animación; no utiliza una recreación HTML del botón.

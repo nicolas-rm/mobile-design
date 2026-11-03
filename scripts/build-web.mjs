@@ -12,7 +12,7 @@ const runtime=path.join(site,'runtime');
 // Resolve Expo from the consumer workspace even when this checkout lives elsewhere.
 const runtimeModules=path.join(runtime,'node_modules');
 if(!fs.existsSync(runtimeModules))fs.symlinkSync(path.join(workspace,'node_modules'),runtimeModules,'dir');
-const destination=path.join(site,'dist/runtime/buttons');
+const destination=path.join(site,'dist/runtime/components');
 const {ts,options}=packageContext();
 const typecheck=ts.createProgram([path.join(runtime,'index.tsx'),path.join(runtime,'types.d.ts'),path.join(packageRoot,'src/paper-internals.d.ts')],{...options,noEmit:true});
 const diagnostics=ts.getPreEmitDiagnostics(typecheck);
@@ -24,7 +24,7 @@ if(result.error)throw result.error;
 if(result.status!==0)process.exit(result.status??1);
 const htmlPath=path.join(destination,'index.html');
 let html=fs.readFileSync(htmlPath,'utf8').replace('<html lang="en">','<html lang="es">');
-html=html.replace('<title>Mobile Design</title>','<title>Buttons · Mobile Design</title><link rel="icon" href="../../assets/favicon.svg">');
+html=html.replace('<title>Mobile Design</title>','<title>Mobile Design · Ejemplos</title><link rel="icon" href="../../assets/favicon.svg">');
 fs.writeFileSync(htmlPath,html);
 // Retain the licenses of the package and its dependency tree with the export.
 const licensed=new Set();
@@ -47,6 +47,7 @@ const hash=createHash('sha256').update(html).digest('hex').slice(0,12);
 const sourceHash=createHash('sha256');
 const hashSource=directory=>{for(const entry of fs.readdirSync(directory,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){const file=path.join(directory,entry.name);if(entry.isDirectory())hashSource(file);else{sourceHash.update(path.relative(packageRoot,file));sourceHash.update(fs.readFileSync(file));}}};
 hashSource(path.join(packageRoot,'src'));
-const examples={buttons:{url:`./runtime/buttons/index.html?v=${hash}`,sourceHash:sourceHash.digest('hex'),runtime:'react-native-web',component:'Button'}};
+const fingerprint=sourceHash.digest('hex');
+const examples=Object.fromEntries(Object.entries({buttons:'Button','extended-fab':'ExtendedFAB'}).map(([id,component])=>[id,{url:`./runtime/components/index.html?v=${hash}&component=${id}`,sourceHash:fingerprint,runtime:'react-native-web',component}]));
 fs.writeFileSync(path.join(site,'dist/web-examples.js'),'// Generated from the real package by npm run build:web.\nexport const webExamples='+JSON.stringify(examples,null,2)+';\n');
-console.log('Buttons web runtime exported. Source fingerprint:',examples.buttons.sourceHash);
+console.log('Web component runtime exported. Source fingerprint:',fingerprint);

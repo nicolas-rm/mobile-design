@@ -3,6 +3,6 @@
     "name": "Mobile Design",
     "slug": "mobile-design-documentation-runtime",
     "web": {"bundler": "metro", "output": "single"},
-    "experiments": {"baseUrl": "/runtime/buttons"}
+    "experiments": {"baseUrl": "/runtime/components"}
   }
 }

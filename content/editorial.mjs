@@ -53,6 +53,7 @@ export const dimensions = {
   'app-bars':[['Small','64 dp'],['Medium flexible','112 dp · 136 dp con subtítulo'],['Large flexible','120 dp · 152 dp con subtítulo'],['Search','Contenedor 64 dp · barra 56 dp']],
   badges:[['Small','6 dp · sin texto'],['Large','Mínimo 16 dp · Label Small']],
   buttons:[['Extra small','32 dp'],['Small','40 dp'],['Medium','56 dp'],['Large','96 dp'],['Extra large','136 dp'],['Objetivo de interacción','Mínimo 48 dp; independiente de la superficie visual']],
+  'extended-fab':[['Small · size="default"','56 dp · radio 16 dp · icono 24 dp · titleMedium'],['Medium','80 dp · radio 20 dp · icono 28 dp · titleLarge'],['Large','96 dp · radio 28 dp · icono 36 dp · headlineSmall'],['Espacio inicial / final','16 / 26 / 28 dp según tamaño'],['Separación icono / etiqueta','8 / 12 / 16 dp según tamaño'],['Ancho','Se ajusta a la etiqueta; al contraerse, 56 / 80 / 96 dp'],['Margen de colocación','16 dp respecto a los bordes; respeta navegación y safe area']],
   'floating-action-button':[['FAB','56 dp · radio 16 dp'],['Medium','80 dp · radio 20 dp'],['Large','96 dp · radio 28 dp']],
   checkbox:[['Objetivo de interacción','48 dp']],
   chips:[['Superficie visual','32 dp'],['Objetivo de interacción','48 dp']],

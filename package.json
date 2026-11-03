@@ -14,7 +14,8 @@
     "check:examples": "node scripts/check-examples.mjs",
     "check": "node scripts/check-site.mjs",
     "test": "npm run check",
-    "test:web": "node scripts/check-web.mjs"
+    "test:web": "node scripts/check-web.mjs && node scripts/check-extended-fab-web.mjs",
+    "test:web:extended-fab": "node scripts/check-extended-fab-web.mjs"
   },
   "devDependencies": {
     "playwright-core": "1.64.1"

@@ -136,7 +136,7 @@ try{
  await page.screenshot({path:path.join(artifacts,'buttons-mobile.png'),fullPage:true,animations:'disabled'});
  const touchContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const touchPage=await touchContext.newPage();
  touchPage.on('pageerror',error=>failures.push(String(error)));
- await touchPage.goto(base+'runtime/buttons/index.html');const touchButton=touchPage.getByTestId('example-button');await touchButton.waitFor();await touchButton.scrollIntoViewIfNeeded();
+ await touchPage.goto(base+'runtime/components/index.html?component=buttons');const touchButton=touchPage.getByTestId('example-button');await touchButton.waitFor();await touchButton.scrollIntoViewIfNeeded();
  const touchBox=await touchButton.boundingBox(),touchSession=await touchContext.newCDPSession(touchPage);
  await touchSession.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:touchBox.x+touchBox.width/2,y:touchBox.y+touchBox.height/2}]});
  await touchButton.locator('[data-paper-ripple]').last().waitFor({state:'attached'});assertMask(await sampleMask(touchButton));

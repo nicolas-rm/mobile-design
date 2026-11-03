@@ -18,11 +18,11 @@ Este repositorio contiene el proyecto de documentación. No incluye la app Music
 - 36 familias con nombres, agrupación y orden del catálogo MD3.
 - Fichas con uso, integración, funcionamiento, variantes, configuraciones, API y accesibilidad dentro del propio sitio.
 - Propiedades, valores iniciales disponibles y contratos de datos extraídos de los tipos del paquete.
-- 42 ejemplos React Native descargables, incluidos Search view, selección de rango, Input chips, menú → diálogo, contraseña y progreso → success.
+- 43 ejemplos React Native descargables, incluidos Search view, selección de rango, Input chips, menú → diálogo, contraseña y progreso → success.
 - 72 capturas nativas, claras/oscuras, de la revisión del 2 de noviembre de 2026.
 - Búsqueda de guías, componentes y propiedades; temas claro/oscuro, navegación adaptable, enlaces directos a apartados, foco visible y reducción de movimiento.
 
-Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y código TSX. Buttons monta el componente original mediante React Native Web y permite explorar sus propiedades; no es una réplica HTML.
+Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y código TSX. Buttons y Extended FABs montan los componentes originales mediante React Native Web y permite explorar sus propiedades; no son réplicas HTML.
 
 ## Plataformas
 
@@ -30,7 +30,7 @@ Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y 
 | --- | --- |
 | React Native con Expo | Entorno principal del paquete documentado. |
 | React Native con módulos Expo integrados | Requiere los peers y su configuración nativa. |
-| Expo Web / React Native Web | Integración inicial de Buttons con ejecución y matriz de navegador. Las demás familias continúan pendientes. |
+| Expo Web / React Native Web | Integración de Buttons y Extended FABs con ejecución y matrices de navegador. Las demás familias continúan pendientes. |
 | React DOM independiente | No hay una distribución DOM verificada del paquete. |
 
 La compatibilidad del sitio web de documentación no acredita la compatibilidad web de los componentes.
@@ -87,7 +87,7 @@ npm ci
 npm run test:web
 ```
 
-Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). El ejecutor abre un servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/buttons-web/`. No utiliza el perfil del usuario. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho.
+Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). El ejecutor abre un servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/buttons-web/`. No utiliza el perfil del usuario. `npm run test:web:extended-fab` ejecuta sólo la segunda familia. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho. Extended FABs añade 144 configuraciones y casos de desplazamiento, presencia, colocación, medición de texto, cinco tareas y transformación de contenedor.
 
 ## Sincronizar con el paquete nativo
 
@@ -111,9 +111,9 @@ Se pueden usar rutas absolutas o relativas. El sincronizador no modifica el paqu
 
 `npm test` comprueba cobertura de fichas, contratos, alcance web por familia, recursos, ejemplos, igualdad de datos integrados, sintaxis JavaScript y enlaces de la arquitectura editorial (170 rutas). Se ejecuta en GitHub Actions sin acceso a la app.
 
-`npm run check:examples` compila los 42 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
+`npm run check:examples` compila los 43 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
 
-Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. La cobertura web se registra por familias: Buttons inicia la integración; las demás siguen pendientes.
+Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. La cobertura web se registra por familias: Buttons y Extended FABs tienen ejemplos interactivos y matrices de navegador; las otras 34 familias siguen pendientes.
 
 ## Estilo y licencias
 
