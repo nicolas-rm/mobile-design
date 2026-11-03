@@ -67,6 +67,13 @@ const data = {
   verification: { date: verified.date, automatic: verified.automatic.blocksPassed, families: verified.matrix.familiesPassed, nativeCases: verified.finalNativeCases.total, voiceOver: verified.voiceOver.passed, largeText: verified.largeSystemText.passed, limits: verified.limits },
 };
 fs.writeFileSync(path.join(output, 'data.json'), JSON.stringify(data, null, 2)+'\n');
+const htmlPath=path.join(output,'index.html');
+if(fs.existsSync(htmlPath)) {
+  const payload=JSON.stringify(data).replace(/</g,'\\u003c');
+  const embedded=`<script id="documentation-data" type="application/json">${payload}</script>`;
+  const html=fs.readFileSync(htmlPath,'utf8').replace(/\s*<script id="documentation-data" type="application\/json">[\s\S]*?<\/script>/,'');
+  fs.writeFileSync(htmlPath,html.replace('</body>',`  ${embedded}\n</body>`));
+}
 fs.mkdirSync(path.join(output,'examples'),{recursive:true});
 for(const entry of data.components) fs.writeFileSync(path.join(output,'examples',entry.id+'.tsx'),entry.example);
 const evidence = '/Users/nicolas-rm/.codex/visualizations/2026/10/25/01a17166-a4bb-7730-8869-2bbaa46baf3d/mobile-design-ios-extended-2026-11-02';

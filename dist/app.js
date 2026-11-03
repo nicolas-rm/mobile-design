@@ -145,4 +145,4 @@ document.addEventListener('keydown',event=>{
 });
 for(const dialog of [searchDialog,demoDialog])dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
 window.addEventListener('hashchange',route);
-try{const response=await fetch('./data.json');if(!response.ok)throw new Error('Data unavailable');data=await response.json();route();}catch(error){main.innerHTML=`<div class="empty-state"><h1>Un momento…</h1><p>No pudimos cargar la documentación. Recarga la página o verifica que el servidor incluya data.json.</p><button class="md-button" onclick="location.reload()">Reintentar</button></div>`;console.error(error);}
+try{data=JSON.parse(document.querySelector('#documentation-data').textContent);route();}catch(error){main.innerHTML=`<div class="empty-state"><h1>Un momento…</h1><p>No pudimos cargar la documentación. Recarga la página o sincroniza de nuevo el sitio.</p><button class="md-button" onclick="location.reload()">Reintentar</button></div>`;console.error(error);}

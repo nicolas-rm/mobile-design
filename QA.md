@@ -8,6 +8,7 @@
 - 36 capturas nativas de la matriz iOS del 2 de noviembre incluidas en `dist/native/`.
 - Comprobación estática aprobada: cobertura, archivos, ejemplos descargables, tarjetas sin controles interactivos anidados en enlaces, paleta canónica y sintaxis JS.
 - Roboto y el subconjunto oficial de Material Symbols Rounded se sirven desde archivos locales.
+- La primera captura del proveedor se tomó durante el fetch inicial del catálogo. Los mismos datos se integraron en el HTML para que el módulo renderice al arrancar, sin esa petición adicional. Se verifica igualdad entre el JSON integrado y `data.json`.
 
 ## Navegador
 
