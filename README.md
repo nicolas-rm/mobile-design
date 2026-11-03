@@ -12,12 +12,15 @@ Este repositorio contiene el proyecto de documentación. No incluye la app Music
 
 ## Qué incluye
 
+- Portada editorial, navegación principal en siete apartados y menús contextuales por sección, con estructura visual inspirada en el sitio MD3.
+- Guías propias de inicio, desarrollo, accesibilidad, contenido, tokens, interacción, diseño adaptable y personalización.
+- Páginas independientes de color, elevación, iconos, movimiento, forma, espaciado y tipografía.
 - 36 familias con nombres, agrupación y orden del catálogo MD3.
 - Fichas con uso, integración, funcionamiento, variantes, configuraciones, API y accesibilidad dentro del propio sitio.
 - Propiedades, valores iniciales disponibles y contratos de datos extraídos de los tipos del paquete.
 - 42 ejemplos React Native descargables, incluidos Search view, selección de rango, Input chips, menú → diálogo, contraseña y progreso → success.
 - 72 capturas nativas, claras/oscuras, de la revisión iOS del 2 de noviembre de 2026.
-- Búsqueda, temas claro/oscuro, navegación adaptable, foco visible y reducción de movimiento.
+- Búsqueda de guías, componentes y propiedades; temas claro/oscuro, navegación adaptable, enlaces directos a apartados, foco visible y reducción de movimiento.
 
 Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas nativas y código TSX; no ejecutan imitaciones HTML del componente. Las fuentes de diseño MD3 aparecen como bibliografía complementaria identificada.
 
@@ -53,6 +56,8 @@ Abre http://127.0.0.1:4317/. Las rutas utilizan hash y no necesitan reglas de re
 | --- | --- |
 | `dist/` | Sitio estático listo para servir. |
 | `dist/component-docs.js` | Presentación autosuficiente de las fichas. |
+| `dist/site-sections.js` | Portada, contenido editorial, arquitectura de navegación y pie del sitio. |
+| `dist/structure.css` | Composición editorial y navegación adaptable con roles MD3. |
 | `dist/illustrations.js` | Ilustraciones decorativas, sin runtime de componentes. |
 | `dist/examples/` | Ejemplos nativos TSX descargables. |
 | `dist/native/` | Capturas nativas claras/oscuras. |
@@ -80,7 +85,7 @@ Se pueden usar rutas absolutas o relativas. El sincronizador no modifica el paqu
 
 ## Verificación y límites
 
-`npm test` comprueba cobertura de fichas, contratos, estado web pendiente, recursos, ejemplos, igualdad de datos integrados y sintaxis JavaScript. Se ejecuta en GitHub Actions sin acceso a la app.
+`npm test` comprueba cobertura de fichas, contratos, estado web pendiente, recursos, ejemplos, igualdad de datos integrados, sintaxis JavaScript y enlaces de la arquitectura editorial (170 rutas). Se ejecuta en GitHub Actions sin acceso a la app.
 
 `npm run check:examples` compila los 42 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
 

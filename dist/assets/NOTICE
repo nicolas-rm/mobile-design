@@ -1,3 +1,7 @@
+Documentation website assets: material-symbols.ttf is a local subset served by the official Google Fonts CSS API on 2026-11-03 (Material Symbols Rounded, default axes). Its 137 requested names are listed in icon-names.json. Copyright Google LLC, Apache License 2.0. It is distinct from the complete pinned native font described below. The website uses the included Roboto 400/500/700 faces under SIL OFL 1.1. Editorial illustrations are original CSS compositions, not Material Design website media.
+
+The following notices describe the documented native package and its included resources:
+
 Mobile Design composes React Native Paper 6.0.0-alpha.0 (MIT, Copyright 2017 Callstack); it does not claim authorship of Paper.
 
 Material Symbols Rounded SVG paths: Copyright Google LLC, Apache License 2.0. Unmodified assets from google/material-design-icons, revision10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7, symbols/web; optical size24, weight400, grade0, fill0/1. See LICENSE-Apache-2.0.txt. Paper/MDI aliases are local compatibility mappings.

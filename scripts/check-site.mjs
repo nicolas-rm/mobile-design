@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {illustrationMarkup} from '../dist/illustrations.js';
+import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from '../dist/site-sections.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const dist=path.join(root,'dist');
 const data=JSON.parse(fs.readFileSync(path.join(dist,'data.json'),'utf8'));
@@ -13,7 +14,7 @@ const embedded=html.match(/<script id="documentation-data" type="application\/js
 assert.ok(embedded,'Inline catalogue must be available before the module renders.');
 assert.deepEqual(JSON.parse(embedded[1]),data,'Inline and downloadable API data must stay identical.');
 assert.equal(new Set(data.components.map(c=>c.id)).size,36);
-const assets=['index.html','styles.css','app.js','component-docs.js','illustrations.js','assets/material-symbols.ttf','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
+const assets=['index.html','styles.css','structure.css','app.js','site-sections.js','component-docs.js','illustrations.js','assets/material-symbols.ttf','assets/icon-names.json','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
 for(const file of assets)assert.ok(fs.statSync(path.join(dist,file)).size>0,file);
 for(const c of data.components){
  assert.ok(c.description&&c.guidance&&c.accessibility,c.id+' editorial');
@@ -34,7 +35,17 @@ for(const c of data.components){
  assert.ok(!/<(?:button|input|a)\b/.test(preview),c.id+' static card must not nest interactive controls');
  assert.ok(!/data-demo/.test(preview),c.id+' illustration must not act as a component runtime');
 }
-for(const file of ['app.js','component-docs.js','illustrations.js'])assert.equal(spawnSync(process.execPath,['--check',path.join(dist,file)],{encoding:'utf8'}).status,0,file+' syntax');
+for(const file of ['app.js','site-sections.js','component-docs.js','illustrations.js'])assert.equal(spawnSync(process.execPath,['--check',path.join(dist,file)],{encoding:'utf8'}).status,0,file+' syntax');
+const routes=new Set(['home','components','develop/installation','verification','support',...Object.keys(guides),...Object.keys(styleTopics).map(id=>'styles/'+id),...data.components.flatMap(c=>['overview','specs','api','accessibility'].map(section=>'components/'+c.id+'/'+section))]);
+for(const [route,entry] of Object.entries(guides)){
+ assert.ok(entry.title&&entry.intro&&entry.sections.length>=3,route+' content');
+ assert.equal(new Set(entry.sections.map(s=>s.id)).size,entry.sections.length,route+' unique anchors');
+ const markup=guideMarkup(entry);
+ for(const match of markup.matchAll(/href="#\/([^"?]+)"/g))assert.ok(routes.has(match[1]),route+' links to '+match[1]);
+}
+for(const [area,entries] of Object.entries(guideNavigation))for(const [route] of entries)assert.ok(routes.has(route),area+' navigation '+route);
+for(const [area] of areas)assert.ok(routes.has(area),area+' primary navigation');
+for(const markup of [homeMarkup(data),footerMarkup()])for(const match of markup.matchAll(/href="#\/([^"?]+)"/g))assert.ok(routes.has(match[1]),'Editorial navigation '+match[1]);
 const app=fs.readFileSync(path.join(dist,'app.js'),'utf8');
 assert.ok(!/handlePreview|demoPanel|reset-demo/.test(app),'Documentation must not mount HTML component imitations.');
 assert.ok(!html.includes('href="https://m3.material.io/components"'),'Navigation must stay inside the documentation.');
@@ -42,3 +53,4 @@ assert.equal(data.platformSupport.web.status,'pending');
 assert.equal(data.colors.light.primary,'rgba(103, 80, 164, 1)');
 assert.equal(data.verification.nativeCases,65);
 console.log(`PASS: 36 self-contained native documentation entries, 72 native captures, ${36+data.components.reduce((n,c)=>n+c.recipes.length,0)} downloadable examples, related types, web-pending status, decorative illustrations, palette and JavaScript syntax.`);
+console.log(`PASS: ${Object.keys(guides).length} editorial guides, ${areas.length} main destinations, style topics and internal route coverage (${routes.size} routes).`);

@@ -1,5 +1,17 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Arquitectura y estilo editorial MD3
+
+- Revisión de la portada y navegación reales de Material Design 3: destinos principales, menús por sección, guías de fundamentos y estilos, tarjetas editoriales y pie de página.
+- Portada propia y siete destinos principales: Inicio, Comenzar, Desarrollo, Fundamentos, Estilos, Componentes y Recursos. No se inventan noticias, versiones ni recursos de diseño del proyecto.
+- 16 guías editoriales, cinco temas de estilo con contenido reutilizado y ampliado, instalación/proveedor y fichas separadas de elevación y espaciado.
+- 170 rutas recorridas en Chrome aislado, esperando la ruta renderizada y comprobando destino activo, título, identificadores únicos, anclas y ausencia de overflow del documento.
+- 11 rutas representativas revisadas a 390 px y portada a 320 px. Verificados menú móvil, fondo inerte, cierre con Escape, restauración de foco, búsqueda de guías y componentes, filtros de API, enlaces de apartados, temas e imágenes y movimiento reducido.
+- Cero errores de página y cero respuestas HTTP fallidas en el recorrido. Revisión visual de portada, Fundamentos y Color; capturas de escritorio/móvil y ambos temas guardadas fuera del repositorio.
+- `npm test` incorpora validación de destinos y enlaces editoriales, además de los contratos y recursos nativos existentes.
+- Los 42 módulos de ejemplo, las 72 capturas y el catálogo sincronizado no cambiaron. El soporte web del paquete continúa pendiente y su código se conserva.
+- No se ejecutaron pruebas nativas ni se modificó la app para esta entrega. La revisión de ejemplos queda para la siguiente etapa solicitada.
+
 ## Revisión vigente: documentación nativa y repositorio autónomo
 
 - 36 fichas con integración, funcionamiento, accesibilidad, responsabilidades, API y tipos relacionados dentro del sitio.
