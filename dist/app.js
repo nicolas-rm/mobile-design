@@ -1,5 +1,5 @@
 import {illustrationMarkup} from './illustrations.js?v=2f4d505ab019';
-import {componentDocs} from './component-docs.js?v=7c5ffea60b1c';
+import {componentDocs} from './component-docs.js?v=51534a7f2601';
 import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from './site-sections.js?v=b2fc80314fe6';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -75,7 +75,7 @@ function updateCatalog(){
 }
 function renderComponent(c,section){
  const active=sections.some(s=>s[0]===section)?section:'overview';currentComponent=c;currentSection=active;
- const toc={overview:[['in-action','Vista nativa'],['when','Cuándo usarlo'],['implementation','Integración'],['variants','Variantes'],['example','Implementación'],['responsibilities','Responsabilidades']],specs:[['anatomy','Anatomía'],['dimensions','Dimensiones'],['defaults','Valores iniciales'],['tokens','Tema y estados']],api:[['import','Importación'],['properties','Propiedades'],['contracts','Tipos relacionados'],['example','Ejemplos']],accessibility:[['semantics','Semántica'],['focus','Foco y movimiento'],['coverage','Evidencia']]};
+ const toc={overview:[['in-action','Vista nativa'],['when','Cuándo usarlo'],['implementation','Integración'],['variants','Variantes'],['example','Implementación']],specs:[['anatomy','Anatomía'],['dimensions','Dimensiones'],['defaults','Valores iniciales'],['tokens','Tema y estados']],api:[['import','Importación'],['properties','Propiedades'],['contracts','Tipos relacionados'],['example','Ejemplos']],accessibility:[['semantics','Semántica'],['focus','Foco y movimiento'],['coverage','Evidencia']]};
  const i=data.components.indexOf(c),prev=data.components[i-1],next=data.components[i+1];
  main.innerHTML=`<div class="detail-heading page-heading"><div class="eyebrow">${icon(c.icon)}${esc(categories[c.category])} <span style="opacity:.45">/</span> ${esc(c.searchAliases[0]??c.title)}</div><h1>${esc(c.title)}</h1><p class="intro">${esc(c.description)}</p></div><div class="detail-layout"><div><nav class="component-tabs" aria-label="Secciones de ${esc(c.title)}">${sections.map(([id,symbol,label])=>`<a href="${hashFor(c.id,id)}" class="${id===active?'active':''}" ${id===active?'aria-current="page"':''}>${icon(symbol)}${label}</a>`).join('')}</nav>${componentDocs[active](c,{data,codeCard})}<nav class="next-prev" aria-label="Componentes anterior y siguiente">${prev?`<a href="${hashFor(prev.id)}">${icon('arrow_back')}<span><small>ANTERIOR</small>${esc(prev.title)}</span></a>`:'<span></span>'}${next?`<a href="${hashFor(next.id)}"><span><small>SIGUIENTE</small>${esc(next.title)}</span>${icon('arrow_forward')}</a>`:'<span></span>'}</nav></div><aside class="toc" aria-label="En esta página"><p>En esta página</p>${toc[active].map(([id,label])=>`<a href="#${id}" data-scroll-to="${id}">${label}</a>`).join('')}</aside></div>`;
 }
