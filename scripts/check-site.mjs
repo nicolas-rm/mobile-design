@@ -6,6 +6,7 @@ import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {illustrationMarkup} from '../dist/illustrations.js';
 import {areas,guides,guideNavigation,styleTopics,guideMarkup,homeMarkup,footerMarkup} from '../dist/site-sections.js';
+import {webExamples} from '../dist/web-examples.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const dist=path.join(root,'dist');
 const data=JSON.parse(fs.readFileSync(path.join(dist,'data.json'),'utf8'));
@@ -15,11 +16,20 @@ const embedded=html.match(/<script id="documentation-data" type="application\/js
 assert.ok(embedded,'Inline catalogue must be available before the module renders.');
 assert.deepEqual(JSON.parse(embedded[1]),data,'Inline and downloadable API data must stay identical.');
 assert.equal(new Set(data.components.map(c=>c.id)).size,36);
-const assets=['index.html','styles.css','structure.css','app.js','site-sections.js','component-docs.js','illustrations.js','assets/material-symbols.ttf','assets/icon-names.json','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
+const assets=['index.html','styles.css','structure.css','app.js','site-sections.js','component-docs.js','web-examples.js','illustrations.js','assets/material-symbols.ttf','assets/icon-names.json','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
 for(const file of assets)assert.ok(fs.statSync(path.join(dist,file)).size>0,file);
 const fingerprint=file=>createHash('sha256').update(fs.readFileSync(path.join(dist,file))).digest('hex').slice(0,12);
 for(const file of ['app.js','styles.css','structure.css','assets/material-symbols.ttf'])assert.ok(html.includes(`./${file}?v=${fingerprint(file)}`),file+' cache fingerprint; run npm run assets after editing');
 for(const file of ['illustrations.js','component-docs.js','site-sections.js'])assert.ok(fs.readFileSync(path.join(dist,'app.js'),'utf8').includes(`./${file}?v=${fingerprint(file)}`),file+' module fingerprint');
+assert.ok(fs.readFileSync(path.join(dist,'component-docs.js'),'utf8').includes(`./web-examples.js?v=${fingerprint('web-examples.js')}`),'Interactive runtime manifest fingerprint');
+for(const [id,example] of Object.entries(webExamples)){
+ assert.ok(data.components.some(c=>c.id===id),'Runtime must belong to a documented family.');
+ assert.equal(example.runtime,'react-native-web');
+ assert.match(example.sourceHash,/^[a-f0-9]{64}$/);
+ const entry=path.join(dist,example.url.split('?')[0]);assert.ok(fs.existsSync(entry),id+' runtime HTML');
+ const runtimeHtml=fs.readFileSync(entry,'utf8');
+ for(const match of runtimeHtml.matchAll(/(?:src|href)="(\/runtime\/[^"?]+)"/g))assert.ok(fs.existsSync(path.join(dist,match[1])),id+' runtime resource '+match[1]);
+}
 assert.ok(fs.readFileSync(path.join(dist,'styles.css'),'utf8').includes('./assets/material-symbols.ttf?v='+fingerprint('assets/material-symbols.ttf')),'Icon preload and CSS must use the same version.');
 for(const c of data.components){
  assert.ok(c.description&&c.guidance&&c.accessibility,c.id+' editorial');
@@ -32,7 +42,7 @@ for(const c of data.components){
  assert.ok(c.guide.integration.length>=2,c.id+' integration');
  assert.ok(c.guide.behavior.length>=3,c.id+' behavior');
  assert.ok(c.guide.accessibility.length>=2,c.id+' accessibility');
- assert.equal(c.webSupport.status,'pending');
+ assert.equal(c.webSupport.status,webExamples[c.id]?'partial':'pending');
  assert.equal(c.webSupport.implementationPreserved,true);
  assert.equal(c.relatedTypes.length,c.guide.types.length,c.id+' related types');
  for(const recipe of c.recipes)assert.equal(fs.readFileSync(path.join(dist,'examples',recipe.id+'.tsx'),'utf8'),recipe.code);
@@ -40,7 +50,7 @@ for(const c of data.components){
  assert.ok(!/<(?:button|input|a)\b/.test(preview),c.id+' static card must not nest interactive controls');
  assert.ok(!/data-demo/.test(preview),c.id+' illustration must not act as a component runtime');
 }
-for(const file of ['app.js','site-sections.js','component-docs.js','illustrations.js'])assert.equal(spawnSync(process.execPath,['--check',path.join(dist,file)],{encoding:'utf8'}).status,0,file+' syntax');
+for(const file of ['app.js','site-sections.js','component-docs.js','web-examples.js','illustrations.js'])assert.equal(spawnSync(process.execPath,['--check',path.join(dist,file)],{encoding:'utf8'}).status,0,file+' syntax');
 const routes=new Set(['home','components','develop/installation','verification','support',...Object.keys(guides),...Object.keys(styleTopics).map(id=>'styles/'+id),...data.components.flatMap(c=>['overview','specs','api','accessibility'].map(section=>'components/'+c.id+'/'+section))]);
 for(const [route,entry] of Object.entries(guides)){
  assert.ok(entry.title&&entry.intro&&entry.sections.length>=3,route+' content');
@@ -54,7 +64,7 @@ for(const markup of [homeMarkup(data),footerMarkup()])for(const match of markup.
 const app=fs.readFileSync(path.join(dist,'app.js'),'utf8');
 assert.ok(!/handlePreview|demoPanel|reset-demo/.test(app),'Documentation must not mount HTML component imitations.');
 assert.ok(!html.includes('href="https://m3.material.io/components"'),'Navigation must stay inside the documentation.');
-assert.equal(data.platformSupport.web.status,'pending');
+assert.equal(data.platformSupport.web.status,'partial');
 assert.equal(data.colors.light.primary,'rgba(103, 80, 164, 1)');
 assert.equal(data.verification.nativeCases,65);
 console.log(`PASS: 36 self-contained native documentation entries, 72 native captures, ${36+data.components.reduce((n,c)=>n+c.recipes.length,0)} downloadable examples, related types, web-pending status, decorative illustrations, palette and JavaScript syntax.`);

@@ -7,10 +7,11 @@ Este repositorio contiene la documentación web del paquete Mobile Design para R
 - Cada ficha concentra uso, integración, funcionamiento, variantes/configuraciones, API, ejemplos y accesibilidad. Los enlaces externos son bibliografía complementaria y deben identificarse como externos.
 - No añadas bloques de fuentes de diseño ni enlaces de referencia a MD3 en el contenido visible. Conserva las licencias y atribuciones obligatorias de los recursos.
 - La fuente de verdad de la API es TypeScript del paquete. Los ejemplos importan `mobile-design`; no se presentan controles HTML simulados como ejecución del componente original.
-- Las ilustraciones del catálogo son decorativas; la evidencia de la implementación se presenta con capturas nativas y ejemplos TSX.
-- El soporte de componentes en Expo Web / React Native Web está pendiente de verificación. Conserva las implementaciones existentes y el estado pendiente; no publiques compatibilidad integral sin ejecutarla.
+- Las ilustraciones del catálogo son decorativas. Los ejemplos interactivos montan el componente original mediante React Native Web y se registran en `dist/web-examples.js`; no son réplicas HTML.
+- La integración web comienza con Buttons y su matriz de navegador. El resto del paquete sigue pendiente de verificación. Conserva las implementaciones existentes y no publiques compatibilidad integral sin ejecutarla.
 - Presenta la evidencia visible sin nombres de sistemas operativos, modelos de dispositivo ni referencias al lugar donde se ejecutó. Conserva el alcance de los casos revisados y el soporte web pendiente, sin afirmar compatibilidad universal. La trazabilidad técnica puede mantenerse en los registros de verificación.
 - El sitio debe ejecutar `npm start` y `npm test` después de clonar este repositorio, sin necesitar la app original ni rutas personales.
 - `npm run sync -- --package-dir /ruta/mobile-design` y `npm run check:examples -- --package-dir /ruta/mobile-design` necesitan el paquete nativo y su workspace configurado.
+- `npm run build:web -- --package-dir /ruta/mobile-design` necesita ese workspace con Expo y dependencias web; `npm run test:web` verifica el runtime precompilado con Chrome/Chromium. Actualiza las huellas con `npm run assets` después de construirlo.
 - Mantén en GitHub solamente este proyecto de documentación, sus recursos, datos sincronizados y ejemplos. No añadas credenciales, perfiles, logs locales ni archivos de la app.
 - Conserva la audiencia del Site al publicar sus cambios. El repositorio de GitHub y el acceso al sitio son configuraciones distintas.

@@ -1,5 +1,20 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Integración web vigente: Buttons
+
+- El ejemplo interactivo monta `Button` del paquete original mediante Expo y React Native Web. Mantiene su proveedor, tokens, fuentes, iconos y animación; no utiliza una recreación HTML del botón.
+- 180 configuraciones aprobadas: Default/Toggle, cinco estilos (cuatro en Toggle), cinco tamaños, dos formas y ambos temas.
+- Comprobados teclado, foco visible, activación única, origen del ripple, animación y cancelación, pulsaciones rápidas, carga, bloqueo durante una pulsación, operación asíncrona y limpieza al abandonar el ejemplo.
+- Corregida la máscara del ripple en el original web compartido: hereda las cuatro esquinas animadas del control en vez de conservar las esquinas del instante inicial. Comparados fotogramas al pulsar y soltar, con ambas formas y los estados de selección, además de pulsación táctil mantenida.
+- Comprobados movimiento reducido del sistema y del sitio, perfiles de movimiento, dirección RTL, alineación de icono/texto, cambio de tema conservando estado y anchos de 390/320 px sin overflow.
+- Las fuentes web son conversiones WOFF2 completas de las originales. Se compararon los once archivos: mapa de caracteres, orden de glifos, métricas y ejes variables conservados.
+- Recorridas de nuevo las 170 rutas; aprobadas navegación móvil, búsqueda, filtros de API, enlaces de apartados, temas y reducción de movimiento. Sin errores de página ni respuestas HTTP fallidas.
+- `npm test` comprueba los recursos del runtime, sus huellas de contenido y el alcance web parcial. Las otras 35 familias conservan sus implementaciones y siguen pendientes de ejecución web.
+- Las verificaciones del paquete no sustituyen un recorrido visual nativo. No se abrió un simulador ni un dispositivo para esta entrega.
+- El verificador integral del paquete también terminó sin errores, incluido TypeScript y los contratos de interacción y ciclo de vida existentes.
+
+Las secciones siguientes conservan el registro de entregas anteriores; sus límites de soporte web describen esas entregas, anteriores al runtime interactivo de Buttons.
+
 ## Limpieza de referencias visibles
 
 - Retirado el bloque de fuentes de diseño de todas las fichas y los enlaces de referencia externos de las páginas editoriales.

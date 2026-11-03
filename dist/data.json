@@ -1142,7 +1142,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -10625,6 +10625,8 @@
   "peers": {
     "react": ">=19.2.0",
     "react-native": ">=0.88.0",
+    "react-dom": ">=19.2.0",
+    "react-native-web": ">=0.21.4",
     "expo-font": ">=58.0.0",
     "react-native-paper": "6.0.0-alpha.0",
     "react-native-reanimated": ">=4.3.0",
@@ -10634,6 +10636,14 @@
     "react-native-svg": ">=15.0.0",
     "expo-image": ">=57.0.0",
     "@gorhom/bottom-sheet": ">=5.2.0"
+  },
+  "optionalPeers": {
+    "react-dom": {
+      "optional": true
+    },
+    "react-native-web": {
+      "optional": true
+    }
   },
   "colors": {
     "light": {
@@ -10773,9 +10783,12 @@
   "platformSupport": {
     "primary": "React Native con módulos Expo",
     "web": {
-      "status": "pending",
-      "implementationPreserved": true
+      "status": "partial",
+      "implementationPreserved": true,
+      "interactiveComponents": [
+        "buttons"
+      ]
     },
-    "documentation": "Sitio web de documentación; no monta el renderer React Native"
+    "documentation": "Documentación con ejemplos interactivos del paquete mediante React Native Web"
   }
 }

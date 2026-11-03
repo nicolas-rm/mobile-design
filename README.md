@@ -22,7 +22,7 @@ Este repositorio contiene el proyecto de documentación. No incluye la app Music
 - 72 capturas nativas, claras/oscuras, de la revisión del 2 de noviembre de 2026.
 - Búsqueda de guías, componentes y propiedades; temas claro/oscuro, navegación adaptable, enlaces directos a apartados, foco visible y reducción de movimiento.
 
-Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas nativas y código TSX; no ejecutan imitaciones HTML del componente. Las fuentes de diseño MD3 aparecen como bibliografía complementaria identificada.
+Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y código TSX. Buttons monta el componente original mediante React Native Web y permite explorar sus propiedades; no es una réplica HTML.
 
 ## Plataformas
 
@@ -30,7 +30,7 @@ Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas na
 | --- | --- |
 | React Native con Expo | Entorno principal del paquete documentado. |
 | React Native con módulos Expo integrados | Requiere los peers y su configuración nativa. |
-| Expo Web / React Native Web | **Pendiente de verificación integral.** El código existente se conserva. |
+| Expo Web / React Native Web | Integración inicial de Buttons con ejecución y matriz de navegador. Las demás familias continúan pendientes. |
 | React DOM independiente | No hay una distribución DOM verificada del paquete. |
 
 La compatibilidad del sitio web de documentación no acredita la compatibilidad web de los componentes.
@@ -55,7 +55,10 @@ Después de editar JavaScript, CSS o la fuente de iconos, ejecuta `npm run asset
 | Ruta | Responsabilidad |
 | --- | --- |
 | `dist/` | Sitio estático listo para servir. |
-| `dist/component-docs.js` | Presentación autosuficiente de las fichas. |
+| `dist/component-docs.js` | Presentación de las fichas y montaje de ejemplos reales. |
+| `runtime/` | Host React/Expo de los ejemplos interactivos. |
+| `dist/runtime/` | Exportación precompilada, fuentes y recursos listos para servir. |
+| `dist/web-examples.js` | Registro de ejemplos y huella del código del paquete utilizado. |
 | `dist/site-sections.js` | Portada, contenido editorial, arquitectura de navegación y pie del sitio. |
 | `dist/structure.css` | Composición editorial y navegación adaptable con roles MD3. |
 | `dist/illustrations.js` | Ilustraciones decorativas, sin runtime de componentes. |
@@ -64,6 +67,27 @@ Después de editar JavaScript, CSS o la fuente de iconos, ejecuta `npm run asset
 | `content/` | Descripciones, integración, comportamiento, accesibilidad y ejemplos fuente. |
 | `scripts/` | Servidor, comprobaciones y sincronización opcional. |
 | `AGENTS.md` / `CONTRIBUTING.md` | Estándar MD3 y reglas de contribución. |
+
+## Construir y verificar los ejemplos web
+
+El runtime precompilado funciona al clonar el sitio. Para reconstruirlo, proporciona el paquete Mobile Design y su workspace con Expo, React DOM, React Native Web y Metro Runtime instalados. Las versiones deben corresponder al SDK de ese workspace.
+
+```sh
+npm run build:web -- --package-dir /ruta/al/paquete/mobile-design
+npm run assets
+npm test
+```
+
+La exportación utiliza el componente original y su proveedor, con fuentes locales WOFF2 completas. El host se monta en un iframe del mismo origen para aislar estilos y sincronizar tema, movimiento y altura sin recargar el estado del ejemplo.
+
+Para ejecutar la matriz de navegador sobre esa exportación:
+
+```sh
+npm ci
+npm run test:web
+```
+
+Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). El ejecutor abre un servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/buttons-web/`. No utiliza el perfil del usuario. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho.
 
 ## Sincronizar con el paquete nativo
 
@@ -85,11 +109,11 @@ Se pueden usar rutas absolutas o relativas. El sincronizador no modifica el paqu
 
 ## Verificación y límites
 
-`npm test` comprueba cobertura de fichas, contratos, estado web pendiente, recursos, ejemplos, igualdad de datos integrados, sintaxis JavaScript y enlaces de la arquitectura editorial (170 rutas). Se ejecuta en GitHub Actions sin acceso a la app.
+`npm test` comprueba cobertura de fichas, contratos, alcance web por familia, recursos, ejemplos, igualdad de datos integrados, sintaxis JavaScript y enlaces de la arquitectura editorial (170 rutas). Se ejecuta en GitHub Actions sin acceso a la app.
 
 `npm run check:examples` compila los 42 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
 
-Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. El soporte web de los componentes se mantiene expresamente pendiente.
+Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. La cobertura web se registra por familias: Buttons inicia la integración; las demás siguen pendientes.
 
 ## Estilo y licencias
 

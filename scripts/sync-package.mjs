@@ -5,6 +5,7 @@ import { editorial, propertyDescriptions, dimensions } from '../content/editoria
 import { examples, exampleModule } from '../content/examples.mjs';
 import {guides} from '../content/guides.mjs';
 import {recipes} from '../content/recipes.mjs';
+import {webExamples} from '../dist/web-examples.js';
 import {packageContext} from './package-context.mjs';
 
 const {site,packageRoot:pkgRoot,workspace,ts,options,evidence}=packageContext();
@@ -74,12 +75,13 @@ const data = {
     guide:guides[entry.id],
     relatedTypes:guides[entry.id].types.map(relatedType).filter(Boolean),
     recipes:(recipes[entry.id]??[]).map(recipe=>({id:recipe.id,title:recipe.title,description:recipe.description,code:exampleModule(recipe)})),
-    webSupport:{status:'pending',implementationPreserved:true},
+    webSupport:{status:webExamples[entry.id]?'partial':'pending',implementationPreserved:true},
   })),
   peers: packageJson.peerDependencies,
+  optionalPeers: packageJson.peerDependenciesMeta ?? {},
   colors: tokens,
   verification: { date: verified.date, automatic: verified.automatic.blocksPassed, families: verified.matrix.familiesPassed, nativeCases: verified.finalNativeCases.total, voiceOver: verified.voiceOver.passed, largeText: verified.largeSystemText.passed, limits: verified.limits },
-  platformSupport:{primary:'React Native con módulos Expo',web:{status:'pending',implementationPreserved:true},documentation:'Sitio web de documentación; no monta el renderer React Native'},
+  platformSupport:{primary:'React Native con módulos Expo',web:{status:'partial',implementationPreserved:true,interactiveComponents:Object.keys(webExamples)},documentation:'Documentación con ejemplos interactivos del paquete mediante React Native Web'},
 };
 fs.writeFileSync(path.join(output, 'data.json'), JSON.stringify(data, null, 2)+'\n');
 const htmlPath=path.join(output,'index.html');
@@ -104,7 +106,8 @@ if(evidence&&fs.existsSync(evidence)) {
 for (const [source,target] of [['Roboto_400Regular.ttf','roboto-regular.ttf'],['Roboto_500Medium.ttf','roboto-medium.ttf'],['Roboto_700Bold.ttf','roboto-bold.ttf'],['OFL.txt','Roboto-OFL.txt']]) {
   fs.copyFileSync(path.join(pkgRoot,'assets/fonts/roboto',source),path.join(output,'assets',target));
 }
-for (const license of ['LICENSE','NOTICE','LICENSE-Apache-2.0.txt']) {
+for (const license of ['LICENSE','LICENSE-Apache-2.0.txt']) {
   if (fs.existsSync(path.join(pkgRoot,license))) fs.copyFileSync(path.join(pkgRoot,license),path.join(output,'assets',license));
 }
+fs.writeFileSync(path.join(output,'assets/NOTICE'),fs.readFileSync(path.join(site,'content/asset-notice.txt'),'utf8')+'\n'+read('NOTICE'));
 console.log(`Synced ${catalog.length} families, ${data.components.reduce((sum,c)=>sum+c.api.length,0)} API properties and the shared color palette.`);

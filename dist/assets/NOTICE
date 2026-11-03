@@ -1,6 +1,9 @@
-Documentation website assets: material-symbols.ttf is a local subset served by the official Google Fonts CSS API on 2026-11-03 (Material Symbols Rounded, default axes). Its 137 requested names are listed in icon-names.json. Copyright Google LLC, Apache License 2.0. It is distinct from the complete pinned native font described below. The website uses the included Roboto 400/500/700 faces under SIL OFL 1.1. Editorial illustrations are original CSS compositions, not Material Design website media.
+Documentation website assets: material-symbols.ttf is a local subset served by the official Google Fonts CSS API on 2026-11-03 (Material Symbols Rounded, default axes). Requested names are listed in icon-names.json. Copyright Google LLC, Apache License 2.0. It is distinct from the complete pinned package font described below. The website uses Roboto 400/500/700 under SIL OFL 1.1. Editorial illustrations are original CSS compositions.
 
-The following notices describe the documented native package and its included resources:
+The interactive runtime uses lossless WOFF2 copies of Mobile Design's complete original fonts, preserving glyphs, metrics and all variable axes. Runtime dependency licenses are included in runtime/buttons/THIRD_PARTY_NOTICES.txt.
+
+The following notices describe the documented package and its included resources:
+
 
 Mobile Design composes React Native Paper 6.0.0-alpha.0 (MIT, Copyright 2017 Callstack); it does not claim authorship of Paper.
 
