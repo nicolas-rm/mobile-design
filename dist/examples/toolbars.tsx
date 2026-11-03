@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { Toolbar } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   return <Toolbar variant="floating" accessibilityLabel="Editar colección"
     actions={[{ key: 'edit', icon: 'pencil-outline', label: 'Editar', onPress: () => Alert.alert('Editar') },

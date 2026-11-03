@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { RadioButton } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [value, setValue] = useState('standard');
   return <RadioButton.Group value={value} onValueChange={setValue}>

@@ -1,5 +1,22 @@
 # Verificación del sitio · 3 de noviembre de 2026
 
+## Revisión vigente: documentación nativa y repositorio autónomo
+
+- 36 fichas con integración, funcionamiento, accesibilidad, responsabilidades, API y tipos relacionados dentro del sitio.
+- 42 módulos TSX compilados sin errores contra el paquete local.
+- 72 capturas nativas claras/oscuras. Las fichas no montan controles HTML que imiten el runtime del paquete.
+- 144 secciones recorridas en una sesión aislada de Chrome: títulos, contenido propio, API y ausencia de enlaces MD3 visibles como contenido principal.
+- Diez comprobaciones adicionales de navegación, búsqueda, filtros, imágenes por tema, ancla de código, soporte pendiente y menú móvil. Cero errores de página o peticiones fallidas.
+- Copia del proyecto fuera del workspace: `npm test` aprobado y `npm start` servido en el puerto 4320 sin la app nativa ni rutas personales.
+- El controlador del navegador integrado devolvió `browser.user is unavailable`; se utilizaron Chrome local aislado y Playwright Core en una carpeta temporal de QA. No se accedió al perfil del navegador del usuario.
+- La captura móvil se tomó después de completar la salida del drawer; el primer fotograma se había capturado durante esa transición.
+- Se conserva íntegro el código de soporte web del paquete nativo. Su validación sigue pendiente; ninguna prueba del sitio se presenta como validación de React Native Web.
+- El repositorio contiene el estándar MD3 en AGENTS/CONTRIBUTING y una comprobación autónoma para GitHub Actions.
+
+## Historial: primera versión, anterior a la depuración
+
+Los recorridos que siguen corresponden a la primera versión del sitio. Sus representaciones HTML interactivas fueron retiradas en la revisión vigente; estas notas no describen el runtime actual de las fichas.
+
 ## Datos y código
 
 - 36 familias, nombres y orden sincronizados desde `packages/mobile-design/src/catalog.ts`.

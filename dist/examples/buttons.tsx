@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [saved, setSaved] = useState(false);
   return <Button variant="filled" size="medium" shape="round"

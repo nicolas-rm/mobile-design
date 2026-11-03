@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 import { Button, Dialog, Text } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [visible, setVisible] = useState(false);
   return <>

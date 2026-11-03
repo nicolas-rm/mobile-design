@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { Card, Text, Button } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   return <Card variant="filled">
     <Card.Title title="En buena compañía" subtitle="Una colección para descubrir" />

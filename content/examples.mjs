@@ -213,5 +213,6 @@ export const examples = {
 
 export function exampleModule(example) {
   const native = ['View','Alert'].filter(name => new RegExp(`\\b${name}\\b`).test(example.body));
-  return `${example.body.includes('useState') ? "import { useState } from 'react';\n" : ''}${native.length ? `import { ${native.join(', ')} } from 'react-native';\n` : ''}${example.reanimated ? "import { useSharedValue } from 'react-native-reanimated';\n" : ''}import { ${example.imports} } from 'mobile-design';\n\n// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.\nexport default function Example() {\n  ${example.body}\n}\n`;
+  const hooks=example.hooks??(example.body.includes('useState')?['useState']:[]);
+  return `${hooks.length ? `import { ${hooks.join(', ')} } from 'react';\n` : ''}${native.length ? `import { ${native.join(', ')} } from 'react-native';\n` : ''}${example.reanimated ? "import { useSharedValue } from 'react-native-reanimated';\n" : ''}import { ${example.imports} } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  ${example.body}\n}\n`;
 }

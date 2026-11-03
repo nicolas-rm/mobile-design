@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { ProgressIndicator, Text, Button } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [progress, setProgress] = useState(0.4);
   return <View style={{ gap: 24 }}>

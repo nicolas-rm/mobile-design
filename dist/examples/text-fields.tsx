@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextField } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [name, setName] = useState('');
   return <TextField variant="outlined" label="Nombre de la colección"

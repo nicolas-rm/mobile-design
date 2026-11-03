@@ -1,24 +1,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
 import { editorial, propertyDescriptions, dimensions } from '../content/editorial.mjs';
 import { examples, exampleModule } from '../content/examples.mjs';
+import {guides} from '../content/guides.mjs';
+import {recipes} from '../content/recipes.mjs';
+import {packageContext} from './package-context.mjs';
 
-const site = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const workspace = path.resolve(site, '../..');
-const require = createRequire(path.join(workspace, 'package.json'));
-const ts = require('typescript');
-const pkgRoot = path.join(workspace, 'packages/mobile-design');
+const {site,packageRoot:pkgRoot,workspace,ts,options,evidence}=packageContext();
 const read = (file) => fs.readFileSync(path.join(pkgRoot, file), 'utf8');
 const compiled = ts.transpileModule(read('src/catalog.ts'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 const context = { exports: {} };
 vm.runInNewContext(compiled, context);
 const { mobileDesignCatalog: catalog, mobileDesignCatalogGroups: groups } = context.exports;
-const config = ts.readConfigFile(path.join(workspace, 'tsconfig.json'), ts.sys.readFile);
-const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, workspace);
-const program = ts.createProgram([path.join(pkgRoot, 'src/index.ts')], parsed.options);
+const program = ts.createProgram([path.join(pkgRoot, 'src/index.ts')], options);
 const checker = program.getTypeChecker();
 const index = program.getSourceFile(path.join(pkgRoot, 'src/index.ts'));
 const exports = checker.getExportsOfModule(checker.getSymbolAtLocation(index));
@@ -34,6 +29,15 @@ function apiFor(name) {
   const signature = type.getCallSignatures()[0];
   if (!signature?.parameters[0]) return [];
   const propsType = checker.getTypeOfSymbolAtLocation(signature.parameters[0], declaration);
+  const defaults={};
+  const parameters=declaration.parameters??[];
+  const binding=parameters[0]?.name;
+  if(binding&&ts.isObjectBindingPattern(binding))for(const element of binding.elements){
+    if(element.initializer)defaults[element.propertyName?.getText()??element.name.getText()]=element.initializer.getText().slice(0,100);
+  }
+  return propertyRows(propsType).map(prop=>({...prop,...(defaults[prop.name]!==undefined?{default:defaults[prop.name]}:{})}));
+}
+function propertyRows(propsType){
   return propsType.getProperties().flatMap((prop) => {
     const decl = prop.valueDeclaration ?? prop.declarations?.[0];
     if (!decl) return [];
@@ -41,9 +45,15 @@ function apiFor(name) {
     if (!local && !coreProperties.has(prop.name)) return [];
     const description = ts.displayPartsToString(prop.getDocumentationComment(checker));
     if (/^Internal\b/i.test(description) || ['iconOnly','iconSize','containerWidth','selectedRadius','disabledContentColor','disabledContainerOpacity','disabledOutlineOpacity'].includes(prop.name)) return [];
-    const typeText = checker.typeToString(checker.getTypeOfSymbolAtLocation(prop, decl), decl, ts.TypeFormatFlags.NoTruncation).replace(/import\("[^"]+"\)\./g, '');
+    const typeText = checker.typeToString(checker.getTypeOfSymbolAtLocation(prop, decl), decl, ts.TypeFormatFlags.NoTruncation).replace(/import\("[^"]+"\)\./g, '').replace(/____ColorValue_Internal/g,'ColorValue');
     return [{name: prop.name, type: typeText, required: !(prop.flags & ts.SymbolFlags.Optional), description: propertyDescriptions[prop.name] ?? description, inherited: !local}];
   }).sort((a,b) => Number(b.required)-Number(a.required) || Number(a.inherited)-Number(b.inherited) || a.name.localeCompare(b.name));
+}
+function relatedType(name){
+ const symbol=publicSymbols.get(name);const declaration=symbol?.declarations?.[0];
+ if(!declaration)return undefined;
+ const type=checker.getTypeAtLocation(declaration);
+ return {name,properties:propertyRows(type)};
 }
 const colorsContext = { module: { exports: {} }, exports: {} };
 vm.runInNewContext(read('src/generated/material-colors.js'), colorsContext);
@@ -61,10 +71,15 @@ const data = {
     dimensions: dimensions[entry.id] ?? [],
     example: exampleModule(examples[entry.id]),
     api: apiFor(aliases[entry.id] ?? entry.exports[0].split('.')[0]),
+    guide:guides[entry.id],
+    relatedTypes:guides[entry.id].types.map(relatedType).filter(Boolean),
+    recipes:(recipes[entry.id]??[]).map(recipe=>({id:recipe.id,title:recipe.title,description:recipe.description,code:exampleModule(recipe)})),
+    webSupport:{status:'pending',implementationPreserved:true},
   })),
   peers: packageJson.peerDependencies,
   colors: tokens,
   verification: { date: verified.date, automatic: verified.automatic.blocksPassed, families: verified.matrix.familiesPassed, nativeCases: verified.finalNativeCases.total, voiceOver: verified.voiceOver.passed, largeText: verified.largeSystemText.passed, limits: verified.limits },
+  platformSupport:{primary:'React Native con módulos Expo',web:{status:'pending',implementationPreserved:true},documentation:'Sitio web de documentación; no monta el renderer React Native'},
 };
 fs.writeFileSync(path.join(output, 'data.json'), JSON.stringify(data, null, 2)+'\n');
 const htmlPath=path.join(output,'index.html');
@@ -76,12 +91,14 @@ if(fs.existsSync(htmlPath)) {
 }
 fs.mkdirSync(path.join(output,'examples'),{recursive:true});
 for(const entry of data.components) fs.writeFileSync(path.join(output,'examples',entry.id+'.tsx'),entry.example);
-const evidence = '/Users/nicolas-rm/.codex/visualizations/2026/10/25/01a17166-a4bb-7730-8869-2bbaa46baf3d/mobile-design-ios-extended-2026-11-02';
-if(fs.existsSync(evidence)) {
+for(const entry of data.components) for(const recipe of entry.recipes)fs.writeFileSync(path.join(output,'examples',recipe.id+'.tsx'),recipe.code);
+if(evidence&&fs.existsSync(evidence)) {
   fs.mkdirSync(path.join(output,'native'),{recursive:true});
   for(const entry of catalog) {
     const source=path.join(evidence,entry.id+'-light.png');
     if(fs.existsSync(source)) fs.copyFileSync(source,path.join(output,'native',entry.id+'.png'));
+    const darkSource=path.join(evidence,entry.id+'-dark.png');
+    if(fs.existsSync(darkSource)) fs.copyFileSync(darkSource,path.join(output,'native',entry.id+'-dark.png'));
   }
 }
 for (const [source,target] of [['Roboto_400Regular.ttf','roboto-regular.ttf'],['Roboto_500Medium.ttf','roboto-medium.ttf'],['Roboto_700Bold.ttf','roboto-bold.ttf'],['OFL.txt','Roboto-OFL.txt']]) {

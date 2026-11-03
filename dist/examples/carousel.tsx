@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { Carousel } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   return <Carousel variant="multi-browse" height={240}
     accessibilityLabel="Destinos para explorar"

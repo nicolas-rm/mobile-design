@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { Tabs, TabsPager, Text } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [value, setValue] = useState('music');
   const [request, setRequest] = useState(0);

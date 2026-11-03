@@ -4,7 +4,8 @@ const iconButton=(name,label,action='command',extra='')=>`<button type="button" 
 const row=(html)=>`<div class="preview-row">${html}</div>`;
 const surface=(html)=>`<div class="preview-surface">${html}</div>`;
 const musicRows=()=>`<div class="demo-list">${[['Long Walk','L. R. Coleman'],['In the Dark','Sole R. Rey']].map(([title,artist])=>`<div class="demo-list-item"><button class="demo-list-item" style="padding:0;min-height:48px" data-demo="track-detail" data-title="${title}"><span class="album">${icon('music_note')}</span><span class="list-text"><strong>${title}</strong><small>${artist}</small></span></button>${iconButton('play_arrow',`Reproducir ${title}`,'track-play')}</div>`).join('')}</div>`;
-export function previewMarkup(id,{staticView=false}={}){
+export function illustrationMarkup(id){
+ const staticView=true;
  let content='';
  switch(id){
   case'app-bars':content=`<div class="mini-appbar">${iconButton('arrow_back','Volver') }<strong>Tu biblioteca</strong>${iconButton('search','Buscar','open-search')}${iconButton('more_vert','Más opciones','menu')}</div><div class="mini-appbar-content"><h3>Tu música</h3></div>`;break;
@@ -52,77 +53,6 @@ export function previewMarkup(id,{staticView=false}={}){
    .replace(/<input\b[^>]*type="range"[^>]*>/g,'<span class="static-slider"></span>')
    .replace(/<input\b[^>]*>/g,'<span class="static-field">Tu colección</span>')
    .replace(/\s(?:role|tabindex|id|aria-controls|aria-describedby)="[^"]*"/g,'');
- return `<div class="preview" data-component="${id}">${content}</div>`;
-}
-
-function chooseTab(button){
- const root=button.closest('.preview');
- root.querySelectorAll('[data-demo="tab"]').forEach(b=>{const active=b===button;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1});
- const panel=root.querySelector('.demo-tab-content');
- const messages=['Tu música, a tu ritmo.','Historias que te acompañan.','Lo que quieres volver a escuchar.'];
- panel.innerHTML=messages[Number(button.dataset.index)]+`<small>Toca una pestaña o desliza este contenido.</small>`;
- panel.setAttribute('aria-label',button.textContent.trim().replace(/^(music_note|audiotrack|bookmark)/,''));
-}
-export function handlePreviewClick(target,{toast,openDemo,closeDemo}){
- const el=target.closest('[data-demo]');if(!el)return false;
- const root=el.closest('.preview')??document;
- const name=el.dataset.demo;
- switch(name){
-  case'group':el.parentElement.querySelectorAll('button').forEach(b=>{const selected=b===el;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected))});break;
-  case'check':case'radio':case'switch':{
-   const selected=el.getAttribute('aria-checked')==='true';
-   if(name==='radio')el.parentElement.querySelectorAll('[role="radio"]').forEach(b=>b.setAttribute('aria-checked','false'));
-   el.setAttribute('aria-checked',String(name==='radio'||!selected));
-   if(name==='check')el.querySelector('.demo-check').innerHTML=selected?'':icon('check');break;
-  }
-  case'chip':{const selected=el.getAttribute('aria-pressed')==='true';el.setAttribute('aria-pressed',String(!selected));el.querySelector('.symbol')?.remove();if(!selected)el.insertAdjacentHTML('afterbegin',icon('check'));break;}
-  case'favorite':case'bookmark':case'tool':{const selected=el.getAttribute('aria-pressed')==='true';el.setAttribute('aria-pressed',String(!selected));el.classList.toggle('selected',!selected);if(name==='favorite')el.setAttribute('aria-label',selected?'Añadir a favoritos':'Quitar de favoritos');break;}
-  case'play':{const playing=el.dataset.playing==='true';el.dataset.playing=String(!playing);el.innerHTML=icon(playing?'play_arrow':'pause')+(playing?'Reproducir':'Pausar');break;}
-  case'save':{const saved=el.dataset.saved==='true';el.dataset.saved=String(!saved);el.innerHTML=icon(saved?'bookmark':'check')+(saved?'Guardar':'Guardado');el.setAttribute('aria-pressed',String(!saved));break;}
-  case'fab-expand':{const expanded=el.getAttribute('aria-expanded')==='true';el.setAttribute('aria-expanded',String(!expanded));el.setAttribute('aria-label',expanded?'Abrir menú Crear':'Cerrar menú Crear');el.innerHTML=icon(expanded?'add':'close');root.querySelector('.fab-menu-stack').hidden=expanded;break;}
-  case'tab':chooseTab(el);break;
-  case'nav':root.querySelectorAll('[data-demo="nav"]').forEach(b=>b.setAttribute('aria-selected',String(b===el)));root.querySelector('.demo-nav-content').textContent=el.getAttribute('aria-label')??el.textContent.trim().replace(/^(home|search|library_music)/,'');break;
-  case'date':root.querySelectorAll('[data-demo="date"]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));toast(`Fecha seleccionada: ${el.textContent} de noviembre`);break;
-  case'period':{const pm=el.textContent==='PM';el.textContent=pm?'AM':'PM';el.setAttribute('aria-label',`Cambiar periodo, actualmente ${pm?'AM':'PM'}`);break;}
-  case'clear-search':{const input=root.querySelector('[data-demo-input="search"]');input.value='';handlePreviewInput(input);input.focus();break;}
-  case'open-search':openDemo('Buscar en tu biblioteca',`<label class="demo-field"><span>Buscar música</span><input type="search" placeholder="Nombre de la canción" autofocus></label><p>Busca canciones, artistas o colecciones.</p>`);break;
-  case'new-note':openDemo('Nueva nota',`<label class="demo-field"><span>Título</span><input type="text" placeholder="Una buena idea" autofocus></label><div class="mini-dialog-actions">${button('Cancelar','close-modal','text')}${button('Guardar','saved-modal')}</div>`);break;
-  case'menu':openDemo('Opciones',`<div class="demo-menu" style="box-shadow:none">${[['edit','Editar'],['share','Compartir'],['bookmark','Guardar']].map(([n,l])=>`<button type="button" data-demo="menu-action">${icon(n)}${l}</button>`).join('')}</div>`);break;
-  case'menu-action':closeDemo();toast('Opción seleccionada');break;
-  case'sheet':openDemo('Tu colección',`<p>Información complementaria de la colección. Esta es una representación web; el ejemplo React Native utiliza el componente de hoja.</p><div class="mini-dialog-actions">${button('Cerrar','close-modal','text')}</div>`);break;
-  case'time':openDemo('Elegir hora',`<label>Hora<input id="web-time" type="time" value="15:45"></label><div class="mini-dialog-actions">${button('Cancelar','close-modal','text')}${button('Aceptar','time-confirm')}</div>`);break;
-  case'time-confirm':{const value=document.querySelector('#web-time').value;if(value){closeDemo();toast(`Hora confirmada: ${value}`)}break;}
-  case'track-detail':openDemo(el.dataset.title,`<p>Detalle de la canción. La región primaria navega y el botón de reproducción conserva su propia acción.</p><div class="mini-dialog-actions">${button('Volver','close-modal','text')}</div>`);break;
-  case'track-play':{const playing=el.dataset.playing==='true';el.dataset.playing=String(!playing);el.innerHTML=icon(playing?'play_arrow':'pause');el.setAttribute('aria-label',playing?'Reproducir canción':'Pausar canción');break;}
-  case'destination':openDemo(el.dataset.title,`<p>Destino seleccionado en la colección.</p><div class="mini-dialog-actions">${button('Cerrar','close-modal','text')}</div>`);break;
-  case'collection':openDemo('En buena compañía',`<p>Una colección para descubrir.</p>${musicRows()}<div class="mini-dialog-actions">${button('Cerrar','close-modal','text')}</div>`);break;
-  case'close-modal':closeDemo();break;
-  case'saved-modal':closeDemo();toast('Nota guardada en esta demostración');break;
-  case'cancel':toast('Acción cancelada');break;
-  case'delete':toast('Descarga eliminada en esta demostración');break;
-  case'undo':toast('Colección restaurada');break;
-  case'understood':toast('Puedes escuchar sin conexión después de descargar');break;
-  default:toast('Acción de la demostración ejecutada');
- }
- return true;
-}
-export function handlePreviewInput(el){
- const root=el.closest('.preview')??el.parentElement;
- switch(el.dataset.demoInput){
-  case'progress':root.querySelector('.progress-track').setAttribute('aria-valuenow',el.value);root.querySelector('.progress-track').style.setProperty('--value',el.value+'%');root.querySelector('.progress-ring').style.setProperty('--value',el.value+'%');root.querySelector('output').textContent=el.value+' %';break;
-  case'volume':root.querySelector('output').textContent=el.value+' %';break;
-  case'text':root.querySelector('output').textContent=el.value.length+'/40';break;
-  case'search':{const query=el.value.trim().toLocaleLowerCase();root.querySelector('[data-demo="clear-search"]').hidden=el.value.length===0;root.querySelector('.demo-search-results').textContent=!query?'Prueba con «Long Walk»':'long walk'.includes(query)?'1 resultado · Long Walk — L. R. Coleman':'Sin resultados en esta demostración';break;}
- }
-}
-export function handlePreviewKeyboard(event){
- const el=event.target;if(el.dataset.demo!=='tab')return false;
- const tabs=[...el.parentElement.querySelectorAll('[data-demo="tab"]')];
- let i=tabs.indexOf(el);if(event.key==='ArrowRight')i=(i+1)%tabs.length;else if(event.key==='ArrowLeft')i=(i+tabs.length-1)%tabs.length;else if(event.key==='Home')i=0;else if(event.key==='End')i=tabs.length-1;else return false;
- event.preventDefault();tabs[i].focus();chooseTab(tabs[i]);return true;
-}
-export function installPreviewGestures(){
-let swipeStart;
-document.addEventListener('pointerdown',event=>{if(event.target.closest('.demo-tab-content'))swipeStart={x:event.clientX,y:event.clientY,element:event.target.closest('.demo-tab-content')};else swipeStart=undefined});
-document.addEventListener('pointerup',event=>{if(!swipeStart)return;const delta=event.clientX-swipeStart.x;if(Math.abs(delta)>40&&Math.abs(delta)>Math.abs(event.clientY-swipeStart.y)){const tabs=[...swipeStart.element.closest('.preview').querySelectorAll('[data-demo="tab"]')];const active=tabs.findIndex(b=>b.getAttribute('aria-selected')==='true');chooseTab(tabs[Math.max(0,Math.min(tabs.length-1,active+(delta<0?1:-1)))]);}swipeStart=undefined;});
+ content=content.replace(/\sdata-demo(?:-input)?="[^"]*"/g, "");
+ return `<div class="preview" data-illustration="${id}">${content}</div>`;
 }

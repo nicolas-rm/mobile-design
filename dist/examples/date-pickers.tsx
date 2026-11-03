@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, DatePicker } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [visible, setVisible] = useState(false);
   const [date, setDate] = useState(new Date(2026, 10, 3));

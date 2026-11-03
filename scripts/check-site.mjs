@@ -3,7 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
-import {previewMarkup} from '../dist/previews.js';
+import {illustrationMarkup} from '../dist/illustrations.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const dist=path.join(root,'dist');
 const data=JSON.parse(fs.readFileSync(path.join(dist,'data.json'),'utf8'));
@@ -13,7 +13,7 @@ const embedded=html.match(/<script id="documentation-data" type="application\/js
 assert.ok(embedded,'Inline catalogue must be available before the module renders.');
 assert.deepEqual(JSON.parse(embedded[1]),data,'Inline and downloadable API data must stay identical.');
 assert.equal(new Set(data.components.map(c=>c.id)).size,36);
-const assets=['index.html','styles.css','app.js','previews.js','assets/material-symbols.ttf','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
+const assets=['index.html','styles.css','app.js','component-docs.js','illustrations.js','assets/material-symbols.ttf','assets/roboto-regular.ttf','assets/roboto-medium.ttf','assets/roboto-bold.ttf','assets/favicon.svg'];
 for(const file of assets)assert.ok(fs.statSync(path.join(dist,file)).size>0,file);
 for(const c of data.components){
  assert.ok(c.description&&c.guidance&&c.accessibility,c.id+' editorial');
@@ -21,11 +21,24 @@ for(const c of data.components){
  assert.ok(c.example.includes("from 'mobile-design'"),c.id+' import');
  assert.equal(fs.readFileSync(path.join(dist,'examples',c.id+'.tsx'),'utf8'),c.example);
  assert.ok(fs.existsSync(path.join(dist,'native',c.id+'.png')),c.id+' native capture');
+ assert.ok(fs.existsSync(path.join(dist,'native',c.id+'-dark.png')),c.id+' dark native capture');
  assert.ok(c.reference.startsWith('https://m3.material.io/components/'));
- const preview=previewMarkup(c.id,{staticView:true});
+ assert.ok(c.guide.integration.length>=2,c.id+' integration');
+ assert.ok(c.guide.behavior.length>=3,c.id+' behavior');
+ assert.ok(c.guide.accessibility.length>=2,c.id+' accessibility');
+ assert.equal(c.webSupport.status,'pending');
+ assert.equal(c.webSupport.implementationPreserved,true);
+ assert.equal(c.relatedTypes.length,c.guide.types.length,c.id+' related types');
+ for(const recipe of c.recipes)assert.equal(fs.readFileSync(path.join(dist,'examples',recipe.id+'.tsx'),'utf8'),recipe.code);
+ const preview=illustrationMarkup(c.id);
  assert.ok(!/<(?:button|input|a)\b/.test(preview),c.id+' static card must not nest interactive controls');
+ assert.ok(!/data-demo/.test(preview),c.id+' illustration must not act as a component runtime');
 }
-for(const file of ['app.js','previews.js'])assert.equal(spawnSync(process.execPath,['--check',path.join(dist,file)],{encoding:'utf8'}).status,0,file+' syntax');
+for(const file of ['app.js','component-docs.js','illustrations.js'])assert.equal(spawnSync(process.execPath,['--check',path.join(dist,file)],{encoding:'utf8'}).status,0,file+' syntax');
+const app=fs.readFileSync(path.join(dist,'app.js'),'utf8');
+assert.ok(!/handlePreview|demoPanel|reset-demo/.test(app),'Documentation must not mount HTML component imitations.');
+assert.ok(!html.includes('href="https://m3.material.io/components"'),'Navigation must stay inside the documentation.');
+assert.equal(data.platformSupport.web.status,'pending');
 assert.equal(data.colors.light.primary,'rgba(103, 80, 164, 1)');
 assert.equal(data.verification.nativeCases,65);
-console.log('PASS: 36 complete documentation entries, 36 native captures, 36 downloadable examples, API data, static-card semantics, palette and JavaScript syntax.');
+console.log(`PASS: 36 self-contained native documentation entries, 72 native captures, ${36+data.components.reduce((n,c)=>n+c.recipes.length,0)} downloadable examples, related types, web-pending status, decorative illustrations, palette and JavaScript syntax.`);

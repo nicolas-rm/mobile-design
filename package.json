@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {"node": ">=22"},
   "scripts": {
-    "start": "python3 -m http.server 4317 --bind 127.0.0.1 --directory dist",
+    "start": "node scripts/serve.mjs",
     "sync": "node scripts/sync-package.mjs",
     "check:examples": "node scripts/check-examples.mjs",
-    "check": "node scripts/check-site.mjs"
+    "check": "node scripts/check-site.mjs",
+    "test": "npm run check"
   }
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavigationRail } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [value, setValue] = useState('home');
   return <NavigationRail expanded value={value} onValueChange={setValue}

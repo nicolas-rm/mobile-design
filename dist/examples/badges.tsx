@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { BadgedBox, IconButton } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   return <BadgedBox badge={8}>
     <IconButton icon="email-outline" accessibilityLabel="Correo, 8 mensajes nuevos"

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavigationBar } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [value, setValue] = useState('home');
   return <NavigationBar value={value} onValueChange={setValue}

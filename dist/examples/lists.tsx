@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { List, IconButton } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   return <List.Item title="Long Walk" description="L. R. Coleman" lines={2}
     onPress={() => Alert.alert('Detalle de la canción')}

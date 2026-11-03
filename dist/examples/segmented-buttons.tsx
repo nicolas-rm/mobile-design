@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SegmentedButtons } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [value, setValue] = useState('walk');
   return <SegmentedButtons value={value} onValueChange={setValue}

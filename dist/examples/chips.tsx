@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Chip } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [selected, setSelected] = useState(false);
   return <Chip variant="filter" selected={selected}

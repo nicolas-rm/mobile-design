@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { SplitButton } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   return <SplitButton label="Enviar" icon="send-outline"
     onPress={() => Alert.alert('Mensaje enviado')}

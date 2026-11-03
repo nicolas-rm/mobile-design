@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, TimePicker } from 'mobile-design';
 
-// Render inside MobileDesignProvider. Sheets also require GestureHandlerRootView.
+// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
   const [visible, setVisible] = useState(false);
   const [time, setTime] = useState({ hours: 15, minutes: 45 });
