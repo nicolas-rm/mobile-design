@@ -9,8 +9,8 @@ const page=(title,intro,sections,art)=>({title,intro,sections,art});
 
 export const areas=[
  ['home','home','Inicio'],['start','apps','Comenzar'],['develop','code','Desarrollo'],
- ['foundations','description','Fundamentos'],['styles','palette','Estilos'],
- ['components','widgets','Componentes'],['resources','menu_book','Recursos']
+ ['foundations','book','Fundamentos'],['styles','palette','Estilos'],
+ ['components','add_circle','Componentes'],['resources','menu_book','Recursos']
 ];
 
 export const guides={
@@ -118,16 +118,27 @@ export const styleTopics=styleCopy;
 export const guideNavigation={
  start:[['start','Descripción general']],
  develop:[['develop','Descripción general'],['develop/installation','Instalación y proveedor'],['develop/state','Estado y acciones'],['develop/composition','Composición y navegación'],['support','Plataformas y soporte']],
- foundations:[['foundations','Descripción general'],['foundations/accessibility','Accesibilidad'],['foundations/content','Diseño de contenido'],['foundations/tokens','Tokens de diseño'],['foundations/interaction','Interacción y estados'],['foundations/layout','Diseño adaptable'],['foundations/customization','Personalización']],
+ foundations:[['foundations','Descripción general'],['foundations/accessibility','Accesibilidad'],['foundations/content','Diseño de contenido'],['foundations/interaction','Interacción y estados'],['foundations/layout','Diseño adaptable'],['foundations/tokens','Tokens de diseño'],['foundations/customization','Personalización']],
  styles:[['styles','Descripción general'],['styles/color','Color'],['styles/elevation','Elevación'],['styles/icons','Iconos'],['styles/motion','Movimiento'],['styles/shape','Forma'],['styles/spacing','Espaciado'],['styles/typography','Tipografía']],
  resources:[['resources','Descripción general'],['verification','Verificación'],['support','Plataformas y soporte'],['resources/licenses','Licencias y atribuciones']]
 };
+export const foundationGroups=[
+ ['foundation-interface','Diseño de interfaz',['foundations/content','foundations/interaction','foundations/layout']],
+ ['foundation-system','Sistema de diseño',['foundations/tokens','foundations/customization']],
+];
 
 export function art(kind='shape'){
- return `<div class="editorial-art art-${kind}" aria-hidden="true"><i></i><i></i><i></i><i></i><span>${icon(({code:'code',accessibility:'accessibility',icons:'search',type:'title',verification:'check',interaction:'touch_app',layout:'view_agenda',elevation:'layers',system:'widgets',foundation:'description',color:'palette',shape:'star'})[kind]??'star')}</span></div>`;
+ return `<div class="editorial-art art-${kind}" aria-hidden="true"><i></i><i></i><i></i><i></i><span>${kind==='type'?'<span class="type-letter">Aa</span>':icon(({code:'code',accessibility:'accessibility',icons:'search',type:'title',verification:'check',interaction:'touch_app',layout:'view_agenda',elevation:'layers',system:'widgets',foundation:'description',color:'palette',shape:'star'})[kind]??'star')}</span></div>`;
 }
 function card(href,title,description,kind){return `<a class="editorial-card" href="${href}">${art(kind)}<div><h3>${title}</h3><p>${description}</p>${icon('arrow_forward')}</div></a>`;}
-export function guideMarkup(entry){return `<header class="page-heading guide-heading"><h1>${entry.title}</h1><p class="intro">${entry.intro}</p></header>${entry.art?`<div class="guide-banner">${art(entry.art)}</div>`:''}<div class="detail-layout guide-document"><article>${entry.sections.map(({id,title,html})=>`<section class="doc-section" id="${id}"><h2>${title}</h2>${html}</section>`).join('')}</article><aside class="toc" aria-label="En esta página"><p>En esta página</p>${entry.sections.map(({id,title})=>`<a href="#${id}" data-scroll-to="${id}">${title}</a>`).join('')}</aside></div>`;}
+export function articleIndex(title, sections = []){
+ return `<aside class="toc" aria-label="En esta página"><p>En esta página</p><div class="toc-title" data-text-variant="titleLarge">${title}</div><div class="toc-links">${sections.map(([id,label])=>`<a href="#${id}" data-scroll-to="${id}">${label}</a>`).join('')}</div></aside>`;
+}
+export function articlePager(previous, next){
+ const card=(entry, direction)=>entry?`<a href="#/${entry[0]}" rel="${direction}"><span class="pager-label" data-text-variant="titleMedium">${direction==='prev'?icon('arrow_back')+'Anterior':'Siguiente'+icon('arrow_forward')}</span><span class="pager-title" data-text-variant="headlineSmall">${entry[1]}</span></a>`:'';
+ return previous||next?`<nav class="next-prev" aria-label="Navegación entre páginas">${card(previous,'prev')}${card(next,'next')}</nav>`:'';
+}
+export function guideMarkup(entry){return `<div class="guide-hero"><header class="page-heading guide-heading"><h1>${entry.title}</h1><p class="intro">${entry.intro}</p></header>${entry.art?`<div class="guide-banner">${art(entry.art)}</div>`:''}</div><div class="detail-layout guide-document">${articleIndex(entry.title,entry.sections.map(({id,title})=>[id,title]))}<article>${entry.sections.map(({id,title,html})=>`<section class="doc-section" id="${id}"><h2>${title}</h2>${html}</section>`).join('')}</article></div>`;}
 
 export function homeMarkup(data){
  const expressive=['toolbars','split-button','progress-indicators','button-groups'];
@@ -140,4 +151,6 @@ export function homeMarkup(data){
  <section class="home-section" id="next-steps"><h2>Próximos pasos</h2><div class="next-steps-grid"><a href="#/start"><span>01</span><h3>Conoce el sistema</h3><p>Entiende cómo se organiza Mobile Design.</p>${icon('arrow_forward')}</a><a href="#/components"><span>02</span><h3>Encuentra tu componente</h3><p>Consulta uso, medidas, API y accesibilidad.</p>${icon('arrow_forward')}</a><a href="#/verification"><span>03</span><h3>Revisa la evidencia</h3><p>Conoce las pruebas y su alcance por plataforma.</p>${icon('arrow_forward')}</a></div></section>`;
 }
 
-export function footerMarkup(){return `<div class="footer-top"><div class="footer-about"><a class="footer-brand" href="#/home">Mobile Design<span class="brand-dot"></span></a><p>Componentes, fundamentos y herramientas para construir interfaces con React Native. Una implementación independiente basada en el lenguaje de Material Design 3.</p></div><nav aria-label="Fundamentos y estilos"><h2>Diseñar</h2><a href="#/foundations">Fundamentos</a><a href="#/styles">Estilos</a><a href="#/foundations/accessibility">Accesibilidad</a><a href="#/components">Componentes</a></nav><nav aria-label="Desarrollo"><h2>Desarrollar</h2><a href="#/develop/installation">Instalación</a><a href="#/develop/state">Estado y acciones</a><a href="#/develop/composition">Composición</a><a href="#/support">Plataformas</a></nav><nav aria-label="Recursos del proyecto"><h2>Proyecto</h2><a href="#/verification">Verificación</a><a href="https://github.com/nicolas-rm/mobile-design" target="_blank" rel="noopener noreferrer">GitHub ${icon('open_in_new')}</a><a href="#/resources/licenses">Licencias</a></nav></div><div class="footer-bottom"><span>Mobile Design · React Native</span><a href="#/resources/licenses">Atribuciones y fuentes</a><span>Proyecto independiente de Google</span></div>`;}
+export function brandLogo(){return '<img class="brand-logo" src="./assets/favicon.svg?v=a3e2f1c86bfe" width="24" height="24" alt="">';}
+
+export function footerMarkup(){return `<div class="footer-top"><div class="footer-about"><a class="footer-brand" href="#/home">${brandLogo()}Mobile Design</a><p>Componentes, fundamentos y herramientas para construir interfaces con React Native. Una implementación independiente basada en el lenguaje de Material Design 3.</p></div><nav aria-label="Fundamentos y estilos"><h2>Diseñar</h2><a href="#/foundations">Fundamentos</a><a href="#/styles">Estilos</a><a href="#/foundations/accessibility">Accesibilidad</a><a href="#/components">Componentes</a></nav><nav aria-label="Desarrollo"><h2>Desarrollar</h2><a href="#/develop/installation">Instalación</a><a href="#/develop/state">Estado y acciones</a><a href="#/develop/composition">Composición</a><a href="#/support">Plataformas</a></nav><nav aria-label="Recursos del proyecto"><h2>Proyecto</h2><a href="#/verification">Verificación</a><a href="https://github.com/nicolas-rm/mobile-design" target="_blank" rel="noopener noreferrer">GitHub ${icon('open_in_new')}</a><a href="#/resources/licenses">Licencias</a></nav></div><div class="footer-bottom"><span>Mobile Design · React Native</span><a href="#/resources/licenses">Atribuciones y fuentes</a><span>Proyecto independiente de Google</span></div>`;}

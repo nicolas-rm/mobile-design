@@ -1,27 +1,38 @@
 {
-  "name": "mobile-design-documentation",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "engines": {
-    "node": ">=22"
-  },
-  "scripts": {
-    "assets": "node scripts/stamp-assets.mjs",
-    "build:web": "node scripts/build-web.mjs",
-    "start": "node scripts/serve.mjs",
-    "sync": "node scripts/sync-package.mjs",
-    "check:examples": "node scripts/check-examples.mjs",
-    "check": "node scripts/check-site.mjs",
-    "test": "npm run check",
-    "test:web": "node scripts/check-web.mjs && node scripts/check-extended-fab-web.mjs && node scripts/check-fab-menu-web.mjs && node scripts/check-page-controls.mjs && node scripts/check-fab-icon-web.mjs && node scripts/check-segmented-split-cards-web.mjs",
-    "test:web:extended-fab": "node scripts/check-extended-fab-web.mjs",
-    "test:web:fab-menu": "node scripts/check-fab-menu-web.mjs",
-    "test:web:page-controls": "node scripts/check-page-controls.mjs",
-    "test:web:fab-icon": "node scripts/check-fab-icon-web.mjs",
-    "test:web:segmented-split-cards": "node scripts/check-segmented-split-cards-web.mjs"
-  },
-  "devDependencies": {
-    "playwright-core": "1.64.1"
-  }
+    "name": "mobile-design-documentation",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "assets": "node scripts/stamp-assets.mjs",
+        "build:web": "node scripts/build-web.mjs",
+        "start": "node scripts/serve.mjs",
+        "sync": "node scripts/sync-package.mjs",
+        "check:examples": "node scripts/check-examples.mjs",
+        "check": "node scripts/check-site.mjs",
+        "test": "npm run check",
+        "test:web": "node scripts/check-web-choices.mjs && node scripts/check-web.mjs && node scripts/check-extended-fab-web.mjs && node scripts/check-fab-menu-web.mjs && node scripts/check-page-controls.mjs && node scripts/check-fab-icon-web.mjs && node scripts/check-segmented-split-cards-web.mjs && node scripts/check-visible-states-web.mjs && node scripts/check-segmented-motion-web.mjs && node scripts/check-typography-web.mjs && node scripts/check-action-motion-web.mjs && node scripts/check-page-typography.mjs && node scripts/check-button-groups-web.mjs && node scripts/check-appbar-badges-web.mjs && node scripts/check-remaining-web.mjs && node scripts/check-remaining-touch-web.mjs",
+        "test:web:extended-fab": "node scripts/check-extended-fab-web.mjs",
+        "test:web:fab-menu": "node scripts/check-fab-menu-web.mjs",
+        "test:web:page-controls": "node scripts/check-page-controls.mjs",
+        "test:web:fab-icon": "node scripts/check-fab-icon-web.mjs",
+        "test:web:segmented-split-cards": "node scripts/check-segmented-split-cards-web.mjs",
+        "test:web:visible-states": "node scripts/check-visible-states-web.mjs",
+        "test:web:segmented-motion": "node scripts/check-segmented-motion-web.mjs",
+        "test:web:typography": "node scripts/check-typography-web.mjs",
+        "test:web:action-motion": "node scripts/check-action-motion-web.mjs",
+        "test:web:page-typography": "node scripts/check-page-typography.mjs",
+        "test:web:appbar-badges": "node scripts/check-appbar-badges-web.mjs",
+        "test:web:button-groups": "node scripts/check-button-groups-web.mjs",
+        "sync:showcases": "node scripts/sync-showcases.mjs",
+        "test:web:remaining": "node scripts/check-remaining-web.mjs && node scripts/check-remaining-touch-web.mjs",
+        "test:web:remaining-touch": "node scripts/check-remaining-touch-web.mjs",
+        "test:web:choices": "node scripts/check-web-choices.mjs"
+    },
+    "devDependencies": {
+        "playwright-core": "1.64.1"
+    }
 }

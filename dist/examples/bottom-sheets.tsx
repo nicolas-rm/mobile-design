@@ -7,7 +7,7 @@ export default function Example() {
   return <>
     <Button onPress={() => setOpen(true)}>Ver detalles</Button>
     <BottomSheet open={open} onOpenChange={setOpen} variant="modal"
-      snapPoints={['50%', '85%']} accessibilityLabel="Detalles de la colección">
+      scrollable snapPoints={['50%', '85%']} accessibilityLabel="Detalles de la colección">
       <BottomSheetScrollView contentContainerStyle={{ padding: 24 }}>
         <Text variant="headlineSmall">Tu colección</Text>
         <Text>Información adicional de la colección guardada.</Text>

@@ -1,0 +1,69 @@
+{
+    "retrievedAt": "2026-10-26",
+    "carbonVersion": "2026-10-13_06-10-19",
+    "components": {
+        "button-groups": {
+            "source": "https://m3.material.io/components/button-groups",
+            "updatedTimestamp": "2026-09-16T18:25:16.117Z",
+            "mediaCount": 39,
+            "visibleMediaReviewedAt": "2026-11-02"
+        },
+        "badges": {
+            "source": "https://m3.material.io/components/badges",
+            "updatedTimestamp": "2026-07-17T06:58:42.753Z",
+            "mediaCount": 32
+        }
+    },
+    "assets": [
+        {
+            "file": "photo.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fm0diaau3-same%20shapes.png?alt=media",
+            "section": "Guidelines",
+            "chunkId": "2e25ab39-1fba-4f30-b6ee-56316b476c78",
+            "frameTimeSeconds": null,
+            "dimensions": [656, 600],
+            "sha256": "cc02bc5b2c994fbc7ea5c60e3d29bb1ddace1ef9feed3ed0e7814e639f4309f6",
+            "bytes": 251727
+        },
+        {
+            "file": "music-frame.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fma2pii3g-Gm3_Expressive_Button-groups_Guidelines_13_IA_v01.mp4?alt=media",
+            "section": "Guidelines",
+            "chunkId": "dcaeb179-7b52-4cd9-af1c-efda1d69de3c",
+            "frameTimeSeconds": 1,
+            "dimensions": [1352, 960],
+            "sha256": "738d7b0f142168611e4e877b98ffd968074fef1a2241f5207de62faa44d40d44",
+            "bytes": 283724
+        },
+        {
+            "file": "call-frame.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fma2pjcic-GM3_Expressive_Button-Groups_Guidelines_14_IA_v01.mp4?alt=media",
+            "section": "Guidelines",
+            "chunkId": "4590c876-5cf4-4337-ae2f-1a34096fe3c3",
+            "frameTimeSeconds": 1,
+            "dimensions": [1352, 600],
+            "sha256": "d2e35db4f6dc2c63ab45412c2fba77c6dd57e7086153e86b35cc2626c029fc12",
+            "bytes": 558007
+        },
+        {
+            "file": "collection.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fme8kxkle-17_caution.png?alt=media",
+            "section": "Guidelines",
+            "chunkId": "e3421a0f-4c5e-4635-a549-9318ca12274b",
+            "frameTimeSeconds": null,
+            "dimensions": [1004, 600],
+            "sha256": "e51ba43f8151a79a767b03404bb66a7f8a66802b3257842ef9de4d0dec209408",
+            "bytes": 180515
+        },
+        {
+            "file": "dinner-club.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fm0dh20ef-label.png?alt=media",
+            "section": "Accessibility",
+            "chunkId": "014bb83b-ac84-4d63-82ed-995ab7b39eda",
+            "frameTimeSeconds": null,
+            "dimensions": [1352, 600],
+            "sha256": "47bbffd8770082f7695f2ea0222b929682303684a3f5053a863aa16e22afe3eb",
+            "bytes": 58231
+        }
+    ]
+}

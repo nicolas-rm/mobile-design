@@ -1,34 +1,139 @@
-import {useCallback,useState} from 'react';
-import {View} from 'react-native';
-import {FAB,MaterialSymbol,MobileDesignProvider,Tooltip,type FABProps,type FABSize,type FABVariant} from 'mobile-design';
-import {RuntimeBridge,useRuntimeEnvironment} from './environment';
-import {FABUsage} from './extended-fab';
+import { SelectField } from './select-field';
+import { Prose, RuntimeTextRoot } from './prose';
+import { useCallback, useState } from 'react';
+import { View } from 'react-native';
+import { FAB, MaterialSymbol, MobileDesignProvider, Tooltip, type FABProps, type FABSize, type FABVariant } from 'mobile-design';
+import { RuntimeBridge, useRuntimeEnvironment } from './environment';
+import { FABUsage } from './extended-fab';
 
-const variants:FABVariant[]=['tonalPrimary','tonalSecondary','tonalTertiary','primary','secondary','tertiary'];
-const names=['Primary container','Secondary container','Tertiary container','Primary','Secondary','Tertiary'];
-const sizes:FABSize[]=['default','medium','large'];
-export function FABsRuntime(){
- const environment=useRuntimeEnvironment();
- const [size,setSize]=useState<FABSize>('medium'),[variant,setVariant]=useState<FABVariant>('tonalPrimary');
- const [visible,setVisible]=useState(true),[symbol,setSymbol]=useState('edit'),[direction,setDirection]=useState<'ltr'|'rtl'>('ltr');
- const [motion,setMotion]=useState<'standard'|'expressive'>('expressive'),[count,setCount]=useState(0);
- const icon: FABProps['icon']=useCallback(({size,color}:{size:number;color:string})=><MaterialSymbol name={symbol} size={size} color={color} filled/>,[symbol]);
- const code=`<FAB\n  size="${size}"\n  variant="${variant}"\n  icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name="${symbol}" filled />}\n  visible={${visible}}\n  accessibilityLabel="Crear contenido"\n  onPress={handleCreate}\n/>`;
- return <MobileDesignProvider colorScheme={environment.colorScheme} direction={direction} motion={motion} reduceMotion={environment.reduced?'on':'auto'}>
-  <main aria-label="Ejemplo interactivo de FABs">
-   <div className="playground-controls" aria-label="Configurar FAB">
-    <label>Tamaño<select id="fab-size" value={size} onChange={e=>setSize(e.target.value as FABSize)}>{sizes.map((s,i)=><option key={s} value={s}>{['FAB · 56','Medium · 80','Large · 96'][i]}</option>)}</select></label>
-    <label>Color<select id="fab-variant" value={variant} onChange={e=>setVariant(e.target.value as FABVariant)}>{variants.map((v,i)=><option key={v} value={v}>{names[i]}</option>)}</select></label>
-    <label>Icono<select id="fab-symbol" value={symbol} onChange={e=>setSymbol(e.target.value)}>{['edit','add','share','favorite'].map(name=><option key={name} value={name}>{name}</option>)}</select></label>
-    <label>Dirección<select id="fab-direction" value={direction} onChange={e=>setDirection(e.target.value as typeof direction)}><option value="ltr">Izquierda a derecha</option><option value="rtl">Derecha a izquierda</option></select></label>
-    <label>Movimiento<select id="fab-motion" value={motion} onChange={e=>setMotion(e.target.value as typeof motion)}><option value="expressive">Expressive</option><option value="standard">Standard</option></select></label>
-    <div className="state-options"><label><input id="fab-visible" type="checkbox" checked={visible} onChange={e=>setVisible(e.target.checked)}/>Visible</label></div>
-   </div>
-   <div className="button-stage" dir={direction}><View><Tooltip title="Crear contenido"><FAB size={size} variant={variant} icon={icon} visible={visible} accessibilityLabel="Crear contenido" onPress={()=>setCount(v=>v+1)} testID="example-fab"/></Tooltip></View></div>
-   <div className="example-result" role="status"><span>Una acción principal; se oculta cuando deja de estar disponible.</span><span><span id="fab-activation-count">{count}</span> acciones</span></div>
-   <section className="example-code"><h2>Código de la configuración</h2><pre tabIndex={0}><code>{code}</code></pre></section>
-   <section className="sizes-section"><h2>Los tres tamaños</h2><div className="variant-examples">{sizes.map((s,i)=><div className="labeled-example" key={s}><FAB size={s} icon={icon} accessibilityLabel={'Crear con tamaño '+s} onPress={()=>setCount(v=>v+1)}/><span>{['FAB · 56','Medium · 80','Large · 96'][i]}</span></div>)}</div></section>
-   <FABUsage direction={direction} extended={false}/>
-  </main><RuntimeBridge/>
- </MobileDesignProvider>;
+const variants: FABVariant[] = ['tonalPrimary', 'tonalSecondary', 'tonalTertiary', 'primary', 'secondary', 'tertiary'];
+const names = ['Primary container', 'Secondary container', 'Tertiary container', 'Primary', 'Secondary', 'Tertiary'];
+const sizes: FABSize[] = ['default', 'medium', 'large'];
+const sizeLabels: Record<FABSize, string> = { default: 'FAB · 56', medium: 'Medium · 80', large: 'Large · 96' };
+export function FABsRuntime() {
+    const environment = useRuntimeEnvironment();
+    const [size, setSize] = useState<FABSize>('medium'),
+        [variant, setVariant] = useState<FABVariant>('tonalPrimary');
+    const [visible, setVisible] = useState(true),
+        [symbol, setSymbol] = useState('edit'),
+        [direction, setDirection] = useState<'ltr' | 'rtl'>('ltr');
+    const [motion, setMotion] = useState<'standard' | 'expressive'>('expressive'),
+        [count, setCount] = useState(0);
+    const icon: FABProps['icon'] = useCallback(
+        ({ size, color }: { size: number; color: string }) => <MaterialSymbol name={symbol} size={size} color={color} filled />,
+        [symbol]
+    );
+    const code = `<FAB\n  size="${size}"\n  variant="${variant}"\n  icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name="${symbol}" filled />}\n  visible={${visible}}\n  accessibilityLabel="Crear contenido"\n  onPress={handleCreate}\n/>`;
+    return (
+        <MobileDesignProvider
+            colorScheme={environment.colorScheme}
+            direction={direction}
+            motion={motion}
+            reduceMotion={environment.reduced ? 'on' : 'auto'}
+        >
+            <RuntimeTextRoot>
+                <main aria-label="Ejemplo interactivo de FABs">
+                    <Prose as="div" className="playground-controls" aria-label="Configurar FAB">
+                        <SelectField
+                            label="Tamaño"
+                            id="fab-size"
+                            value={size}
+                            onValueChange={(nextValue) => setSize(nextValue as FABSize)}
+                            options={sizes.map((value) => ({ value, label: sizeLabels[value] }))}
+                        />
+                        <SelectField
+                            label="Color"
+                            id="fab-variant"
+                            value={variant}
+                            onValueChange={(nextValue) => setVariant(nextValue as FABVariant)}
+                            options={variants.map((v, i) => ({ value: v, label: names[i] }))}
+                        />
+                        <SelectField
+                            label="Icono"
+                            id="fab-symbol"
+                            value={symbol}
+                            onValueChange={(nextValue) => setSymbol(nextValue)}
+                            options={['edit', 'add', 'share', 'favorite'].map((name) => ({ value: name, label: name }))}
+                        />
+                        <SelectField
+                            label="Dirección"
+                            id="fab-direction"
+                            value={direction}
+                            onValueChange={(nextValue) => setDirection(nextValue as typeof direction)}
+                            options={[
+                                { value: 'ltr', label: 'Izquierda a derecha' },
+                                { value: 'rtl', label: 'Derecha a izquierda' },
+                            ]}
+                        />
+                        <SelectField
+                            label="Movimiento"
+                            id="fab-motion"
+                            value={motion}
+                            onValueChange={(nextValue) => setMotion(nextValue as typeof motion)}
+                            options={[
+                                { value: 'expressive', label: 'Expressive' },
+                                { value: 'standard', label: 'Standard' },
+                            ]}
+                        />
+                        <Prose as="div" className="state-options">
+                            <Prose as="label">
+                                <input id="fab-visible" type="checkbox" checked={visible} onChange={(e) => setVisible(e.target.checked)} />
+                                Visible
+                            </Prose>
+                        </Prose>
+                    </Prose>
+                    <Prose as="div" className="button-stage" dir={direction}>
+                        <View>
+                            <Tooltip title="Crear contenido">
+                                <FAB
+                                    size={size}
+                                    variant={variant}
+                                    icon={icon}
+                                    visible={visible}
+                                    accessibilityLabel="Crear contenido"
+                                    onPress={() => setCount((v) => v + 1)}
+                                    testID="example-fab"
+                                />
+                            </Tooltip>
+                        </View>
+                    </Prose>
+                    <Prose as="div" className="example-result" role="status">
+                        <Prose as="span">Una acción principal; se oculta cuando deja de estar disponible.</Prose>
+                        <Prose as="span">
+                            <Prose as="span" id="fab-activation-count">
+                                {count}
+                            </Prose>{' '}
+                            acciones
+                        </Prose>
+                    </Prose>
+                    <section className="example-code">
+                        <Prose as="h2">Código de la configuración</Prose>
+                        <pre tabIndex={0}>
+                            <code>{code}</code>
+                        </pre>
+                    </section>
+                    <section className="sizes-section">
+                        <Prose as="h2">Los tres tamaños</Prose>
+                        <Prose as="div" className="variant-examples">
+                            {sizes.map((size) => (
+                                <Prose as="div" className="labeled-example" key={size}>
+                                    <Tooltip title="Crear contenido">
+                                        <FAB
+                                            size={size}
+                                            icon={icon}
+                                            accessibilityLabel={`Crear contenido · ${sizeLabels[size]}`}
+                                            onPress={() => setCount((value) => value + 1)}
+                                        />
+                                    </Tooltip>
+                                    <Prose as="span">{sizeLabels[size]}</Prose>
+                                </Prose>
+                            ))}
+                        </Prose>
+                    </section>
+                    <FABUsage direction={direction} extended={false} />
+                </main>
+                <RuntimeBridge />
+            </RuntimeTextRoot>
+        </MobileDesignProvider>
+    );
 }

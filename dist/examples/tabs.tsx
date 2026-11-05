@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import { Tabs, TabsPager, Text } from 'mobile-design';
 
 // Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.

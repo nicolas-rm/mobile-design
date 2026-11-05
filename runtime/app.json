@@ -1,8 +1,8 @@
 {
-  "expo": {
-    "name": "Mobile Design",
-    "slug": "mobile-design-documentation-runtime",
-    "web": {"bundler": "metro", "output": "single"},
-    "experiments": {"baseUrl": "/runtime/components"}
-  }
+    "expo": {
+        "name": "Mobile Design",
+        "slug": "mobile-design-documentation-runtime",
+        "web": { "bundler": "metro", "output": "single" },
+        "experiments": { "baseUrl": "/runtime/components" }
+    }
 }

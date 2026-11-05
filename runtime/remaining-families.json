@@ -1,0 +1,221 @@
+{
+    "carousel": {
+        "title": "Carousel",
+        "component": "Carousel",
+        "pair": 1,
+        "variants": ["multi-browse", "hero", "center-aligned-hero", "uncontained", "uncontained-multi-aspect", "full-screen"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "checkbox": {
+        "title": "Checkbox",
+        "component": "Checkbox",
+        "pair": 1,
+        "variants": [],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "chips": {
+        "title": "Chips",
+        "component": "Chip",
+        "pair": 2,
+        "variants": ["assist", "filter", "input", "suggestion"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "date-pickers": {
+        "title": "Date pickers",
+        "component": "DatePicker",
+        "pair": 2,
+        "variants": ["docked", "modal date picker", "modal date input"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "time-pickers": {
+        "title": "Time pickers",
+        "component": "TimePicker",
+        "pair": 3,
+        "variants": ["dial", "input"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "dialogs": {
+        "title": "Dialogs",
+        "component": "Dialog",
+        "pair": 3,
+        "variants": ["basic", "full-screen"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "divider": {
+        "title": "Divider",
+        "component": "Divider",
+        "pair": 4,
+        "variants": [],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "lists": {
+        "title": "Lists",
+        "component": "List",
+        "pair": 4,
+        "variants": ["standard", "segmented"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["party", "Party planning · selección múltiple"],
+            ["colors", "Color selection · muestras"],
+            ["contacts", "Contacts · avatares"],
+            ["topics", "Topics · iconos y navegación"],
+            ["tickets", "Concert tickets · fecha"],
+            ["cart", "Cart · imágenes y precios"],
+            ["music-actions", "Music · acciones independientes"],
+            ["reorder", "My top favorites · reordenar"],
+            ["inbox", "Inbox · una o dos columnas"],
+            ["cities", "Cities · divisores"],
+            ["photos-detail", "Photos · lista y detalle"],
+            ["photos-columns", "Photos · columnas"],
+            ["photos-images", "Photos · imágenes adaptables"],
+            ["photos-cards", "Photos · tarjetas adaptables"],
+            ["photos-carousel", "Photos · carrusel adaptable"],
+            ["podcasts", "Trending now · texto adaptable"],
+            ["timeline", "Space · información estática"],
+            ["tasks", "Tasks · expansión y contracción"],
+            ["recipes", "Recipes · deslizar y alternativas"],
+            ["mailbox", "Inbox interactiva · virtualización"]
+        ]
+    },
+    "loading-indicator": {
+        "title": "Loading indicator",
+        "component": "LoadingIndicator",
+        "pair": 5,
+        "variants": ["loading indicator"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["loading", "Carga y pull-to-refresh"]
+        ]
+    },
+    "progress-indicators": {
+        "title": "Progress indicators",
+        "component": "ProgressIndicator",
+        "pair": 5,
+        "variants": ["linear", "circular"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["progress", "Progreso y tareas"]
+        ]
+    },
+    "menus": {
+        "title": "Menus",
+        "component": "Menu",
+        "pair": 6,
+        "variants": ["vertical menu"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "navigation-bar": {
+        "title": "Navigation bar",
+        "component": "NavigationBar",
+        "pair": 6,
+        "variants": ["flexible navigation bar"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["mail", "Bandeja de correo adaptable"]
+        ]
+    },
+    "navigation-drawer": {
+        "title": "Navigation drawer",
+        "component": "NavigationDrawer",
+        "pair": 7,
+        "variants": ["standard", "modal"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["mail", "Bandeja de correo adaptable"]
+        ]
+    },
+    "navigation-rail": {
+        "title": "Navigation rail",
+        "component": "NavigationRail",
+        "pair": 7,
+        "variants": ["collapsed", "expanded"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["mail", "Bandeja de correo adaptable"]
+        ]
+    },
+    "radio-button": {
+        "title": "Radio button",
+        "component": "RadioButton",
+        "pair": 8,
+        "variants": [],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "search": {
+        "title": "Search",
+        "component": "Searchbar",
+        "pair": 8,
+        "variants": ["search bar", "search view"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "bottom-sheets": {
+        "title": "Bottom sheets",
+        "component": "BottomSheet",
+        "pair": 9,
+        "variants": ["standard", "modal"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "side-sheets": {
+        "title": "Side sheets",
+        "component": "SideSheet",
+        "pair": 9,
+        "variants": ["standard", "modal"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "sliders": {
+        "title": "Sliders",
+        "component": "Slider",
+        "pair": 10,
+        "variants": ["standard", "centered", "range"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "snackbar": {
+        "title": "Snackbar",
+        "component": "Snackbar",
+        "pair": 10,
+        "variants": [],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "switch": {
+        "title": "Switch",
+        "component": "Switch",
+        "pair": 11,
+        "variants": [],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "tabs": {
+        "title": "Tabs",
+        "component": "Tabs",
+        "pair": 11,
+        "variants": ["primary", "secondary"],
+        "scenarios": [
+            ["gallery", "Galería completa"],
+            ["media", "My saved media"],
+            ["music", "Music · tap, swipe y scroll"],
+            ["dogs", "Dog breeds"],
+            ["movies", "Movies near me"],
+            ["recipe", "Poke bowl"]
+        ]
+    },
+    "text-fields": {
+        "title": "Text fields",
+        "component": "TextField",
+        "pair": 12,
+        "variants": ["filled", "outlined"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "toolbars": {
+        "title": "Toolbars",
+        "component": "Toolbar",
+        "pair": 12,
+        "variants": ["docked", "floating"],
+        "scenarios": [["gallery", "Galería completa"]]
+    },
+    "tooltips": {
+        "title": "Tooltips",
+        "component": "Tooltip",
+        "pair": 13,
+        "variants": ["plain", "rich"],
+        "scenarios": [["gallery", "Galería completa"]]
+    }
+}

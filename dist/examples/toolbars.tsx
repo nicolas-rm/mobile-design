@@ -1,10 +1,18 @@
-import { Alert } from 'react-native';
-import { Toolbar } from 'mobile-design';
+import { useState } from 'react';
+import { View } from 'react-native';
+import { Toolbar, TextField, Text } from 'mobile-design';
 
 // Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
-  return <Toolbar variant="floating" accessibilityLabel="Editar colección"
-    actions={[{ key: 'edit', icon: 'pencil-outline', label: 'Editar', onPress: () => Alert.alert('Editar') },
-      { key: 'share', icon: 'share-variant-outline', label: 'Compartir', onPress: () => Alert.alert('Compartir') },
-      { key: 'delete', icon: 'delete-outline', label: 'Eliminar', onPress: () => Alert.alert('Eliminar') }]} />;
+  const [title, setTitle] = useState('Mi colección');
+  const [saved, setSaved] = useState('Mi colección');
+  const [deleted, setDeleted] = useState(false);
+  return <View style={{ gap: 24 }}>
+    <TextField label="Nombre" value={title} onChangeText={setTitle} disabled={deleted} />
+    <Text accessibilityLiveRegion="polite">{deleted ? 'Colección eliminada' : 'Guardado: ' + saved}</Text>
+    <Toolbar variant="floating" accessibilityLabel="Editar colección"
+      actions={[{ key: 'save', icon: 'save', label: 'Guardar', disabled: deleted || title === saved, onPress: () => setSaved(title) },
+        { key: 'undo', icon: 'undo', label: 'Restaurar', onPress: () => { setDeleted(false); setTitle(saved); } },
+        { key: 'delete', icon: 'delete', label: 'Eliminar', disabled: deleted, onPress: () => setDeleted(true) }]} />
+  </View>;
 }

@@ -1,0 +1,9 @@
+# Arte de las figuras de Buttons
+
+Recortes de fotografías y portadas de los medios públicos de [Buttons, Material Design 3](https://m3.material.io/components/buttons). `sources.json` conserva URL original, identificador Carbon, figura/fotograma de procedencia, dimensiones originales, rectángulo de recorte y SHA-256 del PNG final.
+
+No se incluyen controles ni texto rasterizado en las regiones que muestra la aplicación: botones, estados, etiquetas y acciones son componentes React Native de Mobile Design. Los fotogramas de la llamada proceden de los segundos 0 y 3 del clip; el movimiento de los participantes no se reproduce ni representa una llamada de red.
+
+Algunas figuras publican sólo un fragmento de la fotografía. Sourdough bread conserva la franja de 694×104. La cabecera de pan y las portadas de álbum usan las regiones limpias con `cover` para conservar el contexto del botón sobre la imagen: se recortan sin distorsión, pero el encuadre completo es aproximado porque el original lo publica con texto superpuesto. Las bandas de flores y cactus proceden de los dos elementos estrechos del carrusel de Magical Mycelium; los registros siguientes son continuaciones locales del botón Next movie. No se atribuyen sus títulos ni su encuadre ampliado a una pantalla publicada por MD3. Estas regiones no permiten afirmar equivalencia de una imagen completa. No se completan ni generan partes faltantes, ni se pinta UI de la referencia como fondo.
+
+Las continuaciones de recetas, carrito, pago, visita a tienda, suscripción, evento y check-in son datos de sesión locales. No envían pedidos, dinero, mensajes ni suscripciones a servicios externos. Los datos de Flights no publicados en los fragmentos de Upcoming se dejan vacíos en vez de reutilizar números de la primera reserva. La pantalla Download aumenta los tokens tipográficos del contexto al 200%; no sustituye la prueba con el tamaño de texto real del sistema.

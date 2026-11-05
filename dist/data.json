@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "generated": "2026-11-03",
+  "generated": "2026-11-04",
   "groups": [
     {
       "id": "buttons",
@@ -21,6 +21,10 @@
     {
       "id": "sheets",
       "title": "Sheets"
+    },
+    {
+      "id": "extensions",
+      "title": "Extensiones de Mobile Design"
     }
   ],
   "components": [
@@ -78,7 +82,7 @@
           "Contenedor 64 dp · barra 56 dp"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { TopAppBar } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <TopAppBar\n    variant=\"medium-flexible\"\n    title=\"Tu biblioteca\"\n    navigationIcon=\"arrow-left\"\n    navigationLabel=\"Volver\"\n    onNavigationPress={() => Alert.alert('Navegación', 'Regresar a la pantalla anterior')}\n    actions={[{ key: 'search', icon: 'magnify', label: 'Buscar', onPress: () => Alert.alert('Buscar') }]}\n  />;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { TopAppBar, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><TopAppBar\n    variant=\"medium-flexible\"\n    title=\"Tu biblioteca\"\n    navigationIcon=\"arrow_back\"\n    navigationLabel=\"Volver\"\n    onNavigationPress={() => setFeedback(['Navegación', 'Regresar a la pantalla anterior'].join(': '))}\n    actions={[{ key: 'search', icon: 'search', label: 'Buscar', onPress: () => setFeedback(['Buscar'].join(': ')) }]}\n  /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "title",
@@ -282,11 +286,19 @@
           ],
           [
             "Acciones",
-            "Cada entrada de actions necesita una key estable, icono, etiqueta y callback."
+            "Cada entrada de actions necesita una key estable, icono, etiqueta y callback. Prioriza una o dos acciones esenciales. Una acción Filled o Tonal puede destacarse y adoptar ancho Wide."
           ],
           [
             "Desplazamiento",
-            "El controlador coordina colapso, expansión y superficie. scrolled sirve para un estado explícito; no conecta por sí solo un ScrollView."
+            "Pinned conserva la barra y modifica su superficie; exit-until-collapsed comprime la barra flexible hasta Small; enter-always puede ocultarla y volver a mostrarla al invertir el recorrido. Conecta onScroll al Animated.ScrollView y utiliza snap para ajustar el final. scrolled sólo fija el estado de superficie."
+          ],
+          [
+            "Dimensiones",
+            "Search utiliza un contenedor de 64 dp y una entrada de 56 dp. Small mide al menos 64 dp; Medium flexible 112/136 dp y Large flexible 120/152 dp, sin/con subtítulo. Las flexibles admiten dos líneas y crecen con el contenido."
+          ],
+          [
+            "Búsqueda",
+            "Seleccionar la entrada abre SearchView. La flecha regresa; Borrar aparece únicamente si existe una consulta. Navegación, micrófono y cuenta tienen acciones independientes."
           ]
         ],
         "accessibility": [
@@ -364,9 +376,16 @@
           ]
         }
       ],
-      "recipes": [],
+      "recipes": [
+        {
+          "id": "app-bar-scroll-search",
+          "title": "Barra flexible, scroll y búsqueda",
+          "description": "La barra mide su contenido y adapta la altura al desplazamiento. SearchView mantiene la consulta y entrega el resultado después de cerrarse.",
+          "code": "import { useState, useRef } from 'react';\nimport { View, ScrollView } from 'react-native';\nimport Animated, { useSharedValue } from 'react-native-reanimated';\nimport { TopAppBar, SearchView, Text, useAppBarScrollBehavior } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [search, setSearch] = useState(false);\n  const [query, setQuery] = useState('');\n  const [selected, setSelected] = useState('');\n  const pending = useRef('');\n  const behavior = useAppBarScrollBehavior({ behavior: 'exit-until-collapsed', snap: true });\n  const titles = ['Wizards & Wynona', 'At Peace', 'Everyday Stories'];\n  return <View style={{ flex: 1 }}>\n    <TopAppBar title=\"Saved podcasts\" variant=\"large-flexible\" scrollBehavior={behavior}\n      actions={[{ key: 'search', icon: 'search', label: 'Buscar podcasts', onPress: () => setSearch(true) }]} />\n    <Animated.ScrollView onScroll={behavior.onScroll} scrollEventThrottle={16}\n      contentContainerStyle={{ padding: 24, gap: 24 }}>\n      {Array.from({ length: 24 }, (_, index) => <Text key={index} variant=\"bodyLarge\">{titles[index % titles.length]}</Text>)}\n      <Text accessibilityLiveRegion=\"polite\">{selected}</Text>\n    </Animated.ScrollView>\n    <SearchView open={search} onOpenChange={setSearch} value={query} onChangeText={setQuery}\n      placeholder=\"Search podcasts\" onSearch={setQuery}\n      results={titles.filter(title => title.toLowerCase().includes(query.toLowerCase())).map(title => ({ key: title, title }))}\n      onResultPress={result => { pending.current = result.title; }}\n      onClosed={() => { if (pending.current) { setSelected(pending.current); pending.current = ''; } }} />\n  </View>;\n}\n"
+        }
+      ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -407,7 +426,7 @@
           "Mínimo 16 dp · Label Small"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { BadgedBox, IconButton } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <BadgedBox badge={8}>\n    <IconButton icon=\"email-outline\" accessibilityLabel=\"Correo, 8 mensajes nuevos\"\n      onPress={() => Alert.alert('Correo', 'Tienes 8 mensajes nuevos')} />\n  </BadgedBox>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { BadgedBox, IconButton, MaterialSymbol, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><IconButton\n    icon={props => <BadgedBox badge={8}>\n      <MaterialSymbol {...props} name=\"mail\" />\n    </BadgedBox>}\n    accessibilityLabel=\"Correo, 8 mensajes nuevos\"\n    onPress={() => setFeedback(['Correo', 'Tienes 8 mensajes nuevos'].join(': '))} /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "maximum",
@@ -513,12 +532,20 @@
           ],
           [
             "Anclaje",
-            "BadgedBox coloca la insignia en el extremo superior lógico sin convertirla en un segundo botón."
+            "BadgedBox se ancla al glifo de 24 dp dentro del botón, no al objetivo de interacción. Small conserva 6 dp; Large al menos 16 dp, con 4 dp de padding lateral. El anclaje se refleja en RTL."
+          ],
+          [
+            "Contenido",
+            "El conteo numérico utiliza maximum (999 por defecto) y añade + cuando lo supera. La etiqueta no excede cuatro caracteres, incluido +. Cero es contenido válido."
+          ],
+          [
+            "Presencia",
+            "Badge.visible conserva la transición de presencia. BadgedBox se monta o retira con badge; false y undefined lo ocultan. Una novedad atendida puede retirarse, mientras que un total de la colección permanece."
           ]
         ],
         "accessibility": [
           "Nombra la cantidad y su significado en el destino: «Correo, 8 mensajes nuevos».",
-          "Conserva una única acción accesible cuando la insignia sólo complementa un icono."
+          "Conserva una única acción accesible cuando la insignia sólo complementa un icono; no añadas un foco independiente. Usa el valor completo en la etiqueta del destino, aunque el conteo visible esté truncado."
         ],
         "cautions": [
           "No uses la insignia como botón de cierre ni como mensaje de error extenso."
@@ -576,9 +603,16 @@
           ]
         }
       ],
-      "recipes": [],
+      "recipes": [
+        {
+          "id": "badge-notification-navigation",
+          "title": "Novedades y cantidades persistentes",
+          "description": "Una novedad desaparece al atender el destino. Un total de la colección permanece. La insignia se anuncia como parte del destino.",
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { NavigationBar, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [value, setValue] = useState('home');\n  const [unread, setUnread] = useState(10);\n  const items = [\n    { key: 'home', label: 'Home', icon: 'home', selectedIcon: 'home_fill1' },\n    { key: 'mail', label: 'Mail', icon: 'mail', selectedIcon: 'mail_fill1', badge: unread || false,\n      accessibilityLabel: unread ? 'Mail, ' + unread + ' mensajes nuevos' : 'Mail' },\n    { key: 'photos', label: 'Photos', icon: 'image', selectedIcon: 'image_fill1', badge: 1004,\n      accessibilityLabel: 'Photos, 1004 fotos' },\n  ];\n  return <View style={{ flex: 1 }}>\n    <View style={{ flex: 1, padding: 24 }}><Text variant=\"headlineSmall\">{items.find(item => item.key === value)?.label}</Text></View>\n    <NavigationBar items={items} value={value} onValueChange={key => { setValue(key); if (key === 'mail') setUnread(0); }} />\n  </View>;\n}\n"
+        }
+      ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -617,8 +651,49 @@
       "tagline": "Acciones que se entienden y se sienten como un conjunto.",
       "description": "Reúne acciones relacionadas o alternativas de selección. Standard redistribuye el espacio al pulsar; Connected mantiene el grupo unido.",
       "guidance": "Usa Standard para comandos relacionados y Connected para alternativas uniformes. Mantén etiquetas breves y una jerarquía consistente.",
-      "accessibility": "Publica el nombre del grupo y el estado de cada alternativa. La selección debe seguir disponible sin depender de la animación.",
-      "dimensions": [],
+      "accessibility": "Nombra cada botón y publica su estado de selección. El contenedor no recibe foco. La selección debe seguir disponible sin depender de la animación.",
+      "dimensions": [
+        [
+          "Tamaños · altura visual",
+          "XS 32 · S 40 · M 56 · L 96 · XL 136 dp"
+        ],
+        [
+          "Separación Standard",
+          "18 / 12 / 8 / 8 / 8 dp"
+        ],
+        [
+          "Separación Connected",
+          "2 dp en todas las tallas"
+        ],
+        [
+          "Interior Connected · normal",
+          "8 / 8 / 8 / 16 / 20 dp según los tokens de estado"
+        ],
+        [
+          "Interior Connected · pressed",
+          "4 / 4 / 4 / 12 / 16 dp"
+        ],
+        [
+          "Objetivos de interacción",
+          "Mínimo 48 × 48 dp; XS/S Connected conservan ancho mínimo de 48 dp"
+        ],
+        [
+          "Tipografía",
+          "Label Large / Label Large / Title Medium / Headline Small / Headline Large"
+        ],
+        [
+          "Densidad",
+          "0 / −1 / −2 / −3 · resta 4 dp por paso, conserva texto y objetivos"
+        ],
+        [
+          "Movimiento Standard",
+          "Fast Spatial; redistribuye ancho sólo con vecinos inmediatos"
+        ],
+        [
+          "Movimiento Connected",
+          "Conserva los anchos; cambia forma y selección"
+        ]
+      ],
       "example": "import { useState } from 'react';\nimport { ButtonGroup } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [value, setValue] = useState<string | string[]>('week');\n  return <ButtonGroup variant=\"connected\" selectionMode=\"single\"\n    accessibilityLabel=\"Intervalo del calendario\" value={value} onValueChange={setValue}\n    items={[{ value: 'day', label: 'Día' }, { value: 'week', label: 'Semana' }, { value: 'month', label: 'Mes' }]} />;\n}\n",
       "api": [
         {
@@ -788,12 +863,15 @@
           ]
         ],
         "accessibility": [
-          "Da un nombre al conjunto y etiquetas claras a sus alternativas.",
+          "Cada botón necesita una etiqueta clara y estado checked cuando representa selección. El nombre del conjunto es opcional; el contenedor no recibe foco.",
           "Conserva el estado seleccionado cuando se reduce el movimiento."
         ],
         "cautions": [
           "No mezcles alternativas excluyentes con selección múltiple.",
-          "Cada value debe ser único dentro del grupo."
+          "Cada value debe ser único dentro del grupo.",
+          "Connected utiliza botones de selección y un tratamiento uniforme; evita comandos independientes sin toggle.",
+          "Mantén el grupo en una línea; el overflow se coloca al extremo final.",
+          "Tab entra en el grupo, las flechas recorren sus botones y Enter o Espacio activan una sola vez."
         ],
         "types": [
           "ButtonGroupItem"
@@ -904,9 +982,22 @@
           ]
         }
       ],
-      "recipes": [],
+      "recipes": [
+        {
+          "id": "button-group-commands",
+          "title": "Comandos relacionados y jerarquía",
+          "description": "Cada botón ejecuta su acción; sólo el botón pulsado y sus vecinos inmediatos redistribuyen su ancho temporalmente.",
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { ButtonGroup, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [playing, setPlaying] = useState(false);\n  const [position, setPosition] = useState(0);\n  return <View style={{ padding: 24, gap: 20 }}>\n    <ButtonGroup fullWidth buttonVariant=\"filled\" items={[\n      { value: 'rewind', label: 'Retroceder', icon: 'fast_rewind', iconOnly: true,\n        onPress: () => setPosition(value => Math.max(0, value - 10)) },\n      { value: 'play', label: playing ? 'Pausar' : 'Reproducir', icon: playing ? 'pause' : 'play_arrow',\n        weight: 3, onPress: () => setPlaying(value => !value) },\n      { value: 'forward', label: 'Avanzar', icon: 'fast_forward', iconOnly: true,\n        onPress: () => setPosition(value => value + 10) },\n    ]} />\n    <Text accessibilityLiveRegion=\"polite\">{playing ? 'Reproduciendo' : 'En pausa'} · {position} s</Text>\n  </View>;\n}\n"
+        },
+        {
+          "id": "button-group-price-filter",
+          "title": "Connected · filtros de selección múltiple",
+          "description": "La selección se guarda en un array y puede quedar vacía. Los anchos permanecen estables; cada ítem comunica su selección.",
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { ButtonGroup, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [prices, setPrices] = useState<string | string[]>(['$', '$$']);\n  const selected = typeof prices === 'string' ? [prices] : prices;\n  const places = [{ name: 'Garden café', price: '$' }, { name: 'Market table', price: '$$' },\n    { name: 'The terrace', price: '$$$' }, { name: 'Tasting room', price: '$$$$' }];\n  return <View style={{ padding: 24, gap: 20 }}>\n    <ButtonGroup variant=\"connected\" size=\"extra-small\" selectionMode=\"multiple\"\n      value={prices} onValueChange={setPrices}\n      items={['$', '$$', '$$$', '$$$$'].map(price => ({ value: price, label: price,\n        accessibilityLabel: 'Precio ' + price }))} />\n    {places.filter(place => selected.includes(place.price)).map(place => <Text key={place.name}>{place.name}</Text>)}\n    {!selected.length ? <Text>Selecciona un precio para mostrar resultados.</Text> : null}\n  </View>;\n}\n"
+        }
+      ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -942,8 +1033,7 @@
       ],
       "implementation": "mobile-design",
       "exports": [
-        "Button",
-        "buttonSizeTokens"
+        "Button"
       ],
       "reference": "https://m3.material.io/components/buttons/overview",
       "notes": [
@@ -982,7 +1072,7 @@
           "Mínimo 48 dp; independiente de la superficie visual"
         ]
       ],
-      "example": "import { useState } from 'react';\nimport { Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [saved, setSaved] = useState(false);\n  return <Button variant=\"filled\" size=\"medium\" shape=\"round\"\n    selected={saved} icon={saved ? 'check' : 'bookmark-outline'}\n    onPress={() => setSaved(value => !value)}>\n    {saved ? 'Guardado' : 'Guardar'}\n  </Button>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { Button, MaterialSymbol } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [saved, setSaved] = useState(false);\n  return <Button variant=\"filled\" size=\"medium\" shape=\"round\"\n    selected={saved} icon={props => <MaterialSymbol {...props} name=\"bookmark\" filled={saved} />}\n    onPress={() => setSaved(value => !value)}>\n    {saved ? 'Guardado' : 'Guardar'}\n  </Button>;\n}\n",
       "api": [
         {
           "name": "children",
@@ -990,6 +1080,20 @@
           "required": true,
           "description": "Contenido del componente.",
           "inherited": true
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Browser link destination. Native navigation is handled by onPress.",
+          "inherited": false
+        },
+        {
+          "name": "hrefAttrs",
+          "type": "{ target?: string; rel?: string; download?: boolean | string; } | undefined",
+          "required": false,
+          "description": "Browser attributes for a link destination.",
+          "inherited": false
         },
         {
           "name": "pressed",
@@ -1208,7 +1312,7 @@
           "16 dp respecto a los bordes; respeta navegación y safe area"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { FAB } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <FAB.Extended icon=\"pencil-outline\" label=\"Crear nota\"\n    accessibilityLabel=\"Crear nota\"\n    onPress={() => Alert.alert('Nueva nota', 'Aquí comienza la tarea principal')} />;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { FAB, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><FAB.Extended size=\"medium\" icon=\"pencil-outline\" label=\"Crear nota\"\n    accessibilityLabel=\"Crear nota\"\n    onPress={() => setFeedback(['Nueva nota', 'Aquí comienza la tarea principal'].join(': '))} /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "label",
@@ -1227,6 +1331,13 @@
         {
           "name": "accessibilityState",
           "type": "AccessibilityState | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string | undefined",
           "required": false,
           "description": "",
           "inherited": false
@@ -1386,7 +1497,7 @@
           "id": "extended-fab-scroll",
           "title": "Contraer al desplazarse y crear una nota",
           "description": "La pantalla controla expanded según la dirección del desplazamiento y abre una tarea completa. El FAB conserva su etiqueta accesible al contraerse.",
-          "code": "import { useState, useRef } from 'react';\nimport { View, ScrollView } from 'react-native';\nimport { FAB, Button, Text, TextField } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [expanded, setExpanded] = useState(true);\n  const [editing, setEditing] = useState(false);\n  const [title, setTitle] = useState('');\n  const [notes, setNotes] = useState(Array.from({ length: 12 }, (_, i) => 'Nota ' + (i + 1)));\n  const lastY = useRef(0);\n  if (editing) return <View style={{ padding: 24, gap: 24 }}>\n    <Text variant=\"headlineSmall\">Nueva nota</Text>\n    <TextField label=\"Título\" value={title} onChangeText={setTitle} />\n    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 8 }}>\n      <Button variant=\"text\" onPress={() => setEditing(false)}>Cancelar</Button>\n      <Button disabled={!title.trim()} onPress={() => {\n        setNotes(items => [title.trim(), ...items]); setTitle(''); setEditing(false);\n        lastY.current = 0; setExpanded(true);\n      }}>Crear</Button>\n    </View>\n  </View>;\n  return <View style={{ flex: 1, minHeight: 400 }}>\n    <ScrollView scrollEventThrottle={16} contentContainerStyle={{ padding: 24, paddingBottom: 112 }}\n      onScroll={event => {\n        const y = Math.max(0, event.nativeEvent.contentOffset.y);\n        if (Math.abs(y - lastY.current) > 3 || y === 0) {\n          setExpanded(y === 0 || y < lastY.current); lastY.current = y;\n        }\n      }}>\n      {notes.map((note, index) => <Text key={index} variant=\"bodyLarge\" style={{ paddingVertical: 24 }}>{note}</Text>)}\n    </ScrollView>\n    <View pointerEvents=\"box-none\" style={{ position: 'absolute', right: 16, bottom: 16 }}>\n      <FAB.Extended icon=\"pencil-outline\" label=\"Crear nota\" expanded={expanded}\n        onPress={() => { setTitle(''); setEditing(true); }} />\n    </View>\n  </View>;\n}\n"
+          "code": "import { useState, useRef } from 'react';\nimport { View, ScrollView } from 'react-native';\nimport { FAB, Button, Text, TextField } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [expanded, setExpanded] = useState(true);\n  const [editing, setEditing] = useState(false);\n  const [title, setTitle] = useState('');\n  const [notes, setNotes] = useState(Array.from({ length: 12 }, (_, i) => 'Nota ' + (i + 1)));\n  const lastY = useRef(0);\n\n  if (editing) {\n    return (\n      <View style={{ padding: 24, gap: 24 }}>\n        <Text variant=\"headlineSmall\">Nueva nota</Text>\n        <TextField label=\"Título\" value={title} onChangeText={setTitle} />\n\n        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 8 }}>\n          <Button variant=\"text\" onPress={() => setEditing(false)}>\n            Cancelar\n          </Button>\n          <Button\n            disabled={!title.trim()}\n            onPress={() => {\n              setNotes(items => [title.trim(), ...items]);\n              setTitle('');\n              setEditing(false);\n              lastY.current = 0;\n              setExpanded(true);\n            }}\n          >\n            Crear\n          </Button>\n        </View>\n      </View>\n    );\n  }\n\n  return (\n    <View style={{ flex: 1, minHeight: 400 }}>\n      <ScrollView\n        scrollEventThrottle={16}\n        contentContainerStyle={{ padding: 24, paddingBottom: 112 }}\n        onScroll={event => {\n          const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;\n          const y = Math.max(0, contentOffset.y);\n          const atEnd = y + layoutMeasurement.height >= contentSize.height - 1;\n\n          if (Math.abs(y - lastY.current) > 1 || y === 0 || atEnd) {\n            setExpanded(y === 0 || atEnd || y < lastY.current);\n            lastY.current = y;\n          }\n        }}\n      >\n        {notes.map((note, index) => (\n          <Text key={index} variant=\"bodyLarge\" style={{ paddingVertical: 24 }}>\n            {note}\n          </Text>\n        ))}\n      </ScrollView>\n\n      <View pointerEvents=\"box-none\" style={{ position: 'absolute', right: 16, bottom: 16 }}>\n        <FAB.Extended\n          icon=\"pencil-outline\"\n          label=\"Crear nota\"\n          expanded={expanded}\n          onPress={() => {\n            setTitle('');\n            setEditing(true);\n          }}\n        />\n      </View>\n    </View>\n  );\n}\n"
         }
       ],
       "webSupport": {
@@ -1467,7 +1578,7 @@
           "overflow=\"scroll\"; maxHeight acota la pila sin añadir controles de paginación"
         ]
       ],
-      "example": "import { useState } from 'react';\nimport { View, Alert } from 'react-native';\nimport { FAB } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [expanded, setExpanded] = useState(false);\n  return <View style={{ minHeight: 280, justifyContent: 'flex-end', alignItems: 'flex-end' }}>\n    <FAB.Menu presentation=\"expressive\" expanded={expanded} onDismiss={() => setExpanded(false)}\n      trigger={{ icon: 'plus', accessibilityLabel: 'Crear', onPress: () => setExpanded(true) }}\n      items={[\n        { key: 'note', label: 'Nota', icon: 'pencil-outline', onPress: () => Alert.alert('Nueva nota') },\n        { key: 'folder', label: 'Carpeta', icon: 'folder-outline', onPress: () => Alert.alert('Nueva carpeta') },\n      ]} />\n  </View>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { FAB, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  const [expanded, setExpanded] = useState(false);\n  return <View style={{ gap: 16 }}><View style={{ minHeight: 280, justifyContent: 'flex-end', alignItems: 'flex-end' }}>\n    <FAB.Menu presentation=\"expressive\" expanded={expanded} onDismiss={() => setExpanded(false)}\n      trigger={{ icon: 'plus', size: 'medium', accessibilityLabel: 'Crear', onPress: () => setExpanded(true) }}\n      items={[\n        { key: 'note', label: 'Nota', icon: 'pencil-outline', onPress: () => setFeedback(['Nueva nota'].join(': ')) },\n        { key: 'folder', label: 'Carpeta', icon: 'folder-outline', onPress: () => setFeedback(['Nueva carpeta'].join(': ')) },\n      ]} />\n  </View><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "expanded",
@@ -1713,6 +1824,13 @@
               "inherited": false
             },
             {
+              "name": "aria-describedby",
+              "type": "string | undefined",
+              "required": false,
+              "description": "",
+              "inherited": false
+            },
+            {
               "name": "aria-haspopup",
               "type": "\"menu\" | undefined",
               "required": false,
@@ -1853,7 +1971,7 @@
           "16 dp respecto al borde; conserva su posición al desplazar contenido"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { FAB, MaterialSymbol, Tooltip } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <Tooltip title=\"Crear lista\">\n    <FAB size=\"medium\" variant=\"tonalPrimary\"\n      icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name=\"add\" filled />}\n      accessibilityLabel=\"Crear lista\"\n      onPress={() => Alert.alert('Nueva lista')} />\n  </Tooltip>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { FAB, MaterialSymbol, Tooltip, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><Tooltip title=\"Crear lista\">\n    <FAB size=\"medium\" variant=\"tonalPrimary\"\n      icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name=\"add\" filled />}\n      accessibilityLabel=\"Crear lista\"\n      onPress={() => setFeedback(['Nueva lista'].join(': '))} />\n  </Tooltip><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "icon",
@@ -1872,6 +1990,13 @@
         {
           "name": "accessibilityState",
           "type": "AccessibilityState | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string | undefined",
           "required": false,
           "description": "",
           "inherited": false
@@ -2083,7 +2208,7 @@
           "Mínimo 48 × 48 dp; la superficie visual conserva su tamaño"
         ]
       ],
-      "example": "import { useState } from 'react';\nimport { IconButton, MaterialSymbol, Tooltip } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [favorite, setFavorite] = useState(false);\n  const label = favorite ? 'Quitar de favoritos' : 'Añadir a favoritos';\n  return <Tooltip title={label}>\n    <IconButton icon={props => <MaterialSymbol {...props} name=\"favorite\" filled={favorite} />}\n      accessibilityLabel={label} mode=\"contained-tonal\" selected={favorite}\n      sizeClass=\"small\" shape=\"round\" widthVariant=\"default\"\n      onPress={() => setFavorite(value => !value)} />\n  </Tooltip>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { IconButton, MaterialSymbol, Tooltip } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [favorite, setFavorite] = useState(false);\n  const label = favorite ? 'Quitar de favoritos' : 'Añadir a favoritos';\n  return <Tooltip title={label}>\n    <IconButton icon={props => <MaterialSymbol {...props} name=\"favorite\" filled={favorite} />}\n      accessibilityLabel=\"Favorito\" mode=\"contained-tonal\" selected={favorite}\n      sizeClass=\"small\" shape=\"round\" widthVariant=\"default\"\n      onPress={() => setFavorite(value => !value)} />\n  </Tooltip>;\n}\n",
       "api": [
         {
           "name": "icon",
@@ -2604,7 +2729,7 @@
           "Default Effects sin rebote; misma rotación con ambos perfiles del proveedor"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { SplitButton } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <SplitButton label=\"Enviar\" icon=\"send-outline\"\n    onPress={() => Alert.alert('Mensaje enviado')}\n    menuAccessibilityLabel=\"Más opciones de envío\"\n    actions={[\n      { key: 'later', label: 'Programar envío', icon: 'clock-outline', onPress: () => Alert.alert('Programar envío') },\n      { key: 'draft', label: 'Guardar borrador', icon: 'content-save-outline', onPress: () => Alert.alert('Borrador guardado') },\n    ]} />;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { SplitButton, MaterialSymbol, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><SplitButton label=\"Enviar\"\n    icon={(props: { size: number; color: string }) => <MaterialSymbol {...props} name=\"send\" filled />}\n    onPress={() => setFeedback(['Mensaje enviado'].join(': '))}\n    menuAccessibilityLabel=\"Más opciones de envío\"\n    actions={[\n      { key: 'later', label: 'Programar envío', icon: 'clock-outline', onPress: () => setFeedback(['Programar envío'].join(': ')) },\n      { key: 'draft', label: 'Guardar borrador', icon: 'content-save-outline', onPress: () => setFeedback(['Borrador guardado'].join(': ')) },\n    ]} /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "actions",
@@ -2725,6 +2850,10 @@
             "El chevrón abre el menú sin ejecutar el comando principal. La opción elegida se ejecuta una vez después del cierre."
           ],
           [
+            "Opción actual",
+            "Para elegir un valor, pasa selected en todas las opciones del menú. La actual se distingue con una marca y se anuncia como seleccionada. Omite selected en los comandos."
+          ],
+          [
             "Forma y giro",
             "Las esquinas interiores responden a hover, foco y presión. Al abrir, la mitad secundaria se redondea, centra el icono y gira 180° hacia dentro."
           ],
@@ -2738,7 +2867,7 @@
           ],
           [
             "Cancelación",
-            "Escape, salida del menú, bloqueo o desmontaje descartan acciones pendientes. El cierre devuelve el foco al disparador."
+            "Escape, salida del menú, reapertura, bloqueo o desmontaje descartan acciones pendientes. El cierre devuelve el foco al disparador."
           ]
         ],
         "accessibility": [
@@ -2792,6 +2921,13 @@
               "type": "any",
               "required": false,
               "description": "Icono del componente.",
+              "inherited": false
+            },
+            {
+              "name": "selected",
+              "type": "boolean | undefined",
+              "required": false,
+              "description": "Estado de selección controlado.",
               "inherited": false
             },
             {
@@ -2897,7 +3033,7 @@
           "Altura determinada por contenido; conserva acciones y texto al adaptarse"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { Card, Text, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <Card variant=\"filled\">\n    <Card.Title title=\"En buena compañía\" subtitle=\"Una colección para descubrir\" />\n    <Card.Content><Text variant=\"bodyMedium\">Contenido y acciones de una misma idea.</Text></Card.Content>\n    <Card.Actions><Button variant=\"text\" onPress={() => Alert.alert('Colección abierta')}>Explorar</Button></Card.Actions>\n  </Card>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Card, Text, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><Card variant=\"filled\">\n    <Card.Title title=\"En buena compañía\" subtitle=\"Una colección para descubrir\" />\n    <Card.Content><Text variant=\"bodyMedium\">Contenido y acciones de una misma idea.</Text></Card.Content>\n    <Card.Actions><Button variant=\"text\" onPress={() => setFeedback(['Colección abierta'].join(': '))}>Explorar</Button></Card.Actions>\n  </Card><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "children",
@@ -2925,6 +3061,13 @@
           "type": "string | undefined",
           "required": false,
           "description": "Link destination in a browser. Native navigation remains in onPress.",
+          "inherited": false
+        },
+        {
+          "name": "hrefAttrs",
+          "type": "{ rel?: string; } | undefined",
+          "required": false,
+          "description": "Browser attributes for the link destination.",
           "inherited": false
         },
         {
@@ -3107,8 +3250,10 @@
       "category": "containment",
       "variants": [
         "multi-browse",
-        "uncontained",
         "hero",
+        "center-aligned-hero",
+        "uncontained",
+        "uncontained-multi-aspect",
         "full-screen"
       ],
       "configurations": [
@@ -3135,7 +3280,7 @@
       "guidance": "Elige la variante según el contexto y la proporción del contenido. Conserva el elemento focal y sus límites al cambiar tamaño.",
       "accessibility": "Ofrece nombres útiles para cada elemento y alternativas accesibles al gesto. El estado seleccionado debe coincidir con el contenido visible.",
       "dimensions": [],
-      "example": "import { Alert } from 'react-native';\nimport { Carousel } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <Carousel variant=\"multi-browse\" height={240}\n    accessibilityLabel=\"Destinos para explorar\"\n    items={[{ id: 'mountain', title: 'Montaña', icon: 'image-outline' },\n      { id: 'coast', title: 'Costa', icon: 'image-outline' },\n      { id: 'forest', title: 'Bosque', icon: 'image-outline' }]}\n    onItemPress={item => Alert.alert(item.title)} />;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Carousel, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><Carousel variant=\"multi-browse\" height={240}\n    accessibilityLabel=\"Destinos para explorar\"\n    items={[{ id: 'mountain', title: 'Montaña', icon: 'image-outline' },\n      { id: 'coast', title: 'Costa', icon: 'image-outline' },\n      { id: 'forest', title: 'Bosque', icon: 'image-outline' }]}\n    onItemPress={item => setFeedback([item.title].join(': '))} /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "items",
@@ -3279,11 +3424,11 @@
         "behavior": [
           [
             "Exploración",
-            "El recorrido adapta máscaras y elementos focales a la variante."
+            "Multi-browse y Hero adaptan la máscara al desplazarse. Hero centrado añade una vista previa a cada lado cuando hay espacio."
           ],
           [
-            "Ajuste",
-            "snapping y alignment definen la relación con las posiciones de reposo."
+            "Ancho y ajuste",
+            "Uncontained conserva el ancho de cada elemento. Uncontained multi-aspect ratio usa proporciones entre 9:16 y 16:9. Ambos permiten desplazamiento libre o ajuste opcional. Full-screen ajusta el desplazamiento vertical a cada página."
           ],
           [
             "Activación",
@@ -3292,7 +3437,7 @@
         ],
         "accessibility": [
           "Da un nombre a la colección y a elementos que no se entienden por título.",
-          "Mantén una alternativa accesible al arrastre y verifica el contenido focal."
+          "En páginas verticales, ofrece Ver todos para recorrer el contenido sin un gesto horizontal. En pantalla completa, Tab alcanza la página del visor y las flechas verticales cambian de página."
         ],
         "cautions": [
           "Full-screen tiene restricciones de composición y tamaño de ventana.",
@@ -3367,7 +3512,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -3493,7 +3638,7 @@
           ],
           [
             "Estado parcial",
-            "Un padre puede usar indeterminate cuando sólo algunos hijos están seleccionados."
+            "El control del grupo muestra indeterminate cuando hay una selección parcial. Activarlo marca todas las opciones y, una vez marcadas, las desmarca."
           ],
           [
             "Bloqueo",
@@ -3502,7 +3647,7 @@
         ],
         "accessibility": [
           "El estado parcial se anuncia como mixed.",
-          "La etiqueta debe describir la opción y mantener su relación con la casilla."
+          "Tab enfoca la casilla y Espacio cambia su estado. La fila etiquetada tiene un solo objetivo de interacción. Usa description para texto de apoyo."
         ],
         "cautions": [
           "No uses checkbox para alternativas mutuamente excluyentes."
@@ -3512,7 +3657,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -3720,7 +3865,7 @@
         "behavior": [
           [
             "Filter",
-            "El consumidor acepta o descarta la selección desde onPress."
+            "El consumidor actualiza selected desde onPress. Con teclado, Espacio activa al soltar la tecla y Enter también cambia la selección."
           ],
           [
             "Input",
@@ -3728,7 +3873,7 @@
           ],
           [
             "Grupo",
-            "Chip.Group coordina el conjunto; cada entrada debe conservar identidad estable."
+            "Chip.Group permite recorrer las opciones con las flechas. Cada entrada conserva una identidad estable."
           ]
         ],
         "accessibility": [
@@ -3786,7 +3931,7 @@
         }
       ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -3977,16 +4122,17 @@
           ],
           [
             "Confirmar",
-            "onChange recibe Date o DateRange según mode; el host guarda el resultado y cierra."
+            "onChange entrega Date o DateRange según mode. A continuación, onDismiss pide al host cerrar el selector."
           ],
           [
             "Cancelar",
-            "onDismiss permite retirar el selector sin aceptar el borrador."
+            "onDismiss pide cerrar el selector sin llamar a onChange."
           ]
         ],
         "accessibility": [
           "Explica formato y errores de la entrada manual.",
-          "Las fechas no disponibles y la selección deben tener lectura comprensible."
+          "Las flechas recorren días y semanas. Page Up y Page Down cambian de mes; añade Mayús para cambiar de año. Inicio y Fin van a la primera o última fecha disponible del mes.",
+          "Escape descarta el borrador y devuelve el foco al control que abrió el selector."
         ],
         "cautions": [
           "No conviertas fechas locales en cadenas UTC sin decidir la zona de la tarea.",
@@ -4144,7 +4290,7 @@
         }
       ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -4216,7 +4362,7 @@
           "name": "autoSwitchToMinutes",
           "type": "boolean | undefined",
           "required": false,
-          "description": "Disabled automatically during touch exploration.",
+          "description": "Disabled during native touch exploration. On web, only pointer selection advances.",
           "inherited": false
         },
         {
@@ -4257,6 +4403,13 @@
         {
           "name": "initialSelection",
           "type": "\"hours\" | \"minutes\" | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "inputTitle",
+          "type": "string | undefined",
           "required": false,
           "description": "",
           "inherited": false
@@ -4314,16 +4467,17 @@
       "guide": {
         "integration": [
           "Controla visible y value como { hours, minutes }, y acepta el resultado en onConfirm.",
-          "Define is24Hour y el modo inicial. El valor usa horas de 0 a 23 incluso cuando la presentación es de 12 horas."
+          "Define is24Hour y el modo inicial. El valor usa horas de 0 a 23 incluso cuando la presentación es de 12 horas.",
+          "Personaliza title e inputTitle para nombrar el reloj y la entrada manual."
         ],
         "behavior": [
           [
             "Reloj",
-            "Selecciona hora y minuto; autoSwitchToMinutes puede avanzar entre ambos."
+            "Toca una cifra para seleccionarla o arrastra la manecilla para elegir un minuto exacto. El reloj se coloca al lado de los selectores cuando hay espacio horizontal."
           ],
           [
             "Entrada",
-            "El modo input valida los campos antes de permitir confirmación."
+            "Usa el icono del teclado para cambiar de modo y conservar el borrador. Si el reloj no cabe, se abre la entrada manual. La confirmación requiere valores válidos."
           ],
           [
             "Confirmación",
@@ -4331,8 +4485,8 @@
           ]
         ],
         "accessibility": [
-          "Nombra hora y minuto por separado y conserva el periodo AM/PM.",
-          "Con texto ampliado, Cancelar y Aceptar deben seguir disponibles."
+          "Tab recorre los controles. Enter o Espacio seleccionan la cifra enfocada. Escape cierra el diálogo y devuelve el foco.",
+          "La selección por puntero puede avanzar automáticamente a minutos. Los campos manuales identifican los valores inválidos."
         ],
         "cautions": [
           "AM/PM modifica la representación, no el contrato de horas 0–23."
@@ -4364,7 +4518,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -4406,7 +4560,7 @@
       "guidance": "Usa Basic para decisiones breves y Full-screen para tareas extensas. Los botones deben explicar la consecuencia de cada opción.",
       "accessibility": "Da un título al diálogo, controla su cierre y conserva una ruta clara de cancelación. El contenido exterior no debe recibir interacción modal.",
       "dimensions": [],
-      "example": "import { useState } from 'react';\nimport { Alert } from 'react-native';\nimport { Button, Dialog, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [visible, setVisible] = useState(false);\n  return <>\n    <Button onPress={() => setVisible(true)}>Eliminar descarga</Button>\n    <Dialog visible={visible} onDismiss={() => setVisible(false)}>\n      <Dialog.Title>¿Eliminar descarga?</Dialog.Title>\n      <Dialog.Content><Text>Podrás descargarla de nuevo cuando quieras.</Text></Dialog.Content>\n      <Dialog.Actions>\n        <Button variant=\"text\" onPress={() => setVisible(false)}>Cancelar</Button>\n        <Button variant=\"text\" onPress={() => { setVisible(false); Alert.alert('Descarga eliminada'); }}>Eliminar</Button>\n      </Dialog.Actions>\n    </Dialog>\n  </>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Button, Dialog, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  const [visible, setVisible] = useState(false);\n  return <View style={{ gap: 16 }}><>\n    <Button onPress={() => setVisible(true)}>Eliminar descarga</Button>\n    <Dialog visible={visible} onDismiss={() => setVisible(false)}>\n      <Dialog.Title>¿Eliminar descarga?</Dialog.Title>\n      <Dialog.Content><Text>Podrás descargarla de nuevo cuando quieras.</Text></Dialog.Content>\n      <Dialog.Actions>\n        <Button variant=\"text\" onPress={() => setVisible(false)}>Cancelar</Button>\n        <Button variant=\"text\" onPress={() => { setVisible(false); setFeedback(['Descarga eliminada'].join(': ')); }}>Eliminar</Button>\n      </Dialog.Actions>\n    </Dialog>\n  </><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "children",
@@ -4685,7 +4839,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -4820,7 +4974,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -4885,7 +5039,7 @@
           "Adaptación según contenido y segmentación"
         ]
       ],
-      "example": "import { Alert } from 'react-native';\nimport { List, IconButton } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <List.Item title=\"Long Walk\" description=\"L. R. Coleman\" lines={2}\n    onPress={() => Alert.alert('Detalle de la canción')}\n    trailing={<IconButton icon=\"play-outline\" accessibilityLabel=\"Reproducir Long Walk\"\n      onPress={() => Alert.alert('Reproduciendo Long Walk')} />} />;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { List, IconButton, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  return <View style={{ gap: 16 }}><List.Item title=\"Long Walk\" description=\"L. R. Coleman\" lines={2}\n    onPress={() => setFeedback(['Detalle de la canción'].join(': '))}\n    trailing={<IconButton icon=\"play-outline\" accessibilityLabel=\"Reproducir Long Walk\"\n      onPress={() => setFeedback(['Reproduciendo Long Walk'].join(': '))} />} /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "title",
@@ -5285,7 +5439,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -5552,7 +5706,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -5875,7 +6029,7 @@
         }
       ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -5918,7 +6072,7 @@
       "guidance": "Ancla al disparador, limita a opciones relevantes y cierra antes de abrir otra superficie. Usa scroll cuando el contenido excede la ventana.",
       "accessibility": "Nombra el disparador, conserva foco y publica selección/disabled. Escape y las alternativas de teclado deben permitir salir.",
       "dimensions": [],
-      "example": "import { useState } from 'react';\nimport { Alert } from 'react-native';\nimport { Menu, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [visible, setVisible] = useState(false);\n  return <Menu visible={visible} onDismiss={() => setVisible(false)}\n    anchor={<Button variant=\"tonal\" onPress={() => setVisible(true)}>Opciones</Button>}>\n    <Menu.Item title=\"Guardar\" leadingIcon=\"bookmark-outline\"\n      onPress={() => Alert.alert('Guardado')} />\n    <Menu.Item title=\"Compartir\" leadingIcon=\"share-variant-outline\"\n      onPress={() => Alert.alert('Compartir')} />\n  </Menu>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Menu, Button, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  const [visible, setVisible] = useState(false);\n  return <View style={{ gap: 16 }}><Menu visible={visible} onDismiss={() => setVisible(false)}\n    anchor={<Button variant=\"tonal\" onPress={() => setVisible(true)}>Opciones</Button>}>\n    <Menu.Item title=\"Guardar\" leadingIcon=\"bookmark-outline\"\n      onPress={() => setFeedback(['Guardado'].join(': '))} />\n    <Menu.Item title=\"Compartir\" leadingIcon=\"share-variant-outline\"\n      onPress={() => setFeedback(['Compartir'].join(': '))} />\n  </Menu><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n",
       "api": [
         {
           "name": "anchor",
@@ -6478,7 +6632,7 @@
         }
       ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -6728,7 +6882,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -6787,6 +6941,13 @@
           "type": "string",
           "required": true,
           "description": "Valor controlado por la pantalla que consume el componente.",
+          "inherited": false
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Contenido del componente.",
           "inherited": false
         },
         {
@@ -7048,7 +7209,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -7092,7 +7253,7 @@
       "api": [
         {
           "name": "items",
-          "type": "readonly NavigationDestination[]",
+          "type": "readonly (NavigationDestination & { href?: string; })[]",
           "required": true,
           "description": "Elementos, destinos o acciones del conjunto.",
           "inherited": false
@@ -7118,6 +7279,14 @@
           "description": "",
           "inherited": false,
           "default": "'top'"
+        },
+        {
+          "name": "collapsedWidth",
+          "type": "number | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false,
+          "default": "96"
         },
         {
           "name": "expanded",
@@ -7444,7 +7613,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -7567,7 +7736,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -8039,11 +8208,11 @@
           "id": "search-view",
           "title": "Barra y vista de búsqueda conectadas",
           "description": "SearchView conserva su entrada, consulta, resultados y cierre dentro de la misma composición.",
-          "code": "import { useState } from 'react';\nimport { Alert } from 'react-native';\nimport { SearchView } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [open, setOpen] = useState(false);\n  const [query, setQuery] = useState('');\n  const songs = [{ key: 'long-walk', title: 'Long Walk', description: 'L. R. Coleman' },\n    { key: 'in-the-dark', title: 'In the Dark', description: 'Sole R. Rey' }];\n  const results = songs.filter(song => song.title.toLowerCase().includes(query.toLowerCase()));\n  return <SearchView open={open} onOpenChange={setOpen}\n    value={query} onChangeText={setQuery} onSearch={setQuery}\n    placeholder=\"Buscar música\" results={results}\n    onResultPress={song => Alert.alert('Canción seleccionada', song.title)} />;\n}\n"
+          "code": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { SearchView, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [feedback, setFeedback] = useState('');\n  const [open, setOpen] = useState(false);\n  const [query, setQuery] = useState('');\n  const songs = [{ key: 'long-walk', title: 'Long Walk', description: 'L. R. Coleman' },\n    { key: 'in-the-dark', title: 'In the Dark', description: 'Sole R. Rey' }];\n  const results = songs.filter(song => song.title.toLowerCase().includes(query.toLowerCase()));\n  return <View style={{ gap: 16 }}><SearchView open={open} onOpenChange={setOpen}\n    value={query} onChangeText={setQuery} onSearch={setQuery}\n    placeholder=\"Buscar música\" results={results}\n    onResultPress={song => setFeedback(['Canción seleccionada', song.title].join(': '))} /><Text accessibilityLiveRegion=\"polite\">{feedback}</Text></View>;\n}\n"
         }
       ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -8084,7 +8253,7 @@
       "guidance": "Usa sus contenedores coordinados de scroll y BottomSheetTextField para teclado. El árbol necesita GestureHandlerRootView.",
       "accessibility": "Nombra la hoja y ofrece una forma de cierre cuando es descartable. Respeta movimiento reducido y evita que el teclado tape las acciones.",
       "dimensions": [],
-      "example": "import { useState } from 'react';\nimport { BottomSheet, BottomSheetScrollView, Text, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [open, setOpen] = useState(false);\n  return <>\n    <Button onPress={() => setOpen(true)}>Ver detalles</Button>\n    <BottomSheet open={open} onOpenChange={setOpen} variant=\"modal\"\n      snapPoints={['50%', '85%']} accessibilityLabel=\"Detalles de la colección\">\n      <BottomSheetScrollView contentContainerStyle={{ padding: 24 }}>\n        <Text variant=\"headlineSmall\">Tu colección</Text>\n        <Text>Información adicional de la colección guardada.</Text>\n        <Button variant=\"text\" onPress={() => setOpen(false)}>Cerrar</Button>\n      </BottomSheetScrollView>\n    </BottomSheet>\n  </>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { BottomSheet, BottomSheetScrollView, Text, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [open, setOpen] = useState(false);\n  return <>\n    <Button onPress={() => setOpen(true)}>Ver detalles</Button>\n    <BottomSheet open={open} onOpenChange={setOpen} variant=\"modal\"\n      scrollable snapPoints={['50%', '85%']} accessibilityLabel=\"Detalles de la colección\">\n      <BottomSheetScrollView contentContainerStyle={{ padding: 24 }}>\n        <Text variant=\"headlineSmall\">Tu colección</Text>\n        <Text>Información adicional de la colección guardada.</Text>\n        <Button variant=\"text\" onPress={() => setOpen(false)}>Cerrar</Button>\n      </BottomSheetScrollView>\n    </BottomSheet>\n  </>;\n}\n",
       "api": [
         {
           "name": "onOpenChange",
@@ -8494,7 +8663,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -8724,7 +8893,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -9174,7 +9343,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -9210,7 +9379,7 @@
       "guidance": "Escribe mensajes concisos. Deshacer permite revertir la operación. bottomOffset evita cubrir navegación o FAB.",
       "accessibility": "Permite tiempo suficiente para leer y actuar. La acción debe ser comprensible y el mensaje debe poder anunciarse.",
       "dimensions": [],
-      "example": "import { useState } from 'react';\nimport { Alert } from 'react-native';\nimport { Snackbar, Button } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [visible, setVisible] = useState(false);\n  return <>\n    <Button onPress={() => setVisible(true)}>Guardar colección</Button>\n    <Snackbar visible={visible} onDismiss={() => setVisible(false)}\n      action={{ label: 'Deshacer', onPress: () => { setVisible(false); Alert.alert('Acción deshecha'); } }}>\n      Colección guardada\n    </Snackbar>\n  </>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Snackbar, Portal, Button, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [visible, setVisible] = useState(false);\n  const [archived, setArchived] = useState(false);\n  return <View style={{ gap: 16 }}>\n    <Text accessibilityLiveRegion=\"polite\">{archived ? 'Colección archivada' : 'Colección disponible'}</Text>\n    <Button onPress={() => { setArchived(true); setVisible(true); }}>Archivar colección</Button>\n    <Portal><Snackbar visible={visible} onDismiss={() => setVisible(false)} inlineFeedback\n      action={{ label: 'Deshacer', onPress: () => { setArchived(false); setVisible(false); } }}>\n      Colección archivada\n    </Snackbar></Portal>\n  </View>;\n}\n",
       "api": [
         {
           "name": "children",
@@ -9398,7 +9567,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -9549,7 +9718,7 @@
       "relatedTypes": [],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -9592,7 +9761,7 @@
       "guidance": "Enlaza Tabs con TabsPager para sincronizar toque y swipe. Conserva un único valor seleccionado entre cabecera y contenido.",
       "accessibility": "Publica nombre y estado seleccionado. Las flechas pueden mover foco y Enter/Espacio activar; el contenido debe corresponder con la pestaña anunciada.",
       "dimensions": [],
-      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { useSharedValue } from 'react-native-reanimated';\nimport { Tabs, TabsPager, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [value, setValue] = useState('music');\n  const [request, setRequest] = useState(0);\n  const position = useSharedValue(0);\n  const items = [{ key: 'music', label: 'Música', icon: 'music-note-outline' },\n    { key: 'podcasts', label: 'Podcasts', icon: 'podcast' }];\n  return <View style={{ flex: 1 }}>\n    <Tabs items={items} value={value} onValueChange={setValue} position={position}\n      onTabPress={() => setRequest(value => value + 1)} />\n    <TabsPager items={items} value={value} onValueChange={setValue}\n      position={position} selectionRequest={request}\n      renderPage={item => <View style={{ padding: 24 }}><Text>{item.label}</Text></View>} />\n  </View>;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport Animated, { useSharedValue } from 'react-native-reanimated';\nimport { Tabs, TabsPager, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [value, setValue] = useState('music');\n  const [request, setRequest] = useState(0);\n  const position = useSharedValue(0);\n  const items = [{ key: 'music', label: 'Música', icon: 'music-note-outline' },\n    { key: 'podcasts', label: 'Podcasts', icon: 'podcast' }];\n  return <View style={{ flex: 1 }}>\n    <Tabs items={items} value={value} onValueChange={setValue} position={position}\n      onTabPress={() => setRequest(value => value + 1)} />\n    <TabsPager items={items} value={value} onValueChange={setValue}\n      position={position} selectionRequest={request}\n      renderPage={item => <View style={{ padding: 24 }}><Text>{item.label}</Text></View>} />\n  </View>;\n}\n",
       "api": [
         {
           "name": "items",
@@ -9863,7 +10032,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -10443,7 +10612,7 @@
         }
       ],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -10482,7 +10651,7 @@
       "guidance": "Mantén una jerarquía clara y deja las acciones que no caben en un menú real. El host decide su relación con el contenido.",
       "accessibility": "Nombra la barra y cada acción de icono. Expón selección, foco y alternativas del overflow.",
       "dimensions": [],
-      "example": "import { Alert } from 'react-native';\nimport { Toolbar } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  return <Toolbar variant=\"floating\" accessibilityLabel=\"Editar colección\"\n    actions={[{ key: 'edit', icon: 'pencil-outline', label: 'Editar', onPress: () => Alert.alert('Editar') },\n      { key: 'share', icon: 'share-variant-outline', label: 'Compartir', onPress: () => Alert.alert('Compartir') },\n      { key: 'delete', icon: 'delete-outline', label: 'Eliminar', onPress: () => Alert.alert('Eliminar') }]} />;\n}\n",
+      "example": "import { useState } from 'react';\nimport { View } from 'react-native';\nimport { Toolbar, TextField, Text } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [title, setTitle] = useState('Mi colección');\n  const [saved, setSaved] = useState('Mi colección');\n  const [deleted, setDeleted] = useState(false);\n  return <View style={{ gap: 24 }}>\n    <TextField label=\"Nombre\" value={title} onChangeText={setTitle} disabled={deleted} />\n    <Text accessibilityLiveRegion=\"polite\">{deleted ? 'Colección eliminada' : 'Guardado: ' + saved}</Text>\n    <Toolbar variant=\"floating\" accessibilityLabel=\"Editar colección\"\n      actions={[{ key: 'save', icon: 'save', label: 'Guardar', disabled: deleted || title === saved, onPress: () => setSaved(title) },\n        { key: 'undo', icon: 'undo', label: 'Restaurar', onPress: () => { setDeleted(false); setTitle(saved); } },\n        { key: 'delete', icon: 'delete', label: 'Eliminar', disabled: deleted, onPress: () => setDeleted(true) }]} />\n  </View>;\n}\n",
       "api": [
         {
           "name": "actions",
@@ -10714,7 +10883,7 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
         "implementationPreserved": true
       }
     },
@@ -10984,7 +11153,418 @@
       ],
       "recipes": [],
       "webSupport": {
-        "status": "pending",
+        "status": "partial",
+        "implementationPreserved": true
+      }
+    },
+    {
+      "id": "select",
+      "title": "Select",
+      "searchAliases": [
+        "Selector",
+        "Lista desplegable"
+      ],
+      "group": "extensions",
+      "category": "input",
+      "variants": [],
+      "configurations": [
+        "Selección única",
+        "Opción deshabilitada",
+        "Campo deshabilitado"
+      ],
+      "implementation": "mobile-design",
+      "exports": [
+        "Select"
+      ],
+      "notes": [
+        "Extensión basada en TextField y una lista de opciones anclada. El consumidor controla el valor seleccionado."
+      ],
+      "primaryExport": "Select",
+      "icon": "arrow_drop_down",
+      "tagline": "Elige un valor de una lista.",
+      "description": "Select es una extensión de Mobile Design para elegir una opción fija en un formulario.",
+      "guidance": "Usa Select cuando la persona deba elegir un solo valor de una lista breve y conocida.",
+      "accessibility": "Etiqueta el campo y cada opción. El selector comunica su expansión y el valor seleccionado.",
+      "dimensions": [],
+      "example": "import { useState } from 'react';\nimport { Select } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [quality, setQuality] = useState('standard');\n  return <Select label=\"Calidad de audio\" value={quality} onValueChange={setQuality}\n    options={[\n      { value: 'standard', label: 'Estándar' },\n      { value: 'high', label: 'Alta calidad' },\n      { value: 'lossless', label: 'Sin pérdida', disabled: true },\n    ]} />;\n}\n",
+      "api": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Etiqueta visible.",
+          "inherited": false
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": true,
+          "description": "Recibe el valor aceptado; actualiza el estado del consumidor.",
+          "inherited": false
+        },
+        {
+          "name": "options",
+          "type": "readonly ChoiceOption[]",
+          "required": true,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "Valor controlado por la pantalla que consume el componente.",
+          "inherited": false
+        },
+        {
+          "name": "className",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Class applied to the browser field container.",
+          "inherited": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Desactiva la interacción y aplica su tratamiento visual.",
+          "inherited": false,
+          "default": "false"
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        }
+      ],
+      "guide": {
+        "integration": [
+          "Importa Select desde mobile-design.",
+          "Cada opción tiene un value único. Actualiza el valor controlado en onValueChange."
+        ],
+        "behavior": [
+          [
+            "Apertura",
+            "Al activar el campo aparece una lista anclada."
+          ],
+          [
+            "Selección",
+            "La opción elegida se distingue con una marca y la lista se cierra al confirmar."
+          ],
+          [
+            "Disponibilidad",
+            "disabled bloquea el campo o una opción individual."
+          ]
+        ],
+        "accessibility": [
+          "Usa label para identificar el campo.",
+          "Describe cada opción con texto. El estado seleccionado y el estado deshabilitado se comunican por separado."
+        ],
+        "cautions": [
+          "Usa valores únicos para que cada opción tenga una identidad estable."
+        ],
+        "types": [
+          "ChoiceOption"
+        ]
+      },
+      "relatedTypes": [
+        {
+          "name": "ChoiceOption",
+          "properties": [
+            {
+              "name": "label",
+              "type": "string",
+              "required": true,
+              "description": "Etiqueta visible.",
+              "inherited": false
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Valor controlado por la pantalla que consume el componente.",
+              "inherited": false
+            },
+            {
+              "name": "description",
+              "type": "string | undefined",
+              "required": false,
+              "description": "Contenido de apoyo.",
+              "inherited": false
+            },
+            {
+              "name": "disabled",
+              "type": "boolean | undefined",
+              "required": false,
+              "description": "Desactiva la interacción y aplica su tratamiento visual.",
+              "inherited": false
+            },
+            {
+              "name": "href",
+              "type": "string | undefined",
+              "required": false,
+              "description": "Browser link for suggestions that navigate. On native, handle navigation in onSelect.",
+              "inherited": false
+            },
+            {
+              "name": "icon",
+              "type": "string | undefined",
+              "required": false,
+              "description": "Icono del componente.",
+              "inherited": false
+            }
+          ]
+        }
+      ],
+      "recipes": [],
+      "webSupport": {
+        "status": "partial",
+        "implementationPreserved": true
+      }
+    },
+    {
+      "id": "autocomplete",
+      "title": "Autocomplete",
+      "searchAliases": [
+        "Autocompletar",
+        "Sugerencias"
+      ],
+      "group": "extensions",
+      "category": "input",
+      "variants": [
+        "Anclado",
+        "En línea"
+      ],
+      "configurations": [
+        "Filtro local",
+        "Resultados del consumidor",
+        "Sin resultados"
+      ],
+      "implementation": "mobile-design",
+      "exports": [
+        "Autocomplete"
+      ],
+      "notes": [
+        "Extensión basada en TextField. Permite escribir y elegir sugerencias con iconos y descripciones."
+      ],
+      "primaryExport": "Autocomplete",
+      "icon": "search",
+      "tagline": "Escribe para encontrar una opción.",
+      "description": "Autocomplete es una extensión de Mobile Design que muestra sugerencias a medida que se escribe.",
+      "guidance": "Usa sugerencias cuando recordar el valor exacto sea más difícil que reconocerlo. Si ya filtras los resultados, pasa filter como false.",
+      "accessibility": "Etiqueta el campo y escribe sugerencias que se distingan al leerlas. Las descripciones pueden aportar contexto.",
+      "dimensions": [],
+      "example": "import { useState } from 'react';\nimport { Autocomplete } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  const [query, setQuery] = useState('');\n  return <Autocomplete label=\"Ciudad\" value={query} onValueChange={setQuery}\n    leadingIcon=\"search\"\n    options={[\n      { value: 'mty', label: 'Monterrey', description: 'Nuevo León' },\n      { value: 'mid', label: 'Mérida', description: 'Yucatán' },\n      { value: 'qro', label: 'Querétaro', description: 'Querétaro' },\n    ]} />;\n}\n",
+      "api": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Etiqueta visible.",
+          "inherited": false
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": true,
+          "description": "Recibe el valor aceptado; actualiza el estado del consumidor.",
+          "inherited": false
+        },
+        {
+          "name": "options",
+          "type": "readonly ChoiceOption[]",
+          "required": true,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "Valor controlado por la pantalla que consume el componente.",
+          "inherited": false
+        },
+        {
+          "name": "className",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Class applied to the browser field container.",
+          "inherited": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Desactiva la interacción y aplica su tratamiento visual.",
+          "inherited": false,
+          "default": "false"
+        },
+        {
+          "name": "emptyLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false,
+          "default": "'No hay resultados.'"
+        },
+        {
+          "name": "filter",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Set false when the supplied options are already filtered or ranked.",
+          "inherited": false,
+          "default": "true"
+        },
+        {
+          "name": "id",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "leadingIcon",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "listId",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "onEscape",
+          "type": "(() => void) | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "onSelect",
+          "type": "((option: ChoiceOption) => void) | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "openOnFocus",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false,
+          "default": "true"
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "",
+          "inherited": false
+        },
+        {
+          "name": "presentation",
+          "type": "\"popup\" | \"inline\" | undefined",
+          "required": false,
+          "description": "Inline results suit a search dialog that already owns the top layer.",
+          "inherited": false,
+          "default": "'popup'"
+        }
+      ],
+      "guide": {
+        "integration": [
+          "Importa Autocomplete desde mobile-design.",
+          "Controla la consulta con value y onValueChange. Usa onSelect para recibir la opción completa."
+        ],
+        "behavior": [
+          [
+            "Filtro",
+            "Busca coincidencias en la etiqueta y descripción, incluso si la consulta omite los acentos."
+          ],
+          [
+            "Selección",
+            "Al elegir una sugerencia, el campo recibe su etiqueta y onSelect recibe la opción."
+          ],
+          [
+            "Presentación",
+            "popup ancla las sugerencias al campo e inline las muestra debajo, en el flujo de la pantalla."
+          ]
+        ],
+        "accessibility": [
+          "Usa label para nombrar el campo y emptyLabel para explicar el estado vacío.",
+          "Incluye descripciones breves si hay opciones con nombres parecidos."
+        ],
+        "cautions": [
+          "Para navegar desde una sugerencia en móvil, maneja el destino en onSelect. href se usa para enlaces del navegador."
+        ],
+        "types": [
+          "ChoiceOption"
+        ]
+      },
+      "relatedTypes": [
+        {
+          "name": "ChoiceOption",
+          "properties": [
+            {
+              "name": "label",
+              "type": "string",
+              "required": true,
+              "description": "Etiqueta visible.",
+              "inherited": false
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "required": true,
+              "description": "Valor controlado por la pantalla que consume el componente.",
+              "inherited": false
+            },
+            {
+              "name": "description",
+              "type": "string | undefined",
+              "required": false,
+              "description": "Contenido de apoyo.",
+              "inherited": false
+            },
+            {
+              "name": "disabled",
+              "type": "boolean | undefined",
+              "required": false,
+              "description": "Desactiva la interacción y aplica su tratamiento visual.",
+              "inherited": false
+            },
+            {
+              "name": "href",
+              "type": "string | undefined",
+              "required": false,
+              "description": "Browser link for suggestions that navigate. On native, handle navigation in onSelect.",
+              "inherited": false
+            },
+            {
+              "name": "icon",
+              "type": "string | undefined",
+              "required": false,
+              "description": "Icono del componente.",
+              "inherited": false
+            }
+          ]
+        }
+      ],
+      "recipes": [],
+      "webSupport": {
+        "status": "partial",
         "implementationPreserved": true
       }
     }
@@ -11003,6 +11583,13 @@
     "react-native-svg": ">=15.0.0",
     "expo-image": ">=57.0.0",
     "@gorhom/bottom-sheet": ">=5.2.0"
+  },
+  "foundationExamples": {
+    "typography": {
+      "id": "typography",
+      "title": "Text, jerarquía y énfasis",
+      "code": "import { ScrollView, View } from 'react-native';\nimport { MobileDesignProvider, Text, type TextVariant } from 'mobile-design';\n\nconst roles = ['display', 'headline', 'title', 'body', 'label'] as const;\nconst sizes = ['Large', 'Medium', 'Small'] as const;\n\nexport default function TypographyExample() {\n  return <MobileDesignProvider languageHeight=\"small\">\n    <ScrollView contentContainerStyle={{ padding: 24, gap: 24 }}>\n      <Text variant=\"headlineMedium\" accessibilityRole=\"header\">Tu biblioteca</Text>\n      <Text variant=\"bodyLarge\" selectable>\n        Escucha sin prisas. <Text variant=\"bodyLargeEmphasized\">Tus favoritos siguen aquí.</Text>\n      </Text>\n      <Text variant=\"displaySmall\" style={{ fontVariant: ['tabular-nums'] }}>01:11 / 08:48</Text>\n      {roles.flatMap(role => sizes.map(size => {\n        const baseline = (role + size) as TextVariant;\n        const emphasized = (role + size + 'Emphasized') as TextVariant;\n        return <View key={baseline} style={{ gap: 12 }}>\n          <Text variant=\"labelMedium\">{baseline}</Text>\n          <Text variant={baseline} selectable>Diseña para escuchar.</Text>\n          <Text variant={emphasized} selectable>Diseña para escuchar.</Text>\n        </View>;\n      }))}\n    </ScrollView>\n  </MobileDesignProvider>;\n}\n"
+    }
   },
   "optionalPeers": {
     "react-dom": {
@@ -11153,6 +11740,34 @@
       "status": "partial",
       "implementationPreserved": true,
       "interactiveComponents": [
+        "carousel",
+        "checkbox",
+        "chips",
+        "date-pickers",
+        "time-pickers",
+        "dialogs",
+        "divider",
+        "lists",
+        "loading-indicator",
+        "progress-indicators",
+        "menus",
+        "navigation-bar",
+        "navigation-drawer",
+        "navigation-rail",
+        "radio-button",
+        "search",
+        "bottom-sheets",
+        "side-sheets",
+        "sliders",
+        "snackbar",
+        "switch",
+        "tabs",
+        "text-fields",
+        "toolbars",
+        "tooltips",
+        "app-bars",
+        "badges",
+        "button-groups",
         "buttons",
         "extended-fab",
         "fab-menu",
@@ -11160,7 +11775,9 @@
         "icon-buttons",
         "segmented-buttons",
         "split-button",
-        "cards"
+        "cards",
+        "select",
+        "autocomplete"
       ]
     },
     "documentation": "Documentación con ejemplos interactivos del paquete mediante React Native Web"

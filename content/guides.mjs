@@ -1,45 +1,855 @@
 // Guidance describes Mobile Design's native API and the consuming screen's responsibilities.
 export const guides = {
-  'app-bars': {
-    integration:['Elige variant y proporciona title; subtitle, navigationIcon y actions completan la anatomía.', 'Para una barra desplazable, conecta useAppBarScrollBehavior con la barra y el contenido de la misma pantalla. El host decide navegación y rutas.'],
-    behavior:[['Navegación','onNavigationPress ejecuta el regreso o abre el panel de destinos definido por la pantalla.'],['Acciones','Cada entrada de actions necesita una key estable, icono, etiqueta y callback.'],['Desplazamiento','El controlador coordina colapso, expansión y superficie. scrolled sirve para un estado explícito; no conecta por sí solo un ScrollView.']],
-    accessibility:['Usa navigationLabel para explicar la flecha o el menú y label en cada acción.', 'Mantén el título legible al colapsar; collapsedTitle puede representar su alternativa compacta.'],
-    cautions:['Una acción de búsqueda debe presentar la búsqueda real de la pantalla.', 'Evita controladores de scroll independientes para una misma barra.'],
-    types:['TopAppBarAction'],
-  },
-  badges:{integration:['Usa Badge para la insignia visual o BadgedBox para anclarla a un icono o destino.', 'Pasa un número como badge para cantidades o true para una novedad sin texto. El destino conserva su acción.'],behavior:[['Sin cantidad','La variante dot comunica presencia de novedades.'],['Con cantidad','Large muestra una etiqueta breve; maximum limita el contador numérico y añade + cuando se supera.'],['Anclaje','BadgedBox coloca la insignia en el extremo superior lógico sin convertirla en un segundo botón.']],accessibility:['Nombra la cantidad y su significado en el destino: «Correo, 8 mensajes nuevos».','Conserva una única acción accesible cuando la insignia sólo complementa un icono.'],cautions:['No uses la insignia como botón de cierre ni como mensaje de error extenso.'],types:['BadgedBoxProps']},
-  'button-groups':{integration:['Define items con value estable y label. Usa onPress por ítem para comandos.', 'Para selección, define selectionMode, value y onValueChange; el consumidor guarda el nuevo valor.'],behavior:[['Standard','La presión amplía temporalmente el elemento y utiliza el espacio disponible de sus vecinos inmediatos.'],['Connected','Mantiene el conjunto unido y comunica selección con forma, color e indicador.'],['Selección','single acepta un valor; multiple admite varios. allowEmptySelection controla si puede quedar vacío.']],accessibility:['Da un nombre al conjunto y etiquetas claras a sus alternativas.','Conserva el estado seleccionado cuando se reduce el movimiento.'],cautions:['No mezcles alternativas excluyentes con selección múltiple.','Cada value debe ser único dentro del grupo.'],types:['ButtonGroupItem']},
-  buttons:{integration:['Define variant, size y shape según la jerarquía de la acción; children contiene su etiqueta.', 'Usa onPress para un comando. Para Toggle, proporciona selected y actualízalo desde el consumidor.'],behavior:[['Default','Activa el callback al completar una pulsación válida.'],['Toggle','selected representa el estado aceptado; el componente no administra ese valor por la pantalla.'],['Carga y bloqueo','disabled o loading bloquean la activación. La forma y los estados visuales responden a presión, foco y selección.']],accessibility:['Usa una etiqueta que describa el resultado, como «Guardar colección».','El objetivo de interacción conserva un mínimo independiente del tamaño visual.'],cautions:['El tratamiento Text no admite Toggle.','pressed mantiene la presentación de presión para composiciones como un menú abierto; no sustituye selected.'],types:[]},
-  'extended-fab':{integration:['Usa FAB.Extended o ExtendedFAB con label e icon opcional; size default corresponde al tamaño Small.', 'La pantalla coloca una sola acción principal con margen de 16, respetando safe area y navegación, y controla expanded/visible.', 'Al desplazarse hacia abajo puede contraerse; hacia arriba recupera la etiqueta. Un rail expandido puede usar elevation={0}.'],behavior:[['Activación','onPress inicia una única tarea principal. Icono y etiqueta forman una sola acción.'],['Colapso','expanded anima anchura y opacidad sin escalar glifos. Sin icono, la etiqueta permanece visible.'],['Presencia','visible coordina aparición y salida; el componente permanece montado durante la transición y deja de ser interactivo al ocultarse.'],['Uso en pantalla','La pantalla coordina formularios, confirmación y transformaciones de contenedor; no son estados internos adicionales del FAB.']],accessibility:['Conserva el mismo nombre accesible al contraer la etiqueta y describe la acción, no el icono.','Tab alcanza la acción; Enter y Espacio la activan. El foco visible acompaña la forma.','Al cerrar la tarea, devuelve el foco a la acción principal; un FAB oculto no debe recibir foco.'],cautions:['Prefiere etiquetas de una o dos palabras y evita truncarlas o partirlas.','Usa una sola acción flotante destacada; evita colocarla sobre toolbars, tarjetas o controles interactivos.','Los estados son habilitado, hover, foco y pulsación; no se añaden variantes de carga o deshabilitado.'],types:[]},
-  'fab-menu':{integration:['Controla expanded y ciérralo desde onDismiss. trigger define el FAB y su nombre accesible.', 'Define de dos a seis items relacionados, con label e icon; cada comando usa onPress.', 'presentation="expressive" muestra la pila animada en todas las plataformas. La presentación adaptive utiliza el menú baseline en web.', 'overflow="scroll" y maxHeight habilitan una pila extendida; más de seis acciones es una extensión del paquete.'],behavior:[['Presentación Expressive','El FAB se transforma en un cierre circular de 56. Las pastillas de altura 56 y radio 28 se ajustan al contenido y tienen elevación 0.'],['Abrir y cerrar','La pila conserva la esquina superior final del FAB, incluso al partir de Medium o Large. El cierre y Escape cierran el conjunto.'],['Elegir una acción','La selección ejecuta un solo comando y solicita el cierre una sola vez.'],['Teclado','En Expressive, el foco permanece en el cierre y Tab recorre las acciones. La adaptación web añade flechas, Inicio/Fin y búsqueda por prefijo.'],['Desplazamiento','La pila puede desplazarse en alturas limitadas sin obstruir el cierre.']],accessibility:['Describe la acción del FAB y conserva el estado expandido.', 'Expressive expone botones con nombre; la adaptación web usa elementos de menú y descubre comandos deshabilitados.', 'Al cerrar o elegir un comando, recupera el foco del FAB. Los elementos ocultos salen del teclado.'],cautions:['El patrón base admite de dos a seis acciones relacionadas; no se abre desde un FAB extendido ni se combina con un rail o toolbar flotante.', 'Respeta el extremo final lógico y márgenes de 16, o de 24 en ventanas grandes.', 'Las listas de más de seis acciones y los submenús son extensiones del paquete.'],types:['FABMenuItemProps','FABMenuTriggerProps']},
-  'floating-action-button':{integration:['Define un MaterialSymbol con filled, accessibilityLabel y onPress para la acción principal. Medium (80 dp) es el tamaño recomendado; la API conserva size="default" (56 dp) como valor inicial.', 'El host controla visible, posición e insets. size y variant seleccionan tamaño y par de colores semánticos. Añade Tooltip para explicar la acción al pasar el puntero o enfocar.'],behavior:[['Comando','onPress inicia una única tarea destacada: crear, redactar, publicar o completar una compra.'],['Presión y elevación','La capa de estado queda dentro de la forma. Conserva elevación 3 y aumenta a 4 al pasar el puntero.'],['Desplazamiento','Permanece anclado mientras se desplaza el contenido. Evita cubrir los últimos elementos.'],['Visibilidad','Se oculta cuando la acción no está disponible, en vez de inventar un estado deshabilitado. La presencia se anima según el tema y respeta movimiento reducido.'],['Transformación','Puede abrir la tarea desde su superficie mediante ContainerTransformSurface; confirmar o cancelar devuelve el foco al FAB.']],accessibility:['Describe la acción con palabras porque sólo hay icono visible. El tooltip complementa el nombre.','Mantén el FAB fuera de las zonas que la navegación o el teclado necesitan.','Cuando visible es false, no debe seguir en el recorrido del teclado.'],cautions:['Usa una sola acción de máxima jerarquía por pantalla.','No añadas loading o disabled: no forman parte de esta API.'],types:[]},
-  'icon-buttons':{integration:['Define icon y accessibilityLabel. sizeClass controla la escala completa; size heredado puede personalizar el glifo. Usa MaterialSymbol para controlar su relleno.', 'Default omite selected. Toggle recibe selected y lo actualiza en onPress. mode="contained" corresponde a Filled, contained-tonal a Tonal, outlined a Outlined; omitir mode corresponde a Standard.'],behavior:[['Default','Ejecuta una acción sin selección persistente. Usa el icono relleno cuando esté disponible.'],['Toggle','El estado controlado cambia forma, color y relleno: contorno sin selección y relleno al seleccionar. Round cambia a Square y viceversa.'],['Presión','El radio converge al token de presión y vuelve al estado actual al soltar o cancelar, incluso con pulsaciones rápidas.'],['Superficie y objetivo','shape y widthVariant configuran el dibujo. El objetivo real conserva al menos 48 × 48 dp; el feedback queda limitado al dibujo. Para centrar controles de tamaños distintos dentro de Tooltip, usa anchorStyle={{alignSelf: "center"}} en esa composición.'],['Teclado y ayuda','Enter y Espacio activan una vez. El foco de teclado es visible y Tooltip describe la acción.'],['Carga','loading bloquea nuevas acciones y anuncia busy; disabled retira la activación. Son estados del paquete, adicionales a las configuraciones visuales.']],accessibility:['Un icono reconocible también necesita nombre accesible y ayuda contextual.','Actualiza el nombre de acciones opuestas: añadir o quitar favorito. Publica la selección del toggle.','No uses varios iconos decorativos como controles sin una acción real.'],cautions:['No alinees el objetivo usando la caja del glifo.','Usa pressed sólo para composiciones que mantienen abierto un popup; Menu ya coordina ese estado con su ancla.'],types:[]},
-  'segmented-buttons':{integration:['Define de dos a cinco buttons con valores únicos, etiquetas breves y un mismo tipo de contenido: iconos, etiquetas o ambos.', 'Single-select recibe un valor; multiSelect recibe un array que puede quedar vacío. En diseños Expressive nuevos, la alternativa recomendada es Connected button groups.'],behavior:[['Selección única','Elegir otra opción reemplaza el valor anterior. La opción seleccionada no queda vacía al volver a activarla.'],['Selección múltiple','Cada opción se añade o retira; pueden seleccionarse todas o ninguna.'],['Icono y check','Con etiqueta e icono, el check sustituye al icono mediante una transición. Con sólo etiqueta, el check entra y el texto se recentra.'],['Densidad y medidas','La superficie baja de 40 a 36, 32 o 28 dp. El objetivo real conserva 48 dp; los segmentos tienen el mismo ancho y permanecen en una línea.'],['Teclado','Tab entra por el primer segmento; flechas, Inicio y Fin mueven el foco sin cambiar la selección. Espacio o Enter confirman la opción enfocada.'],['Contenido adaptable','Las etiquetas se miden con la fuente real. El grupo conserva un ancho intrínseco y evita extender sus opciones por toda una ventana amplia.']],accessibility:['El grupo de selección única expone radio y radiogroup; cada opción múltiple expone checkbox.', 'Los iconos sin texto necesitan accessibilityLabel y las opciones deshabilitadas no se activan.', 'En RTL se invierte el orden visual y la dirección de las flechas. La selección sigue siendo independiente del foco.'],cautions:['La referencia conserva esta familia, pero recomienda Connected button groups para interfaces Expressive nuevas.', 'No mezcles segmentos de sólo icono con otros de sólo texto ni uses más de cinco opciones.'],types:['SegmentedButtonOption']},
-  'split-button':{integration:['Define label, icon opcional y onPress para el comando principal. Las actions contienen alternativas relacionadas con key, label y onPress.', 'La mitad principal admite texto, icono o ambos; conserva un nombre accesible explícito si no hay texto. expanded/onExpandedChange permiten coordinar el menú.'],behavior:[['Comando principal','La primera mitad ejecuta su comando sin abrir el menú.'],['Alternativas','El chevrón abre el menú sin ejecutar el comando principal. La opción elegida se ejecuta una vez después del cierre.'],['Forma y giro','Las esquinas interiores responden a hover, foco y presión. Al abrir, la mitad secundaria se redondea, centra el icono y gira 180° hacia dentro.'],['Color','La selección añade una capa de estado; mantiene el mismo par de colores del estilo elegido.'],['Colocación','El menú se mide desde la superficie secundaria y deja 4 dp. Puede colocarse arriba si no cabe debajo.'],['Cancelación','Escape, salida del menú, bloqueo o desmontaje descartan acciones pendientes. El cierre devuelve el foco al disparador.']],accessibility:['Nombra el comando principal y la apertura del menú por separado: Enviar y Más opciones de envío.', 'Las dos mitades tienen objetivos de al menos 48 × 48 dp. Tab recorre ambas; Enter o Espacio activan la enfocada.', 'El control secundario comunica expanded y dispone de navegación de menú por flechas, Inicio/Fin y búsqueda por prefijo.'],cautions:['No cambies el chevrón por un icono de otra acción ni uses etiquetas largas.', 'Las alternativas son opciones relacionadas; no añadas botones independientes dentro de una mitad.', 'La rotación utiliza el movimiento estándar de efectos, incluso con un proveedor Expressive.'],types:['SplitButtonAction']},
-  cards:{integration:['Escoge Elevated, Filled u Outlined y compón Card.Title, Card.Content, Card.Cover y Card.Actions. El contenedor es el único elemento obligatorio.', 'Usa una tarjeta informativa con controles internos, o una superficie directamente pulsable sin otros controles dentro. En navegador, href crea un enlace real; onPress permite coordinar navegación en la aplicación.'],behavior:[['Contenido','Título, subtítulo, texto, imagen y acciones son opcionales. La altura se adapta al contenido; Card.Content utiliza padding lateral de 16 dp.'],['Interacción','Las tarjetas informativas no reciben presión ni foco como acción. Los botones internos tienen sus propios objetivos; la tarjeta completa no los envuelve en otro botón.'],['Estados','Hover, foco, presión y arrastre usan sus propios niveles de elevación y capas de estado, sin copiar las reglas de otros botones.'],['Detalle y expansión','La tarea puede expandirse desde la tarjeta usando ContainerTransformSurface. Volver y Escape cierran la vista y recuperan el foco. La expansión de información usa el desplazamiento de la página.'],['Colecciones','Cuadrícula, lista, fila horizontal, mosaico y disposición escalonada organizan varias tarjetas. Filtro y orden se colocan fuera de ellas.'],['Gestos','Deslizar mueve la tarjeta completa para una sola acción. El arrastre eleva la tarjeta; un menú ofrece las mismas acciones sin arrastrar.']],accessibility:['Cada acción necesita nombre y orden de foco. Una tarjeta informativa no añade una parada de Tab.', 'Una tarjeta directamente pulsable puede tener rol de botón o enlace; las imágenes decorativas no añaden lectura duplicada.', 'Incluye alternativas de un solo puntero para archivar o reordenar y conserva una vía para deshacer.'],cautions:['No anides botones o enlaces dentro de una tarjeta que ya es una acción completa.', 'No conviertas en tarjetas datos que se entienden mejor con espacio, títulos o divisores.', 'Los filtros, gestos, navegación y selección pertenecen a la composición; no son variantes visuales adicionales de Card.'],types:[]},
-  carousel:{integration:['Pasa items con id único y title. image, icon y aspectRatio describen su contenido visual.', 'Elige variant y conecta onItemPress con el destino. onIndexChange permite observar la posición aceptada.'],behavior:[['Exploración','El recorrido adapta máscaras y elementos focales a la variante.'],['Ajuste','snapping y alignment definen la relación con las posiciones de reposo.'],['Activación','onItemPress entrega el elemento y su índice; el consumidor abre su visor o detalle.']],accessibility:['Da un nombre a la colección y a elementos que no se entienden por título.','Mantén una alternativa accesible al arrastre y verifica el contenido focal.'],cautions:['Full-screen tiene restricciones de composición y tamaño de ventana.','Las medidas de una fotografía no deben sustituir el espacio del elemento en el carrusel.'],types:['CarouselItem']},
-  checkbox:{integration:['Controla status con checked, unchecked o indeterminate.', 'Usa Checkbox.Item para una opción etiquetada y administra el conjunto seleccionado en la pantalla.'],behavior:[['Independencia','Cambiar una opción no elimina las demás selecciones.'],['Estado parcial','Un padre puede usar indeterminate cuando sólo algunos hijos están seleccionados.'],['Bloqueo','disabled conserva la lectura del estado sin permitir modificarlo.']],accessibility:['El estado parcial se anuncia como mixed.','La etiqueta debe describir la opción y mantener su relación con la casilla.'],cautions:['No uses checkbox para alternativas mutuamente excluyentes.'],types:[]},
-  chips:{integration:['Elige variant según Assist, Filter, Input o Suggestion; children aporta la etiqueta.', 'Controla selected para filtros. onClose retira una entrada; onPress conserva una función distinta.'],behavior:[['Filter','El consumidor acepta o descarta la selección desde onPress.'],['Input','La acción de cierre se entrega independientemente de la región primaria.'],['Grupo','Chip.Group coordina el conjunto; cada entrada debe conservar identidad estable.']],accessibility:['Nombra el cierre con closeIconAccessibilityLabel, por ejemplo «Quitar Ana».','Publica selected cuando la función sea un filtro.'],cautions:['La X de Input no debe activar también el callback primario.'],types:['ChipGroupProps']},
-  'date-pickers':{integration:['Controla visible, value, onChange y onDismiss; mode distingue fecha simple de rango.', 'Define locale, firstDayOfWeek y límites cuando la tarea los requiera. DockedDatePicker aporta la composición anclada.'],behavior:[['Borrador','La selección del calendario o la entrada permanece en la sesión hasta confirmarse.'],['Confirmar','onChange recibe Date o DateRange según mode; el host guarda el resultado y cierra.'],['Cancelar','onDismiss permite retirar el selector sin aceptar el borrador.']],accessibility:['Explica formato y errores de la entrada manual.','Las fechas no disponibles y la selección deben tener lectura comprensible.'],cautions:['No conviertas fechas locales en cadenas UTC sin decidir la zona de la tarea.','Mantén consistentes mínimo, máximo e isDateDisabled.'],types:['DateRange','DockedDatePickerProps']},
-  'time-pickers':{integration:['Controla visible y value como { hours, minutes }, y acepta el resultado en onConfirm.', 'Define is24Hour y el modo inicial. El valor usa horas de 0 a 23 incluso cuando la presentación es de 12 horas.'],behavior:[['Reloj','Selecciona hora y minuto; autoSwitchToMinutes puede avanzar entre ambos.'],['Entrada','El modo input valida los campos antes de permitir confirmación.'],['Confirmación','onConfirm recibe el borrador aceptado; onDismiss descarta la sesión.']],accessibility:['Nombra hora y minuto por separado y conserva el periodo AM/PM.','Con texto ampliado, Cancelar y Aceptar deben seguir disponibles.'],cautions:['AM/PM modifica la representación, no el contrato de horas 0–23.'],types:['TimeValue']},
-  dialogs:{integration:['Controla visible y onDismiss; compón Title, Content y Actions dentro de Dialog.', 'Usa FullScreenDialog para una tarea extensa y separa guardar de descartar.'],behavior:[['Entrada','La superficie modal presenta la tarea sobre el contenido anterior.'],['Decisión','Los botones invocan las acciones de la pantalla; el componente no elimina ni guarda datos por sí mismo.'],['Salida','onClosed permite continuar después de retirar la superficie. Una salida interrumpida no debe iniciar otro destino.']],accessibility:['Incluye título, acciones inequívocas y una ruta de cancelación cuando proceda.','El contenido de fondo no debe recibir interacción durante el modal.'],cautions:['Conserva la superficie montada hasta que complete su salida.'],types:['FullScreenDialogProps','ContainerTransformOrigin']},
-  divider:{integration:['Coloca Divider entre regiones que necesitan separación visual.', 'orientation cambia el eje; thickness e insets ajustan la línea dentro de la composición.'],behavior:[['Separación','La línea ocupa su grosor y utiliza el rol de contorno del tema.'],['Alineación','El inset debe coincidir con los márgenes del contenido que agrupa.'],['Interacción','El separador es visual y no inicia una acción.']],accessibility:['No añadas foco a una línea decorativa.','La agrupación también debe entenderse por títulos y orden de lectura.'],cautions:['El divisor no reemplaza una estructura semántica.'],types:[]},
-  lists:{integration:['Compón List.Item con title y slots leading/trailing; description y lines definen apoyo y altura.', 'Usa una región primaria para navegación y controles trailing independientes cuando la fila tenga varias acciones. Para grandes colecciones, el host aporta FlatList.'],behavior:[['Acción primaria','onPress abre o activa el elemento, sin ejecutar un botón secundario.'],['Acciones separadas','Un control trailing mantiene su propio gesto y estado de presión; no se combina su objetivo con la fila.'],['Composiciones','List.Accordion, SwipeListItem y ListReorderGroup cubren expansión, acciones laterales y reordenamiento con estado del consumidor.']],accessibility:['Nombra cada acción independiente y publica selección o expansión cuando exista.','Conserva el orden título, descripción, metadata y acciones sin duplicar anuncios.'],cautions:['List no virtualiza la colección.','No extiendas artificialmente el sombreado de una acción sobre otro botón independiente.'],types:['ListSlotProps','ListAccordionProps','SwipeListAction']},
-  'loading-indicator':{integration:['Usa LoadingIndicator mientras la duración de una tarea es desconocida.', 'variant configura contenedor; animating pausa el movimiento y visible controla presencia. El estado del trabajo pertenece al host.'],behavior:[['Actividad','El morph recorre las formas de carga mientras la animación está habilitada.'],['Pausa','animating=false detiene el indicador sin resolver la tarea.'],['Resultado','Success o error se presentan mediante una composición de resultado; no son valores de variant.']],accessibility:['Incluye accessibilityLabel con el nombre de la tarea.','Conserva una señal comprensible cuando se reduce el movimiento.'],cautions:['Una tarea con avance conocido necesita ProgressIndicator.'],types:['PullToRefreshProps']},
-  'progress-indicators':{integration:['Elige linear o circular. progress de 0 a 1 comunica avance determinado; omitirlo mantiene el modo indeterminado.', 'appearance configura flat o wavy. CircularProgressStatus compone progreso y success.'],behavior:[['Avance','El host publica el progreso real de la operación.'],['Pausa','paused detiene el movimiento sin completar el trabajo.'],['Finalización','CircularProgressStatus cambia de progress a success y puede informar el final de su animación.']],accessibility:['Nombra la tarea y conserva un resultado textual al finalizar.','No anuncies cada frame; el valor debe representar avance significativo.'],cautions:['El ejemplo de success no introduce una tercera forma normativa de ProgressIndicator.'],types:['CircularProgressStatusProps']},
-  menus:{integration:['Controla visible y onDismiss y proporciona un anchor que abra el menú.', 'Compón Menu.Item y grupos. onClosed permite coordinar la siguiente superficie después de la salida.'],behavior:[['Apertura','El popup mide su ancla y se ajusta a la ventana y al teclado.'],['Selección','El ítem ejecuta una acción o representa una alternativa seleccionada.'],['Continuación','Cuando una opción abre un diálogo, retén la intención y ejecútala en onClosed.']],accessibility:['Etiqueta el disparador y explica qué acción ejecuta cada ítem.','Conserva los estados selected y disabled y una forma clara de salir.'],cautions:['No abras dos superficies modales durante el mismo evento.','La navegación web por teclado existe en el código, pero su validación completa sigue pendiente.'],types:['MenuItemProps','MenuSubmenuProps']},
-  'navigation-bar':{integration:['Define items con key estable, label e icon y conecta value/onValueChange.', 'La pantalla acepta el destino y resuelve su ruta. iconPosition y arrangement ajustan la composición.'],behavior:[['Destino','Activar un ítem entrega su key.'],['Selección','value determina el indicador y el contenido activo del host.'],['Novedades','badge complementa el destino; no crea un control separado.']],accessibility:['Cada destino necesita nombre y estado seleccionado.','Integra la cantidad de novedades en el significado del destino.'],cautions:['El componente no instala ni configura un router.'],types:['NavigationDestination']},
-  'navigation-drawer':{integration:['Define items y controla value/onValueChange; header y footer añaden contenido de contexto.', 'Usa NavigationDrawerModal cuando el panel necesite apertura modal y cierre sobre un scrim.'],behavior:[['Estructura','Los destinos pueden agruparse por sección.'],['Selección','El valor aceptado actualiza el destino destacado; el host resuelve la navegación.'],['Modal','La composición modal coordina apertura y cierre sin modificar el conjunto de destinos.']],accessibility:['Conserva nombres completos y una selección reconocible.','El cierre modal debe devolver el acceso al contenido o disparador.'],cautions:['No añadas un botón de cerrar a la anatomía estándar si la composición ya resuelve su navegación.'],types:['NavigationDrawerDestination','NavigationDrawerModalProps']},
-  'navigation-rail':{integration:['Pasa items, value y onValueChange, y decide el breakpoint desde el layout.', 'Controla expanded/onExpandedChange cuando el usuario pueda abrir etiquetas; header, footer y fab son slots opcionales.'],behavior:[['Colapsada','Los iconos conservan la identidad y el nombre de sus destinos.'],['Expandida','Aparecen etiquetas dentro de la columna lateral.'],['Ruta','El cambio de valor pertenece a la pantalla y conserva los mismos destinos entre tamaños.']],accessibility:['Mantén nombres cuando las etiquetas están ocultas.','Nombra el control que expande o cierra el rail modal.'],cautions:['El breakpoint es responsabilidad del host, no un cambio automático de rutas.'],types:['NavigationDestination','NavigationRailModalProps']},
-  'radio-button':{integration:['Usa RadioButton.Group con value/onValueChange para un conjunto de alternativas.', 'Cada RadioButton.Item aporta un value único y una etiqueta.'],behavior:[['Exclusión','La nueva selección reemplaza la anterior.'],['Valor','El consumidor conserva un único valor aceptado.'],['Bloqueo','Una opción disabled conserva la lectura, pero no puede activarse.']],accessibility:['Explica el propósito del grupo y el nombre de cada alternativa.','El estado checked debe coincidir con el valor del consumidor.'],cautions:['No uses RadioButton para varias opciones independientes.'],types:[]},
-  search:{integration:['Searchbar expone el campo; SearchView compone la entrada con su vista de búsqueda.', 'Controla open, value y sus callbacks. El consumidor filtra u obtiene results y decide el destino de un resultado.'],behavior:[['Abrir','Activar la entrada de SearchView abre su presentación.'],['Escribir y borrar','onChangeText actualiza la consulta. Borrar se ofrece cuando existe texto; la flecha cierra o regresa.'],['Resultados','onSearch entrega la consulta y onResultPress entrega el resultado. Loading, emptyContent y supportingContent describen sus estados.']],accessibility:['Etiqueta el campo y los resultados sin anunciar cada pulsación de forma invasiva.','Conserva acciones diferenciadas para borrar la consulta y cerrar la búsqueda.'],cautions:['SearchView no consulta un servicio por sí mismo.','Cancela peticiones antiguas para que una respuesta tardía no reemplace la consulta actual.'],types:['SearchViewProps','SearchResult']},
-  'bottom-sheets':{integration:['Controla open/onOpenChange y define variant y snapPoints.', 'Usa GestureHandlerRootView y los contenedores de scroll de la hoja. BottomSheetTextField coordina los campos con su teclado.'],behavior:[['Expansión','El gesto recorre las posiciones admitidas; onIndexChange informa el índice.'],['Desplazamiento','El motor coordina el scroll interno con el arrastre de la superficie.'],['Cierre','El host acepta el estado cerrado; onClosed permite continuar tras su salida.']],accessibility:['Nombra la superficie y mantén una forma de cierre cuando sea descartable.','Verifica acceso a campos y acciones con el teclado abierto.'],cautions:['No anides un ScrollView genérico cuando necesitas el coordinado por la hoja.'],types:['BottomSheetTextFieldProps']},
-  'side-sheets':{integration:['Controla open/onOpenChange y elige standard o modal según el layout.', 'edge define el borde lógico; title, header y footer aportan contexto.'],behavior:[['Standard','Participa en el espacio de la pantalla.'],['Modal','Presenta scrim e impide interacción con el fondo.'],['Salida','onClosed se entrega tras retirar la superficie, para coordinar otra tarea.']],accessibility:['Conserva título, acción de cierre y orden de lectura.','Evita que el fondo reciba foco durante la presentación modal.'],cautions:['El host debe reservar espacio para una hoja estándar.'],types:[]},
-  sliders:{integration:['Controla value/onValueChange y define minimumValue, maximumValue y step.', 'RangeSlider usa dos límites; orientation permite una composición vertical.'],behavior:[['Arrastre','onValueChange entrega el avance durante el gesto.'],['Completar','onSlidingComplete permite confirmar el valor final.'],['Cancelar','onSlidingCancel descarta una interacción cancelada sin ejecutar la confirmación.']],accessibility:['Incluye nombre y unidad mediante accessibilityLabel y valueSuffix.','Conserva las acciones accesibles de incremento y decremento.'],cautions:['No uses el callback de cambio como confirmación irreversible.'],types:['RangeSliderProps']},
-  snackbar:{integration:['Controla visible/onDismiss y utiliza children para un mensaje breve.', 'action añade una opción relacionada; bottomOffset evita solapar navegación y FAB.'],behavior:[['Mensaje','La superficie aparece después de una acción de la pantalla.'],['Acción','El callback de action ejecuta Deshacer u otra continuación explícita.'],['Duración','El ciclo considera visibilidad, acciones y preferencias accesibles; el host acepta el cierre.']],accessibility:['Permite leer y activar la acción sin una duración demasiado breve.','Conserva texto útil en el anuncio de resultado.'],cautions:['El componente no revierte datos por sí mismo; Deshacer pertenece al consumidor.'],types:[]},
-  switch:{integration:['Controla value y actualízalo desde onValueChange.', 'Usa accessibilityLabel o una composición etiquetada para explicar el ajuste.'],behavior:[['Activación','Cambiar el valor aplica un ajuste binario.'],['Estado','Track y handle representan el valor aceptado y responden al gesto.'],['Bloqueo','disabled impide cambiar el estado y mantiene su significado.']],accessibility:['Mantén una etiqueta estable para el ajuste y publica on/off.','Los iconos del handle complementan el significado.'],cautions:['No uses Switch para una acción que necesita confirmación diferida.'],types:[]},
-  tabs:{integration:['Define items con key y label y comparte value/onValueChange entre Tabs y contenido.', 'Con TabsPager, enlaza position del hilo UI y selectionRequest para coordinar toque, reelección y swipe.'],behavior:[['Toque','La pestaña solicita un valor y el consumidor actualiza el contenido aceptado.'],['Deslizamiento','TabsPager mueve el contenido y position sincroniza el indicador.'],['Interrupción','Una nueva selección puede interrumpir un gesto anterior; selectionRequest permite reactivar la pestaña actual.']],accessibility:['Nombre, selección y página visible deben coincidir.','Mantén etiquetas claras para iconos sin texto y comprueba su crecimiento con texto ampliado.'],cautions:['Dos estados seleccionados independientes desalinean la cabecera y el pager.'],types:['TabItem','TabsPagerProps']},
-  'text-fields':{integration:['Controla value y onChangeText y proporciona label.', 'SupportingText explica el formato; error y errorText comunican una corrección. Los iconos interactivos tienen callbacks propios.'],behavior:[['Escritura','El campo entrega texto sin administrar los datos de la pantalla.'],['Foco','Etiqueta, indicador y superficie expresan edición y disponibilidad.'],['Validación','El consumidor decide cuándo presentar errores y cuándo puede enviarse el formulario.']],accessibility:['Relaciona etiqueta, ayuda y error con la entrada.','Etiqueta los iconos interactivos, como Mostrar contraseña o Borrar.'],cautions:['No pierdas texto ni foco al alternar la visibilidad de una contraseña.'],types:['TextFieldHandle','BottomSheetTextFieldProps']},
-  toolbars:{integration:['Define actions con key, icon, label y onPress.', 'variant, orientation y color configuran la barra; el host decide su posición y relación con el contenido.'],behavior:[['Herramientas','Cada acción representa un comando o selección de la tarea actual.'],['Overflow','Las opciones que no caben se trasladan a un menú real.'],['Presencia','visible y expanded coordinan el espacio y su presentación.']],accessibility:['Nombra la barra y cada acción de icono.','Conserva los estados seleccionados y el acceso a las acciones de overflow.'],cautions:['No elimines comandos al reducir el espacio: deben seguir disponibles en el menú.'],types:['ToolbarAction']},
-  tooltips:{integration:['Usa Tooltip para una explicación breve y RichTooltip para título, contenido y acciones.', 'RichTooltip admite visible/onDismiss y un anchor real. persistent conserva una ayuda que necesita decisión.'],behavior:[['Plain','Describe el propósito de un control sin añadir una tarea.'],['Rich','Presenta información adicional y acciones identificadas por key.'],['Cierre','El consumidor acepta onDismiss; las acciones deciden si continúan o cierran la ayuda.']],accessibility:['La ayuda complementa, no reemplaza, el nombre accesible del disparador.','Una ayuda persistente con acciones necesita una forma de cierre alcanzable.'],cautions:['Evita mostrar un tooltip para repetir una etiqueta ya evidente.'],types:['RichTooltipAction','TooltipProps']},
+    select: {
+        integration: [
+            'Importa Select desde mobile-design.',
+            'Cada opción tiene un value único. Actualiza el valor controlado en onValueChange.',
+        ],
+        behavior: [
+            ['Apertura', 'Al activar el campo aparece una lista anclada.'],
+            ['Selección', 'La opción elegida se distingue con una marca y la lista se cierra al confirmar.'],
+            ['Disponibilidad', 'disabled bloquea el campo o una opción individual.'],
+        ],
+        accessibility: [
+            'Usa label para identificar el campo.',
+            'Describe cada opción con texto. El estado seleccionado y el estado deshabilitado se comunican por separado.',
+        ],
+        cautions: ['Usa valores únicos para que cada opción tenga una identidad estable.'],
+        types: ['ChoiceOption'],
+    },
+    autocomplete: {
+        integration: [
+            'Importa Autocomplete desde mobile-design.',
+            'Controla la consulta con value y onValueChange. Usa onSelect para recibir la opción completa.',
+        ],
+        behavior: [
+            ['Filtro', 'Busca coincidencias en la etiqueta y descripción, incluso si la consulta omite los acentos.'],
+            ['Selección', 'Al elegir una sugerencia, el campo recibe su etiqueta y onSelect recibe la opción.'],
+            ['Presentación', 'popup ancla las sugerencias al campo e inline las muestra debajo, en el flujo de la pantalla.'],
+        ],
+        accessibility: [
+            'Usa label para nombrar el campo y emptyLabel para explicar el estado vacío.',
+            'Incluye descripciones breves si hay opciones con nombres parecidos.',
+        ],
+        cautions: ['Para navegar desde una sugerencia en móvil, maneja el destino en onSelect. href se usa para enlaces del navegador.'],
+        types: ['ChoiceOption'],
+    },
+    'app-bars': {
+        integration: [
+            'Elige variant y proporciona title; subtitle, navigationIcon y actions completan la anatomía.',
+            'Para una barra desplazable, conecta useAppBarScrollBehavior con la barra y el contenido de la misma pantalla. El host decide navegación y rutas.',
+        ],
+        behavior: [
+            ['Navegación', 'onNavigationPress ejecuta el regreso o abre el panel de destinos definido por la pantalla.'],
+            [
+                'Acciones',
+                'Cada entrada de actions necesita una key estable, icono, etiqueta y callback. Prioriza una o dos acciones esenciales. Una acción Filled o Tonal puede destacarse y adoptar ancho Wide.',
+            ],
+            [
+                'Desplazamiento',
+                'Pinned conserva la barra y modifica su superficie; exit-until-collapsed comprime la barra flexible hasta Small; enter-always puede ocultarla y volver a mostrarla al invertir el recorrido. Conecta onScroll al Animated.ScrollView y utiliza snap para ajustar el final. scrolled sólo fija el estado de superficie.',
+            ],
+            [
+                'Dimensiones',
+                'Search utiliza un contenedor de 64 dp y una entrada de 56 dp. Small mide al menos 64 dp; Medium flexible 112/136 dp y Large flexible 120/152 dp, sin/con subtítulo. Las flexibles admiten dos líneas y crecen con el contenido.',
+            ],
+            [
+                'Búsqueda',
+                'Seleccionar la entrada abre SearchView. La flecha regresa; Borrar aparece únicamente si existe una consulta. Navegación, micrófono y cuenta tienen acciones independientes.',
+            ],
+        ],
+        accessibility: [
+            'Usa navigationLabel para explicar la flecha o el menú y label en cada acción.',
+            'Mantén el título legible al colapsar; collapsedTitle puede representar su alternativa compacta.',
+        ],
+        cautions: [
+            'Una acción de búsqueda debe presentar la búsqueda real de la pantalla.',
+            'Evita controladores de scroll independientes para una misma barra.',
+        ],
+        types: ['TopAppBarAction'],
+    },
+    badges: {
+        integration: [
+            'Usa Badge para la insignia visual o BadgedBox para anclarla a un icono o destino.',
+            'Pasa un número como badge para cantidades o true para una novedad sin texto. El destino conserva su acción.',
+        ],
+        behavior: [
+            ['Sin cantidad', 'La variante dot comunica presencia de novedades.'],
+            ['Con cantidad', 'Large muestra una etiqueta breve; maximum limita el contador numérico y añade + cuando se supera.'],
+            [
+                'Anclaje',
+                'BadgedBox se ancla al glifo de 24 dp dentro del botón, no al objetivo de interacción. Small conserva 6 dp; Large al menos 16 dp, con 4 dp de padding lateral. El anclaje se refleja en RTL.',
+            ],
+            [
+                'Contenido',
+                'El conteo numérico utiliza maximum (999 por defecto) y añade + cuando lo supera. La etiqueta no excede cuatro caracteres, incluido +. Cero es contenido válido.',
+            ],
+            [
+                'Presencia',
+                'Badge.visible conserva la transición de presencia. BadgedBox se monta o retira con badge; false y undefined lo ocultan. Una novedad atendida puede retirarse, mientras que un total de la colección permanece.',
+            ],
+        ],
+        accessibility: [
+            'Nombra la cantidad y su significado en el destino: «Correo, 8 mensajes nuevos».',
+            'Conserva una única acción accesible cuando la insignia sólo complementa un icono; no añadas un foco independiente. Usa el valor completo en la etiqueta del destino, aunque el conteo visible esté truncado.',
+        ],
+        cautions: ['No uses la insignia como botón de cierre ni como mensaje de error extenso.'],
+        types: ['BadgedBoxProps'],
+    },
+    'button-groups': {
+        integration: [
+            'Define items con value estable y label. Usa onPress por ítem para comandos.',
+            'Para selección, define selectionMode, value y onValueChange; el consumidor guarda el nuevo valor.',
+        ],
+        behavior: [
+            ['Standard', 'La presión amplía temporalmente el elemento y utiliza el espacio disponible de sus vecinos inmediatos.'],
+            ['Connected', 'Mantiene el conjunto unido y comunica selección con forma, color e indicador.'],
+            ['Selección', 'single acepta un valor; multiple admite varios. allowEmptySelection controla si puede quedar vacío.'],
+        ],
+        accessibility: [
+            'Cada botón necesita una etiqueta clara y estado checked cuando representa selección. El nombre del conjunto es opcional; el contenedor no recibe foco.',
+            'Conserva el estado seleccionado cuando se reduce el movimiento.',
+        ],
+        cautions: [
+            'No mezcles alternativas excluyentes con selección múltiple.',
+            'Cada value debe ser único dentro del grupo.',
+            'Connected utiliza botones de selección y un tratamiento uniforme; evita comandos independientes sin toggle.',
+            'Mantén el grupo en una línea; el overflow se coloca al extremo final.',
+            'Tab entra en el grupo, las flechas recorren sus botones y Enter o Espacio activan una sola vez.',
+        ],
+        types: ['ButtonGroupItem'],
+    },
+    buttons: {
+        integration: [
+            'Define variant, size y shape según la jerarquía de la acción; children contiene su etiqueta.',
+            'Usa onPress para un comando. Para Toggle, proporciona selected y actualízalo desde el consumidor.',
+        ],
+        behavior: [
+            ['Default', 'Activa el callback al completar una pulsación válida.'],
+            ['Toggle', 'selected representa el estado aceptado; el componente no administra ese valor por la pantalla.'],
+            [
+                'Carga y bloqueo',
+                'disabled o loading bloquean la activación. La forma y los estados visuales responden a presión, foco y selección.',
+            ],
+        ],
+        accessibility: [
+            'Usa una etiqueta que describa el resultado, como «Guardar colección».',
+            'El objetivo de interacción conserva un mínimo independiente del tamaño visual.',
+        ],
+        cautions: [
+            'El tratamiento Text no admite Toggle.',
+            'pressed mantiene la presentación de presión para composiciones como un menú abierto; no sustituye selected.',
+        ],
+        types: [],
+    },
+    'extended-fab': {
+        integration: [
+            'Usa FAB.Extended o ExtendedFAB con label e icon opcional; size default corresponde al tamaño Small.',
+            'La pantalla coloca una sola acción principal con margen de 16, respetando safe area y navegación, y controla expanded/visible.',
+            'Al desplazarse hacia abajo puede contraerse; hacia arriba recupera la etiqueta. Un rail expandido puede usar elevation={0}.',
+        ],
+        behavior: [
+            ['Activación', 'onPress inicia una única tarea principal. Icono y etiqueta forman una sola acción.'],
+            ['Colapso', 'expanded anima anchura y opacidad sin escalar glifos. Sin icono, la etiqueta permanece visible.'],
+            [
+                'Presencia',
+                'visible coordina aparición y salida; el componente permanece montado durante la transición y deja de ser interactivo al ocultarse.',
+            ],
+            [
+                'Uso en pantalla',
+                'La pantalla coordina formularios, confirmación y transformaciones de contenedor; no son estados internos adicionales del FAB.',
+            ],
+        ],
+        accessibility: [
+            'Conserva el mismo nombre accesible al contraer la etiqueta y describe la acción, no el icono.',
+            'Tab alcanza la acción; Enter y Espacio la activan. El foco visible acompaña la forma.',
+            'Al cerrar la tarea, devuelve el foco a la acción principal; un FAB oculto no debe recibir foco.',
+        ],
+        cautions: [
+            'Prefiere etiquetas de una o dos palabras y evita truncarlas o partirlas.',
+            'Usa una sola acción flotante destacada; evita colocarla sobre toolbars, tarjetas o controles interactivos.',
+            'Los estados son habilitado, hover, foco y pulsación; no se añaden variantes de carga o deshabilitado.',
+        ],
+        types: [],
+    },
+    'fab-menu': {
+        integration: [
+            'Controla expanded y ciérralo desde onDismiss. trigger define el FAB y su nombre accesible.',
+            'Define de dos a seis items relacionados, con label e icon; cada comando usa onPress.',
+            'presentation="expressive" muestra la pila animada en todas las plataformas. La presentación adaptive utiliza el menú baseline en web.',
+            'overflow="scroll" y maxHeight habilitan una pila extendida; más de seis acciones es una extensión del paquete.',
+        ],
+        behavior: [
+            [
+                'Presentación Expressive',
+                'El FAB se transforma en un cierre circular de 56. Las pastillas de altura 56 y radio 28 se ajustan al contenido y tienen elevación 0.',
+            ],
+            [
+                'Abrir y cerrar',
+                'La pila conserva la esquina superior final del FAB, incluso al partir de Medium o Large. El cierre y Escape cierran el conjunto.',
+            ],
+            ['Elegir una acción', 'La selección ejecuta un solo comando y solicita el cierre una sola vez.'],
+            [
+                'Teclado',
+                'En Expressive, el foco permanece en el cierre y Tab recorre las acciones. La adaptación web añade flechas, Inicio/Fin y búsqueda por prefijo.',
+            ],
+            ['Desplazamiento', 'La pila puede desplazarse en alturas limitadas sin obstruir el cierre.'],
+        ],
+        accessibility: [
+            'Describe la acción del FAB y conserva el estado expandido.',
+            'Expressive expone botones con nombre; la adaptación web usa elementos de menú y descubre comandos deshabilitados.',
+            'Al cerrar o elegir un comando, recupera el foco del FAB. Los elementos ocultos salen del teclado.',
+        ],
+        cautions: [
+            'El patrón base admite de dos a seis acciones relacionadas; no se abre desde un FAB extendido ni se combina con un rail o toolbar flotante.',
+            'Respeta el extremo final lógico y márgenes de 16, o de 24 en ventanas grandes.',
+            'Las listas de más de seis acciones y los submenús son extensiones del paquete.',
+        ],
+        types: ['FABMenuItemProps', 'FABMenuTriggerProps'],
+    },
+    'floating-action-button': {
+        integration: [
+            'Define un MaterialSymbol con filled, accessibilityLabel y onPress para la acción principal. Medium (80 dp) es el tamaño recomendado; la API conserva size="default" (56 dp) como valor inicial.',
+            'El host controla visible, posición e insets. size y variant seleccionan tamaño y par de colores semánticos. Añade Tooltip para explicar la acción al pasar el puntero o enfocar.',
+        ],
+        behavior: [
+            ['Comando', 'onPress inicia una única tarea destacada: crear, redactar, publicar o completar una compra.'],
+            ['Presión y elevación', 'La capa de estado queda dentro de la forma. Conserva elevación 3 y aumenta a 4 al pasar el puntero.'],
+            ['Desplazamiento', 'Permanece anclado mientras se desplaza el contenido. Evita cubrir los últimos elementos.'],
+            [
+                'Visibilidad',
+                'Se oculta cuando la acción no está disponible, en vez de inventar un estado deshabilitado. La presencia se anima según el tema y respeta movimiento reducido.',
+            ],
+            [
+                'Transformación',
+                'Puede abrir la tarea desde su superficie mediante ContainerTransformSurface; confirmar o cancelar devuelve el foco al FAB.',
+            ],
+        ],
+        accessibility: [
+            'Describe la acción con palabras porque sólo hay icono visible. El tooltip complementa el nombre.',
+            'Mantén el FAB fuera de las zonas que la navegación o el teclado necesitan.',
+            'Cuando visible es false, no debe seguir en el recorrido del teclado.',
+        ],
+        cautions: ['Usa una sola acción de máxima jerarquía por pantalla.', 'No añadas loading o disabled: no forman parte de esta API.'],
+        types: [],
+    },
+    'icon-buttons': {
+        integration: [
+            'Define icon y accessibilityLabel. sizeClass controla la escala completa; size heredado puede personalizar el glifo. Usa MaterialSymbol para controlar su relleno.',
+            'Default omite selected. Toggle recibe selected y lo actualiza en onPress. mode="contained" corresponde a Filled, contained-tonal a Tonal, outlined a Outlined; omitir mode corresponde a Standard.',
+        ],
+        behavior: [
+            ['Default', 'Ejecuta una acción sin selección persistente. Usa el icono relleno cuando esté disponible.'],
+            [
+                'Toggle',
+                'El estado controlado cambia forma, color y relleno: contorno sin selección y relleno al seleccionar. Round cambia a Square y viceversa.',
+            ],
+            [
+                'Presión',
+                'El radio converge al token de presión y vuelve al estado actual al soltar o cancelar, incluso con pulsaciones rápidas.',
+            ],
+            [
+                'Superficie y objetivo',
+                'shape y widthVariant configuran el dibujo. El objetivo real conserva al menos 48 × 48 dp; el feedback queda limitado al dibujo. Para centrar controles de tamaños distintos dentro de Tooltip, usa anchorStyle={{alignSelf: "center"}} en esa composición.',
+            ],
+            ['Teclado y ayuda', 'Enter y Espacio activan una vez. El foco de teclado es visible y Tooltip describe la acción.'],
+            [
+                'Carga',
+                'loading bloquea nuevas acciones y anuncia busy; disabled retira la activación. Son estados del paquete, adicionales a las configuraciones visuales.',
+            ],
+        ],
+        accessibility: [
+            'Un icono reconocible también necesita nombre accesible y ayuda contextual.',
+            'Actualiza el nombre de acciones opuestas: añadir o quitar favorito. Publica la selección del toggle.',
+            'No uses varios iconos decorativos como controles sin una acción real.',
+        ],
+        cautions: [
+            'No alinees el objetivo usando la caja del glifo.',
+            'Usa pressed sólo para composiciones que mantienen abierto un popup; Menu ya coordina ese estado con su ancla.',
+        ],
+        types: [],
+    },
+    'segmented-buttons': {
+        integration: [
+            'Define de dos a cinco buttons con valores únicos, etiquetas breves y un mismo tipo de contenido: iconos, etiquetas o ambos.',
+            'Single-select recibe un valor; multiSelect recibe un array que puede quedar vacío. En diseños Expressive nuevos, la alternativa recomendada es Connected button groups.',
+        ],
+        behavior: [
+            [
+                'Selección única',
+                'Elegir otra opción reemplaza el valor anterior. La opción seleccionada no queda vacía al volver a activarla.',
+            ],
+            ['Selección múltiple', 'Cada opción se añade o retira; pueden seleccionarse todas o ninguna.'],
+            [
+                'Icono y check',
+                'Con etiqueta e icono, el check sustituye al icono mediante una transición. Con sólo etiqueta, el check entra y el texto se recentra.',
+            ],
+            [
+                'Densidad y medidas',
+                'La superficie baja de 40 a 36, 32 o 28 dp. El objetivo real conserva 48 dp; los segmentos tienen el mismo ancho y permanecen en una línea.',
+            ],
+            [
+                'Teclado',
+                'Tab entra por el primer segmento; flechas, Inicio y Fin mueven el foco sin cambiar la selección. Espacio o Enter confirman la opción enfocada.',
+            ],
+            [
+                'Contenido adaptable',
+                'Las etiquetas se miden con la fuente real. El grupo conserva un ancho intrínseco y evita extender sus opciones por toda una ventana amplia.',
+            ],
+        ],
+        accessibility: [
+            'El grupo de selección única expone radio y radiogroup; cada opción múltiple expone checkbox.',
+            'Los iconos sin texto necesitan accessibilityLabel y las opciones deshabilitadas no se activan.',
+            'En RTL se invierte el orden visual y la dirección de las flechas. La selección sigue siendo independiente del foco.',
+        ],
+        cautions: [
+            'La referencia conserva esta familia, pero recomienda Connected button groups para interfaces Expressive nuevas.',
+            'No mezcles segmentos de sólo icono con otros de sólo texto ni uses más de cinco opciones.',
+        ],
+        types: ['SegmentedButtonOption'],
+    },
+    'split-button': {
+        integration: [
+            'Define label, icon opcional y onPress para el comando principal. Las actions contienen alternativas relacionadas con key, label y onPress.',
+            'La mitad principal admite texto, icono o ambos; conserva un nombre accesible explícito si no hay texto. expanded/onExpandedChange permiten coordinar el menú.',
+        ],
+        behavior: [
+            ['Comando principal', 'La primera mitad ejecuta su comando sin abrir el menú.'],
+            [
+                'Alternativas',
+                'El chevrón abre el menú sin ejecutar el comando principal. La opción elegida se ejecuta una vez después del cierre.',
+            ],
+            [
+                'Opción actual',
+                'Para elegir un valor, pasa selected en todas las opciones del menú. La actual se distingue con una marca y se anuncia como seleccionada. Omite selected en los comandos.',
+            ],
+            [
+                'Forma y giro',
+                'Las esquinas interiores responden a hover, foco y presión. Al abrir, la mitad secundaria se redondea, centra el icono y gira 180° hacia dentro.',
+            ],
+            ['Color', 'La selección añade una capa de estado; mantiene el mismo par de colores del estilo elegido.'],
+            ['Colocación', 'El menú se mide desde la superficie secundaria y deja 4 dp. Puede colocarse arriba si no cabe debajo.'],
+            [
+                'Cancelación',
+                'Escape, salida del menú, reapertura, bloqueo o desmontaje descartan acciones pendientes. El cierre devuelve el foco al disparador.',
+            ],
+        ],
+        accessibility: [
+            'Nombra el comando principal y la apertura del menú por separado: Enviar y Más opciones de envío.',
+            'Las dos mitades tienen objetivos de al menos 48 × 48 dp. Tab recorre ambas; Enter o Espacio activan la enfocada.',
+            'El control secundario comunica expanded y dispone de navegación de menú por flechas, Inicio/Fin y búsqueda por prefijo.',
+        ],
+        cautions: [
+            'No cambies el chevrón por un icono de otra acción ni uses etiquetas largas.',
+            'Las alternativas son opciones relacionadas; no añadas botones independientes dentro de una mitad.',
+            'La rotación utiliza el movimiento estándar de efectos, incluso con un proveedor Expressive.',
+        ],
+        types: ['SplitButtonAction'],
+    },
+    cards: {
+        integration: [
+            'Escoge Elevated, Filled u Outlined y compón Card.Title, Card.Content, Card.Cover y Card.Actions. El contenedor es el único elemento obligatorio.',
+            'Usa una tarjeta informativa con controles internos, o una superficie directamente pulsable sin otros controles dentro. En navegador, href crea un enlace real; onPress permite coordinar navegación en la aplicación.',
+        ],
+        behavior: [
+            [
+                'Contenido',
+                'Título, subtítulo, texto, imagen y acciones son opcionales. La altura se adapta al contenido; Card.Content utiliza padding lateral de 16 dp.',
+            ],
+            [
+                'Interacción',
+                'Las tarjetas informativas no reciben presión ni foco como acción. Los botones internos tienen sus propios objetivos; la tarjeta completa no los envuelve en otro botón.',
+            ],
+            [
+                'Estados',
+                'Hover, foco, presión y arrastre usan sus propios niveles de elevación y capas de estado, sin copiar las reglas de otros botones.',
+            ],
+            [
+                'Detalle y expansión',
+                'La tarea puede expandirse desde la tarjeta usando ContainerTransformSurface. Volver y Escape cierran la vista y recuperan el foco. La expansión de información usa el desplazamiento de la página.',
+            ],
+            [
+                'Colecciones',
+                'Cuadrícula, lista, fila horizontal, mosaico y disposición escalonada organizan varias tarjetas. Filtro y orden se colocan fuera de ellas.',
+            ],
+            [
+                'Gestos',
+                'Deslizar mueve la tarjeta completa para una sola acción. El arrastre eleva la tarjeta; un menú ofrece las mismas acciones sin arrastrar.',
+            ],
+        ],
+        accessibility: [
+            'Cada acción necesita nombre y orden de foco. Una tarjeta informativa no añade una parada de Tab.',
+            'Una tarjeta directamente pulsable puede tener rol de botón o enlace; las imágenes decorativas no añaden lectura duplicada.',
+            'Incluye alternativas de un solo puntero para archivar o reordenar y conserva una vía para deshacer.',
+        ],
+        cautions: [
+            'No anides botones o enlaces dentro de una tarjeta que ya es una acción completa.',
+            'No conviertas en tarjetas datos que se entienden mejor con espacio, títulos o divisores.',
+            'Los filtros, gestos, navegación y selección pertenecen a la composición; no son variantes visuales adicionales de Card.',
+        ],
+        types: [],
+    },
+    carousel: {
+        integration: [
+            'Pasa items con id único y title. image, icon y aspectRatio describen su contenido visual.',
+            'Elige variant y conecta onItemPress con el destino. onIndexChange permite observar la posición aceptada.',
+        ],
+        behavior: [
+            [
+                'Exploración',
+                'Multi-browse y Hero adaptan la máscara al desplazarse. Hero centrado añade una vista previa a cada lado cuando hay espacio.',
+            ],
+            [
+                'Ancho y ajuste',
+                'Uncontained conserva el ancho de cada elemento. Uncontained multi-aspect ratio usa proporciones entre 9:16 y 16:9. Ambos permiten desplazamiento libre o ajuste opcional. Full-screen ajusta el desplazamiento vertical a cada página.',
+            ],
+            ['Activación', 'onItemPress entrega el elemento y su índice; el consumidor abre su visor o detalle.'],
+        ],
+        accessibility: [
+            'Da un nombre a la colección y a elementos que no se entienden por título.',
+            'En páginas verticales, ofrece Ver todos para recorrer el contenido sin un gesto horizontal. En pantalla completa, Tab alcanza la página del visor y las flechas verticales cambian de página.',
+        ],
+        cautions: [
+            'Full-screen tiene restricciones de composición y tamaño de ventana.',
+            'Las medidas de una fotografía no deben sustituir el espacio del elemento en el carrusel.',
+        ],
+        types: ['CarouselItem'],
+    },
+    checkbox: {
+        integration: [
+            'Controla status con checked, unchecked o indeterminate.',
+            'Usa Checkbox.Item para una opción etiquetada y administra el conjunto seleccionado en la pantalla.',
+        ],
+        behavior: [
+            ['Independencia', 'Cambiar una opción no elimina las demás selecciones.'],
+            [
+                'Estado parcial',
+                'El control del grupo muestra indeterminate cuando hay una selección parcial. Activarlo marca todas las opciones y, una vez marcadas, las desmarca.',
+            ],
+            ['Bloqueo', 'disabled conserva la lectura del estado sin permitir modificarlo.'],
+        ],
+        accessibility: [
+            'El estado parcial se anuncia como mixed.',
+            'Tab enfoca la casilla y Espacio cambia su estado. La fila etiquetada tiene un solo objetivo de interacción. Usa description para texto de apoyo.',
+        ],
+        cautions: ['No uses checkbox para alternativas mutuamente excluyentes.'],
+        types: [],
+    },
+    chips: {
+        integration: [
+            'Elige variant según Assist, Filter, Input o Suggestion; children aporta la etiqueta.',
+            'Controla selected para filtros. onClose retira una entrada; onPress conserva una función distinta.',
+        ],
+        behavior: [
+            [
+                'Filter',
+                'El consumidor actualiza selected desde onPress. Con teclado, Espacio activa al soltar la tecla y Enter también cambia la selección.',
+            ],
+            ['Input', 'La acción de cierre se entrega independientemente de la región primaria.'],
+            ['Grupo', 'Chip.Group permite recorrer las opciones con las flechas. Cada entrada conserva una identidad estable.'],
+        ],
+        accessibility: [
+            'Nombra el cierre con closeIconAccessibilityLabel, por ejemplo «Quitar Ana».',
+            'Publica selected cuando la función sea un filtro.',
+        ],
+        cautions: ['La X de Input no debe activar también el callback primario.'],
+        types: ['ChipGroupProps'],
+    },
+    'date-pickers': {
+        integration: [
+            'Controla visible, value, onChange y onDismiss; mode distingue fecha simple de rango.',
+            'Define locale, firstDayOfWeek y límites cuando la tarea los requiera. DockedDatePicker aporta la composición anclada.',
+        ],
+        behavior: [
+            ['Borrador', 'La selección del calendario o la entrada permanece en la sesión hasta confirmarse.'],
+            ['Confirmar', 'onChange entrega Date o DateRange según mode. A continuación, onDismiss pide al host cerrar el selector.'],
+            ['Cancelar', 'onDismiss pide cerrar el selector sin llamar a onChange.'],
+        ],
+        accessibility: [
+            'Explica formato y errores de la entrada manual.',
+            'Las flechas recorren días y semanas. Page Up y Page Down cambian de mes; añade Mayús para cambiar de año. Inicio y Fin van a la primera o última fecha disponible del mes.',
+            'Escape descarta el borrador y devuelve el foco al control que abrió el selector.',
+        ],
+        cautions: [
+            'No conviertas fechas locales en cadenas UTC sin decidir la zona de la tarea.',
+            'Mantén consistentes mínimo, máximo e isDateDisabled.',
+        ],
+        types: ['DateRange', 'DockedDatePickerProps'],
+    },
+    'time-pickers': {
+        integration: [
+            'Controla visible y value como { hours, minutes }, y acepta el resultado en onConfirm.',
+            'Define is24Hour y el modo inicial. El valor usa horas de 0 a 23 incluso cuando la presentación es de 12 horas.',
+            'Personaliza title e inputTitle para nombrar el reloj y la entrada manual.',
+        ],
+        behavior: [
+            ['Reloj', 'Toca una cifra para seleccionarla o arrastra la manecilla para elegir un minuto exacto. El reloj se coloca al lado de los selectores cuando hay espacio horizontal.'],
+            ['Entrada', 'Usa el icono del teclado para cambiar de modo y conservar el borrador. Si el reloj no cabe, se abre la entrada manual. La confirmación requiere valores válidos.'],
+            ['Confirmación', 'onConfirm recibe el borrador aceptado; onDismiss descarta la sesión.'],
+        ],
+        accessibility: [
+            'Tab recorre los controles. Enter o Espacio seleccionan la cifra enfocada. Escape cierra el diálogo y devuelve el foco.',
+            'La selección por puntero puede avanzar automáticamente a minutos. Los campos manuales identifican los valores inválidos.',
+        ],
+        cautions: ['AM/PM modifica la representación, no el contrato de horas 0–23.'],
+        types: ['TimeValue'],
+    },
+    dialogs: {
+        integration: [
+            'Controla visible y onDismiss; compón Title, Content y Actions dentro de Dialog.',
+            'Usa FullScreenDialog para una tarea extensa y separa guardar de descartar.',
+        ],
+        behavior: [
+            ['Entrada', 'La superficie modal presenta la tarea sobre el contenido anterior.'],
+            ['Decisión', 'Los botones invocan las acciones de la pantalla; el componente no elimina ni guarda datos por sí mismo.'],
+            [
+                'Salida',
+                'onClosed permite continuar después de retirar la superficie. Una salida interrumpida no debe iniciar otro destino.',
+            ],
+        ],
+        accessibility: [
+            'Incluye título, acciones inequívocas y una ruta de cancelación cuando proceda.',
+            'El contenido de fondo no debe recibir interacción durante el modal.',
+        ],
+        cautions: ['Conserva la superficie montada hasta que complete su salida.'],
+        types: ['FullScreenDialogProps', 'ContainerTransformOrigin'],
+    },
+    divider: {
+        integration: [
+            'Coloca Divider entre regiones que necesitan separación visual.',
+            'orientation cambia el eje; thickness e insets ajustan la línea dentro de la composición.',
+        ],
+        behavior: [
+            ['Separación', 'La línea ocupa su grosor y utiliza el rol de contorno del tema.'],
+            ['Alineación', 'El inset debe coincidir con los márgenes del contenido que agrupa.'],
+            ['Interacción', 'El separador es visual y no inicia una acción.'],
+        ],
+        accessibility: ['No añadas foco a una línea decorativa.', 'La agrupación también debe entenderse por títulos y orden de lectura.'],
+        cautions: ['El divisor no reemplaza una estructura semántica.'],
+        types: [],
+    },
+    lists: {
+        integration: [
+            'Compón List.Item con title y slots leading/trailing; description y lines definen apoyo y altura.',
+            'Usa una región primaria para navegación y controles trailing independientes cuando la fila tenga varias acciones. Para grandes colecciones, el host aporta FlatList.',
+        ],
+        behavior: [
+            ['Acción primaria', 'onPress abre o activa el elemento, sin ejecutar un botón secundario.'],
+            [
+                'Acciones separadas',
+                'Un control trailing mantiene su propio gesto y estado de presión; no se combina su objetivo con la fila.',
+            ],
+            [
+                'Composiciones',
+                'List.Accordion, SwipeListItem y ListReorderGroup cubren expansión, acciones laterales y reordenamiento con estado del consumidor.',
+            ],
+        ],
+        accessibility: [
+            'Nombra cada acción independiente y publica selección o expansión cuando exista.',
+            'Conserva el orden título, descripción, metadata y acciones sin duplicar anuncios.',
+        ],
+        cautions: [
+            'List no virtualiza la colección.',
+            'No extiendas artificialmente el sombreado de una acción sobre otro botón independiente.',
+        ],
+        types: ['ListSlotProps', 'ListAccordionProps', 'SwipeListAction'],
+    },
+    'loading-indicator': {
+        integration: [
+            'Usa LoadingIndicator mientras la duración de una tarea es desconocida.',
+            'variant configura contenedor; animating pausa el movimiento y visible controla presencia. El estado del trabajo pertenece al host.',
+        ],
+        behavior: [
+            ['Actividad', 'El morph recorre las formas de carga mientras la animación está habilitada.'],
+            ['Pausa', 'animating=false detiene el indicador sin resolver la tarea.'],
+            ['Resultado', 'Success o error se presentan mediante una composición de resultado; no son valores de variant.'],
+        ],
+        accessibility: [
+            'Incluye accessibilityLabel con el nombre de la tarea.',
+            'Conserva una señal comprensible cuando se reduce el movimiento.',
+        ],
+        cautions: ['Una tarea con avance conocido necesita ProgressIndicator.'],
+        types: ['PullToRefreshProps'],
+    },
+    'progress-indicators': {
+        integration: [
+            'Elige linear o circular. progress de 0 a 1 comunica avance determinado; omitirlo mantiene el modo indeterminado.',
+            'appearance configura flat o wavy. CircularProgressStatus compone progreso y success.',
+        ],
+        behavior: [
+            ['Avance', 'El host publica el progreso real de la operación.'],
+            ['Pausa', 'paused detiene el movimiento sin completar el trabajo.'],
+            ['Finalización', 'CircularProgressStatus cambia de progress a success y puede informar el final de su animación.'],
+        ],
+        accessibility: [
+            'Nombra la tarea y conserva un resultado textual al finalizar.',
+            'No anuncies cada frame; el valor debe representar avance significativo.',
+        ],
+        cautions: ['El ejemplo de success no introduce una tercera forma normativa de ProgressIndicator.'],
+        types: ['CircularProgressStatusProps'],
+    },
+    menus: {
+        integration: [
+            'Controla visible y onDismiss y proporciona un anchor que abra el menú.',
+            'Compón Menu.Item y grupos. onClosed permite coordinar la siguiente superficie después de la salida.',
+        ],
+        behavior: [
+            ['Apertura', 'El popup mide su ancla y se ajusta a la ventana y al teclado.'],
+            ['Selección', 'El ítem ejecuta una acción o representa una alternativa seleccionada.'],
+            ['Continuación', 'Cuando una opción abre un diálogo, retén la intención y ejecútala en onClosed.'],
+        ],
+        accessibility: [
+            'Etiqueta el disparador y explica qué acción ejecuta cada ítem.',
+            'Conserva los estados selected y disabled y una forma clara de salir.',
+        ],
+        cautions: [
+            'No abras dos superficies modales durante el mismo evento.',
+            'La navegación web por teclado existe en el código, pero su validación completa sigue pendiente.',
+        ],
+        types: ['MenuItemProps', 'MenuSubmenuProps'],
+    },
+    'navigation-bar': {
+        integration: [
+            'Define items con key estable, label e icon y conecta value/onValueChange.',
+            'La pantalla acepta el destino y resuelve su ruta. iconPosition y arrangement ajustan la composición.',
+        ],
+        behavior: [
+            ['Destino', 'Activar un ítem entrega su key.'],
+            ['Selección', 'value determina el indicador y el contenido activo del host.'],
+            ['Novedades', 'badge complementa el destino; no crea un control separado.'],
+        ],
+        accessibility: [
+            'Cada destino necesita nombre y estado seleccionado.',
+            'Integra la cantidad de novedades en el significado del destino.',
+        ],
+        cautions: ['El componente no instala ni configura un router.'],
+        types: ['NavigationDestination'],
+    },
+    'navigation-drawer': {
+        integration: [
+            'Define items y controla value/onValueChange; header y footer añaden contenido de contexto.',
+            'Usa NavigationDrawerModal cuando el panel necesite apertura modal y cierre sobre un scrim.',
+        ],
+        behavior: [
+            ['Estructura', 'Los destinos pueden agruparse por sección.'],
+            ['Selección', 'El valor aceptado actualiza el destino destacado; el host resuelve la navegación.'],
+            ['Modal', 'La composición modal coordina apertura y cierre sin modificar el conjunto de destinos.'],
+        ],
+        accessibility: [
+            'Conserva nombres completos y una selección reconocible.',
+            'El cierre modal debe devolver el acceso al contenido o disparador.',
+        ],
+        cautions: ['No añadas un botón de cerrar a la anatomía estándar si la composición ya resuelve su navegación.'],
+        types: ['NavigationDrawerDestination', 'NavigationDrawerModalProps'],
+    },
+    'navigation-rail': {
+        integration: [
+            'Pasa items, value y onValueChange, y decide el breakpoint desde el layout.',
+            'Controla expanded/onExpandedChange cuando el usuario pueda abrir etiquetas; header, footer y fab son slots opcionales.',
+        ],
+        behavior: [
+            ['Colapsada', 'Los iconos conservan la identidad y el nombre de sus destinos.'],
+            ['Expandida', 'Aparecen etiquetas dentro de la columna lateral.'],
+            ['Ruta', 'El cambio de valor pertenece a la pantalla y conserva los mismos destinos entre tamaños.'],
+        ],
+        accessibility: ['Mantén nombres cuando las etiquetas están ocultas.', 'Nombra el control que expande o cierra el rail modal.'],
+        cautions: ['El breakpoint es responsabilidad del host, no un cambio automático de rutas.'],
+        types: ['NavigationDestination', 'NavigationRailModalProps'],
+    },
+    'radio-button': {
+        integration: [
+            'Usa RadioButton.Group con value/onValueChange para un conjunto de alternativas.',
+            'Cada RadioButton.Item aporta un value único y una etiqueta.',
+        ],
+        behavior: [
+            ['Exclusión', 'La nueva selección reemplaza la anterior.'],
+            ['Valor', 'El consumidor conserva un único valor aceptado.'],
+            ['Bloqueo', 'Una opción disabled conserva la lectura, pero no puede activarse.'],
+        ],
+        accessibility: [
+            'Explica el propósito del grupo y el nombre de cada alternativa.',
+            'El estado checked debe coincidir con el valor del consumidor.',
+        ],
+        cautions: ['No uses RadioButton para varias opciones independientes.'],
+        types: [],
+    },
+    search: {
+        integration: [
+            'Searchbar expone el campo; SearchView compone la entrada con su vista de búsqueda.',
+            'Controla open, value y sus callbacks. El consumidor filtra u obtiene results y decide el destino de un resultado.',
+        ],
+        behavior: [
+            ['Abrir', 'Activar la entrada de SearchView abre su presentación.'],
+            ['Escribir y borrar', 'onChangeText actualiza la consulta. Borrar se ofrece cuando existe texto; la flecha cierra o regresa.'],
+            [
+                'Resultados',
+                'onSearch entrega la consulta y onResultPress entrega el resultado. Loading, emptyContent y supportingContent describen sus estados.',
+            ],
+        ],
+        accessibility: [
+            'Etiqueta el campo y los resultados sin anunciar cada pulsación de forma invasiva.',
+            'Conserva acciones diferenciadas para borrar la consulta y cerrar la búsqueda.',
+        ],
+        cautions: [
+            'SearchView no consulta un servicio por sí mismo.',
+            'Cancela peticiones antiguas para que una respuesta tardía no reemplace la consulta actual.',
+        ],
+        types: ['SearchViewProps', 'SearchResult'],
+    },
+    'bottom-sheets': {
+        integration: [
+            'Controla open/onOpenChange y define variant y snapPoints.',
+            'Usa GestureHandlerRootView y los contenedores de scroll de la hoja. BottomSheetTextField coordina los campos con su teclado.',
+        ],
+        behavior: [
+            ['Expansión', 'El gesto recorre las posiciones admitidas; onIndexChange informa el índice.'],
+            ['Desplazamiento', 'El motor coordina el scroll interno con el arrastre de la superficie.'],
+            ['Cierre', 'El host acepta el estado cerrado; onClosed permite continuar tras su salida.'],
+        ],
+        accessibility: [
+            'Nombra la superficie y mantén una forma de cierre cuando sea descartable.',
+            'Verifica acceso a campos y acciones con el teclado abierto.',
+        ],
+        cautions: ['No anides un ScrollView genérico cuando necesitas el coordinado por la hoja.'],
+        types: ['BottomSheetTextFieldProps'],
+    },
+    'side-sheets': {
+        integration: [
+            'Controla open/onOpenChange y elige standard o modal según el layout.',
+            'edge define el borde lógico; title, header y footer aportan contexto.',
+        ],
+        behavior: [
+            ['Standard', 'Participa en el espacio de la pantalla.'],
+            ['Modal', 'Presenta scrim e impide interacción con el fondo.'],
+            ['Salida', 'onClosed se entrega tras retirar la superficie, para coordinar otra tarea.'],
+        ],
+        accessibility: [
+            'Conserva título, acción de cierre y orden de lectura.',
+            'Evita que el fondo reciba foco durante la presentación modal.',
+        ],
+        cautions: ['El host debe reservar espacio para una hoja estándar.'],
+        types: [],
+    },
+    sliders: {
+        integration: [
+            'Controla value/onValueChange y define minimumValue, maximumValue y step.',
+            'RangeSlider usa dos límites; orientation permite una composición vertical.',
+        ],
+        behavior: [
+            ['Arrastre', 'onValueChange entrega el avance durante el gesto.'],
+            ['Completar', 'onSlidingComplete permite confirmar el valor final.'],
+            ['Cancelar', 'onSlidingCancel descarta una interacción cancelada sin ejecutar la confirmación.'],
+        ],
+        accessibility: [
+            'Incluye nombre y unidad mediante accessibilityLabel y valueSuffix.',
+            'Conserva las acciones accesibles de incremento y decremento.',
+        ],
+        cautions: ['No uses el callback de cambio como confirmación irreversible.'],
+        types: ['RangeSliderProps'],
+    },
+    snackbar: {
+        integration: [
+            'Controla visible/onDismiss y utiliza children para un mensaje breve.',
+            'action añade una opción relacionada; bottomOffset evita solapar navegación y FAB.',
+        ],
+        behavior: [
+            ['Mensaje', 'La superficie aparece después de una acción de la pantalla.'],
+            ['Acción', 'El callback de action ejecuta Deshacer u otra continuación explícita.'],
+            ['Duración', 'El ciclo considera visibilidad, acciones y preferencias accesibles; el host acepta el cierre.'],
+        ],
+        accessibility: [
+            'Permite leer y activar la acción sin una duración demasiado breve.',
+            'Conserva texto útil en el anuncio de resultado.',
+        ],
+        cautions: ['El componente no revierte datos por sí mismo; Deshacer pertenece al consumidor.'],
+        types: [],
+    },
+    switch: {
+        integration: [
+            'Controla value y actualízalo desde onValueChange.',
+            'Usa accessibilityLabel o una composición etiquetada para explicar el ajuste.',
+        ],
+        behavior: [
+            ['Activación', 'Cambiar el valor aplica un ajuste binario.'],
+            ['Estado', 'Track y handle representan el valor aceptado y responden al gesto.'],
+            ['Bloqueo', 'disabled impide cambiar el estado y mantiene su significado.'],
+        ],
+        accessibility: [
+            'Mantén una etiqueta estable para el ajuste y publica on/off.',
+            'Los iconos del handle complementan el significado.',
+        ],
+        cautions: ['No uses Switch para una acción que necesita confirmación diferida.'],
+        types: [],
+    },
+    tabs: {
+        integration: [
+            'Define items con key y label y comparte value/onValueChange entre Tabs y contenido.',
+            'Con TabsPager, enlaza position del hilo UI y selectionRequest para coordinar toque, reelección y swipe.',
+        ],
+        behavior: [
+            ['Toque', 'La pestaña solicita un valor y el consumidor actualiza el contenido aceptado.'],
+            ['Deslizamiento', 'TabsPager mueve el contenido y position sincroniza el indicador.'],
+            [
+                'Interrupción',
+                'Una nueva selección puede interrumpir un gesto anterior; selectionRequest permite reactivar la pestaña actual.',
+            ],
+        ],
+        accessibility: [
+            'Nombre, selección y página visible deben coincidir.',
+            'Mantén etiquetas claras para iconos sin texto y comprueba su crecimiento con texto ampliado.',
+        ],
+        cautions: ['Dos estados seleccionados independientes desalinean la cabecera y el pager.'],
+        types: ['TabItem', 'TabsPagerProps'],
+    },
+    'text-fields': {
+        integration: [
+            'Controla value y onChangeText y proporciona label.',
+            'SupportingText explica el formato; error y errorText comunican una corrección. Los iconos interactivos tienen callbacks propios.',
+        ],
+        behavior: [
+            ['Escritura', 'El campo entrega texto sin administrar los datos de la pantalla.'],
+            ['Foco', 'Etiqueta, indicador y superficie expresan edición y disponibilidad.'],
+            ['Validación', 'El consumidor decide cuándo presentar errores y cuándo puede enviarse el formulario.'],
+        ],
+        accessibility: [
+            'Relaciona etiqueta, ayuda y error con la entrada.',
+            'Etiqueta los iconos interactivos, como Mostrar contraseña o Borrar.',
+        ],
+        cautions: ['No pierdas texto ni foco al alternar la visibilidad de una contraseña.'],
+        types: ['TextFieldHandle', 'BottomSheetTextFieldProps'],
+    },
+    toolbars: {
+        integration: [
+            'Define actions con key, icon, label y onPress.',
+            'variant, orientation y color configuran la barra; el host decide su posición y relación con el contenido.',
+        ],
+        behavior: [
+            ['Herramientas', 'Cada acción representa un comando o selección de la tarea actual.'],
+            ['Overflow', 'Las opciones que no caben se trasladan a un menú real.'],
+            ['Presencia', 'visible y expanded coordinan el espacio y su presentación.'],
+        ],
+        accessibility: [
+            'Nombra la barra y cada acción de icono.',
+            'Conserva los estados seleccionados y el acceso a las acciones de overflow.',
+        ],
+        cautions: ['No elimines comandos al reducir el espacio: deben seguir disponibles en el menú.'],
+        types: ['ToolbarAction'],
+    },
+    tooltips: {
+        integration: [
+            'Usa Tooltip para una explicación breve y RichTooltip para título, contenido y acciones.',
+            'RichTooltip admite visible/onDismiss y un anchor real. persistent conserva una ayuda que necesita decisión.',
+        ],
+        behavior: [
+            ['Plain', 'Describe el propósito de un control sin añadir una tarea.'],
+            ['Rich', 'Presenta información adicional y acciones identificadas por key.'],
+            ['Cierre', 'El consumidor acepta onDismiss; las acciones deciden si continúan o cierran la ayuda.'],
+        ],
+        accessibility: [
+            'La ayuda complementa, no reemplaza, el nombre accesible del disparador.',
+            'Una ayuda persistente con acciones necesita una forma de cierre alcanzable.',
+        ],
+        cautions: ['Evita mostrar un tooltip para repetir una etiqueta ya evidente.'],
+        types: ['RichTooltipAction', 'TooltipProps'],
+    },
 };

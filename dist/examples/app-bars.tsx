@@ -1,14 +1,16 @@
-import { Alert } from 'react-native';
-import { TopAppBar } from 'mobile-design';
+import { useState } from 'react';
+import { View } from 'react-native';
+import { TopAppBar, Text } from 'mobile-design';
 
 // Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.
 export default function Example() {
-  return <TopAppBar
+  const [feedback, setFeedback] = useState('');
+  return <View style={{ gap: 16 }}><TopAppBar
     variant="medium-flexible"
     title="Tu biblioteca"
-    navigationIcon="arrow-left"
+    navigationIcon="arrow_back"
     navigationLabel="Volver"
-    onNavigationPress={() => Alert.alert('Navegación', 'Regresar a la pantalla anterior')}
-    actions={[{ key: 'search', icon: 'magnify', label: 'Buscar', onPress: () => Alert.alert('Buscar') }]}
-  />;
+    onNavigationPress={() => setFeedback(['Navegación', 'Regresar a la pantalla anterior'].join(': '))}
+    actions={[{ key: 'search', icon: 'search', label: 'Buscar', onPress: () => setFeedback(['Buscar'].join(': ')) }]}
+  /><Text accessibilityLiveRegion="polite">{feedback}</Text></View>;
 }

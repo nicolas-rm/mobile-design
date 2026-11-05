@@ -1,124 +1,101 @@
-# mobile-design
+# Mobile Design · Documentación
 
 <img src="dist/assets/favicon.svg" width="64" height="64" alt="Mobile Design">
 
-**Documentación de Mobile Design para React Native con módulos Expo, con el lenguaje visual de Material Design 3.**
+Documentación en español de Mobile Design para React Native con módulos Expo. El sitio reúne guías de diseño e integración, referencias de API y ejemplos interactivos basados en Material Design 3.
 
 [![Documentation checks](https://github.com/nicolas-rm/mobile-design/actions/workflows/docs-check.yml/badge.svg)](https://github.com/nicolas-rm/mobile-design/actions/workflows/docs-check.yml)
 
-[Documentación publicada](https://mobile-design-docs.satinfig8.chatgpt.site) · [Estándar MD3](CONTRIBUTING.md) · [Verificación](QA.md)
+[Documentación publicada](https://mobile-design-docs.satinfig8.chatgpt.site/) · [Contribuir](CONTRIBUTING.md) · [Verificación](QA.md)
 
-Este repositorio contiene el proyecto de documentación. No incluye la app Music Design ni constituye una distribución del paquete nativo en npm. El acceso al Site publicado es privado; es independiente de la visibilidad de este repositorio.
+Este repositorio contiene el sitio y su exportación estática. El paquete `mobile-design` se desarrolla en el workspace de Music Design y se enlaza allí como paquete privado.
 
-## Qué incluye
+## Abrir en local
 
-- Portada editorial, navegación principal en siete apartados y menús contextuales por sección, con estructura visual inspirada en el sitio MD3.
-- Guías propias de inicio, desarrollo, accesibilidad, contenido, tokens, interacción, diseño adaptable y personalización.
-- Páginas independientes de color, elevación, iconos, movimiento, forma, espaciado y tipografía.
-- 36 familias con nombres, agrupación y orden del catálogo MD3.
-- Fichas con uso, integración, funcionamiento, variantes, configuraciones, API y accesibilidad dentro del propio sitio.
-- Propiedades, valores iniciales disponibles y contratos de datos extraídos de los tipos del paquete.
-- 46 ejemplos React Native descargables, incluidos Search view, selección de rango, Input chips, menú → diálogo, contraseña y progreso → success.
-- 72 capturas nativas, claras/oscuras, de la revisión del 2 de noviembre de 2026.
-- Búsqueda de guías, componentes y propiedades; temas claro/oscuro, navegación adaptable, enlaces directos a apartados, foco visible y reducción de movimiento.
-
-Las ilustraciones del catálogo son decorativas. Las fichas muestran capturas y código TSX. Buttons, Extended FABs, FAB menu, FABs, Icon buttons, Segmented buttons, Split button y Cards montan los componentes originales mediante React Native Web y permiten explorar sus propiedades; no son réplicas HTML. Los botones de copiar código, limpiar filtros y las acciones de tema/movimiento de las guías también usan Button original dentro de la página. Los iconos de tema, movimiento, búsqueda, menú móvil y enlaces de apartado utilizan IconButton original. El catálogo utiliza Card como enlace real y los encabezados de ejemplos descargables usan SplitButton para copiar, descargar o copiar su enlace. Los enlaces de navegación, campos y filtros del sitio se integrarán al revisar sus familias.
-
-## Plataformas
-
-| Entorno | Alcance |
-| --- | --- |
-| React Native con Expo | Entorno principal del paquete documentado. |
-| React Native con módulos Expo integrados | Requiere los peers y su configuración nativa. |
-| Expo Web / React Native Web | Integración de Buttons, Extended FABs, FAB menu, FABs, Icon buttons, Segmented buttons, Split button y Cards con ejecución y matrices de navegador. Las demás familias continúan pendientes. |
-| React DOM independiente | No hay una distribución DOM verificada del paquete. |
-
-La compatibilidad del sitio web de documentación no acredita la compatibilidad web de los componentes.
-
-## Abrir después de clonar
-
-Necesitas **Node.js 22 o posterior**. El sitio y sus comprobaciones usan módulos incluidos en Node; no necesitan instalar dependencias ni tener la app original.
+Con **Node.js 22 o posterior**, clona el repositorio y sirve la exportación incluida.
 
 ```sh
 git clone https://github.com/nicolas-rm/mobile-design.git
 cd mobile-design
-npm test
 npm start
 ```
 
-Abre http://127.0.0.1:4317/. Las rutas utilizan hash y no necesitan reglas de rewrite. `PORT=4320 npm start` permite usar otro puerto.
+Abre [la documentación local](http://127.0.0.1:4317/). Para cambiar el puerto, usa `PORT=4320 npm start`. Las rutas usan hash y funcionan con un servidor estático. Tanto `npm start` como `npm test` pueden ejecutarse directamente después de clonar.
 
-Después de editar JavaScript, CSS o la fuente de iconos, ejecuta `npm run assets` y `npm test`. Las huellas de contenido en las URLs impiden mezclar recursos de diferentes versiones por caché; las comprobaciones detectan huellas desactualizadas.
+## Qué incluye
 
-## Organización
+- **36 familias de componentes MD3 y dos extensiones**, Select y Autocomplete. Cada ficha reúne descripción, especificaciones, API y accesibilidad. Los tipos y los valores iniciales disponibles se extraen del paquete.
+- **38 galerías interactivas** que ejecutan los componentes originales con React Native Web, además del laboratorio de `Text`. Las ventanas de ejemplo permiten probar variantes, temas y comportamientos. Las ilustraciones del catálogo tienen una función decorativa.
+- **53 ejemplos TSX descargables** y **72 capturas de referencia**. El código, las capturas y los contratos se muestran en la página. Los ejemplos descargables ofrecen acciones para copiar el código, descargarlo y compartir su enlace.
+- Guías de inicio, desarrollo, fundamentos, estilos y recursos. La guía de instalación distingue los requisitos del paquete de los dos específicos del navegador. El buscador incluye guías, componentes y propiedades.
 
-| Ruta | Responsabilidad |
-| --- | --- |
-| `dist/` | Sitio estático listo para servir. |
-| `dist/component-docs.js` | Presentación de las fichas y montaje de ejemplos reales. |
-| `runtime/` | Host React/Expo de ejemplos interactivos y controles de la página. |
-| `dist/runtime/` | Exportación precompilada, fuentes y recursos listos para servir. |
-| `dist/web-examples.js` | Registro de ejemplos y huella del código del paquete utilizado. |
-| `dist/site-sections.js` | Portada, contenido editorial, arquitectura de navegación y pie del sitio. |
-| `dist/structure.css` | Composición editorial y navegación adaptable con roles MD3. |
-| `dist/illustrations.js` | Ilustraciones decorativas, sin runtime de componentes. |
-| `dist/examples/` | Ejemplos nativos TSX descargables. |
-| `dist/native/` | Capturas nativas claras/oscuras. |
-| `content/` | Descripciones, integración, comportamiento, accesibilidad y ejemplos fuente. |
-| `scripts/` | Servidor, comprobaciones y sincronización opcional. |
-| `AGENTS.md` / `CONTRIBUTING.md` | Estándar MD3 y reglas de contribución. |
+El sitio reutiliza el paquete en su propia interfaz. `NavigationRail` y `NavigationDrawer` componen la navegación lateral. `TopAppBar` sirve de cabecera en ventanas estrechas. El catálogo usa `Card` con enlaces reales y `ButtonGroup` para las categorías. Los filtros y la búsqueda emplean `TextField` y `Autocomplete`. Los controles de tema y movimiento usan `IconButton` y los encabezados de ejemplos descargables usan `SplitButton`.
 
-## Construir y verificar los ejemplos web
+Los textos editoriales consumen `Text` manteniendo encabezados, enlaces, listas y tablas semánticos. El sitio conserva Roboto, Material Symbols Rounded, temas claro y oscuro, foco visible y preferencia de movimiento reducido.
 
-El runtime precompilado funciona al clonar el sitio. Para reconstruirlo, proporciona el paquete Mobile Design y su workspace con Expo, React DOM, React Native Web y Metro Runtime instalados. Las versiones deben corresponder al SDK de ese workspace.
+## Alcance por plataforma
+
+| Entorno                       | Alcance                                                                                                                                                  |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| React Native con módulos Expo | Entorno principal del paquete y de los ejemplos TSX. La integración y los rangos declarados se explican en **Desarrollo → Instalación y proveedor**.     |
+| Expo Web y React Native Web   | Todas las familias y extensiones tienen una galería. La cobertura de comportamientos, combinaciones y motores se registra por familia en [QA.md](QA.md). |
+| React DOM independiente       | La implementación web documentada usa React Native Web.                                                                                                  |
+
+Las pruebas de navegador cubren los casos descritos en QA. La aplicación consumidora puede necesitar verificaciones adicionales con sus propios gestos, navegación, lectores de pantalla y configuraciones.
+
+## Dónde editar
+
+| Ruta                   | Contenido                                                                                                                                                                               |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`content/`](content/) | Textos de fichas, guías, medidas y fuentes de ejemplos descargables.                                                                                                                    |
+| [`runtime/`](runtime/) | Host Expo de las galerías y componentes compartidos de la página. `runtime/showcases/` contiene composiciones adaptadas desde el workspace nativo.                                      |
+| [`dist/`](dist/)       | Sitio que sirve el navegador. `app.js` y `site-sections.js` gestionan páginas y navegación. `component-docs.js` presenta las fichas. `styles.css` y `structure.css` definen el aspecto. |
+| [`scripts/`](scripts/) | Servidor, sincronización, exportación y comprobaciones.                                                                                                                                 |
+
+Los datos de `dist/data.json`, su copia integrada en `dist/index.html` y los TSX de `dist/examples/` se generan juntos. El runtime precompilado se guarda en `dist/runtime/` y se registra en `dist/web-examples.js`. Las galerías usan ventanas del mismo origen para aislar estilos y sincronizar tema y movimiento.
+
+## Sincronizar y reconstruir
+
+Para actualizar fichas, tipos o ejemplos descargables, usa el workspace nativo con sus dependencias instaladas. Los comandos se ejecutan desde el repositorio de documentación. Ajusta `--package-dir` si la documentación y el workspace están en directorios separados.
 
 ```sh
-npm run build:web -- --package-dir /ruta/al/paquete/mobile-design
+npm run sync -- --package-dir ../../packages/mobile-design
+npm run check:examples -- --package-dir ../../packages/mobile-design
 npm run assets
 npm test
 ```
 
-La exportación utiliza el componente original y su proveedor, con fuentes locales WOFF2 completas. Los ejemplos se montan en un iframe del mismo origen para aislar estilos y sincronizar tema, movimiento y altura sin recargar su estado. Los controles de la página se montan con portales bajo un único MobileDesignProvider; se desmontan antes de sustituir el contenido de una ruta.
+`sync` actualiza la información del paquete, los ejemplos y los recursos compartidos de `@mobile-design/tokens` y `@mobile-design/icons`. Conserva las capturas existentes. Para importar nuevas capturas, añade `--evidence-dir /ruta/a/capturas` al comando de sincronización.
 
-Para ejecutar la matriz de navegador sobre esa exportación:
-
-```sh
-npm ci
-npm run test:web
-```
-
-Necesita Chrome/Chromium instalado (`CHROME_PATH` permite indicar su ejecutable). Cada ejecutor abre su propio servidor temporal, crea un perfil de navegador aislado y guarda capturas/resultados en `.artifacts/` por familia. No utiliza el perfil del usuario. `npm run test:web:extended-fab`, `npm run test:web:fab-menu`, `npm run test:web:fab-icon`, `npm run test:web:page-controls` y `npm run test:web:segmented-split-cards` permiten ejecutarlos por separado. Comprueba las combinaciones Default/Toggle, estilos, tamaños y formas en ambos temas, además de teclado, ratón, tacto, animación interrumpida, cancelación, bloqueo/carga, RTL, movimiento reducido y adaptación a ancho estrecho. Extended FABs añade 144 configuraciones y casos de desplazamiento, presencia, colocación, medición de texto, cinco tareas y transformación de contenedor. FAB menu añade 192 configuraciones: pila Expressive de 2–6 acciones y menú anclado, teclado, foco, acciones, portapapeles, RTL y pila desplazable opcional. FABs añade 36 configuraciones de tamaño/color/tema, cinco tareas y posición fija al desplazar. Icon buttons añade 480 configuraciones, las cuatro áreas exteriores del objetivo de 48 dp y acciones de selección, reproducción, llamada y menú. Segmented buttons añade 192 configuraciones de modo, densidad, contenido, cantidad y tema. Split button añade 120 de talla, estilo, contenido y tema. Cards añade 72 de variante, anatomía, imagen y estado en ambos temas, además de transformación de contenedor, expansión, siete distribuciones y gestos reales de arrastre/deslizamiento. Los apartados de código, capturas y tipos se presentan siempre visibles; sólo los selectores de configuración permanecen compactos. El ejecutor de controles verifica copia, foco, limpieza de filtros y 20 reemplazos de ruta sin duplicar controles, enlaces reales del catálogo y copia/descarga con SplitButton.
-
-## Sincronizar con el paquete nativo
-
-Esta operación es opcional para consultar o editar el sitio. Necesita el código original del paquete y un workspace con TypeScript y sus dependencias nativas instaladas.
+Si cambió una galería original de la app, ejecuta `npm run sync:showcases -- --package-dir ../../packages/mobile-design` y revisa las diferencias en `runtime/showcases/` antes de exportar. Para reconstruir el runtime, el workspace necesita TypeScript, Expo, React DOM, React Native Web y Metro Runtime compatibles con su SDK.
 
 ```sh
-npm run sync -- --package-dir /ruta/al/paquete/mobile-design
-npm run check:examples -- --package-dir /ruta/al/paquete/mobile-design
+npm run build:web -- --package-dir ../../packages/mobile-design
+npm run sync -- --package-dir ../../packages/mobile-design
+npm run assets
 npm test
 ```
 
-Para actualizar también la evidencia existente:
+Si sólo cambias JavaScript, CSS o recursos del sitio, actualiza las huellas con `npm run assets` y ejecuta `npm test`.
 
-```sh
-npm run sync -- --package-dir /ruta/al/paquete/mobile-design --evidence-dir /ruta/a/las/capturas
-```
+## Verificación
 
-Se pueden usar rutas absolutas o relativas. El sincronizador no modifica el paquete original. Sin una carpeta de evidencia, conserva las imágenes ya incluidas en este repositorio. `dist/data.json`, los ejemplos y el JSON integrado en el HTML se generan juntos.
+| Comando                                                                | Qué comprueba                                                                                           |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `npm test`                                                             | Datos integrados, rutas, enlaces, recursos, contratos y sintaxis. Es la comprobación de GitHub Actions. |
+| `npm run check:examples -- --package-dir ../../packages/mobile-design` | Tipos de los módulos TSX descargables contra el paquete del workspace.                                  |
+| `npm run test:web`                                                     | Matrices de navegador de las galerías y controles del sitio sobre la exportación incluida.              |
+| `npm run test:web:page-controls`                                       | Navegación, foco, búsqueda y acciones de copiar y descargar.                                            |
+| `npm run test:web:page-typography`                                     | Consumo de `Text` en el sitio y los ejemplos.                                                           |
+| `npm run test:web:choices`                                             | Integración de Select y Autocomplete con teclado y puntero.                                             |
+| `npm run test:web:remaining`                                           | Galerías revisadas por parejas, configuraciones y recorridos de interacción.                            |
 
-## Verificación y límites
+Para las pruebas web ejecuta `npm ci` e instala Chrome o Chromium. Si el ejecutor está en otra ubicación, indica su ruta con `CHROME_PATH`. Los resultados y capturas se guardan en `.artifacts/`. Puedes filtrar una familia con `node scripts/check-remaining-web.mjs --family=carousel`. La suite de Select y Autocomplete también admite `WEB_CHOICE_ENGINES=chromium,webkit,firefox` con los motores correspondientes instalados.
 
-`npm test` comprueba cobertura de fichas, contratos, alcance web por familia, recursos, ejemplos, igualdad de datos integrados, sintaxis JavaScript y enlaces de la arquitectura editorial (170 rutas). Se ejecuta en GitHub Actions sin acceso a la app.
+Para probar una exportación aislada, parte de una copia de `dist/`. `MOBILE_DESIGN_DOCS_DIST_DIR` indica dónde escribir el runtime reconstruido. `MOBILE_DESIGN_DOCS_TEST_DIST_DIR` indica qué copia completa verificar con `test:web:remaining`.
 
-`npm run check:examples` compila los 46 ejemplos contra el paquete indicado. Esa comprobación requiere su workspace; no se presenta como una prueba de píxeles, gestos o rendimiento.
+Consulta [QA.md](QA.md) para los casos, resultados y límites de cada revisión.
 
-Los resultados publicados corresponden a los casos registrados en la revisión. Las verificaciones del sitio no sustituyen una ejecución del paquete en la aplicación consumidora. La cobertura web se registra por familias: Buttons, Extended FABs, FAB menu, FABs, Icon buttons, Segmented buttons, Split button y Cards tienen ejemplos interactivos y matrices de navegador; las otras 28 familias siguen pendientes. La revisión automatizada de foco y teclado no sustituye una comprobación con lectores de pantalla.
+## Licencias
 
-## Estilo y licencias
-
-Se conservan MD3 Baseline, Roboto y Material Symbols Rounded. Los nuevos cambios deben usar los roles semánticos y componentes de documentación existentes; consulta [CONTRIBUTING.md](CONTRIBUTING.md).
-
-El código de documentación se distribuye bajo [MIT](LICENSE). Las fuentes y recursos mantienen sus licencias y atribuciones en `dist/assets/`. Este proyecto es independiente de Google; Material Design 3 es su referencia de diseño.
-
-La galería de FAB menu abre con la presentación Expressive: pastillas sin sombra y cierre circular. `presentation="expressive"` permite usar esa presentación en web; `adaptive` conserva el menú baseline de navegador indicado por la referencia. La lista de más de seis acciones permanece identificada como extensión.
+El código de documentación se distribuye bajo [MIT](LICENSE). Las fuentes, imágenes y dependencias conservan sus atribuciones en [`dist/assets/NOTICE`](dist/assets/NOTICE) y en los [avisos del runtime](dist/runtime/components/THIRD_PARTY_NOTICES.txt). Mobile Design es un proyecto independiente de Google.

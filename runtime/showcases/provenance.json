@@ -1,0 +1,97 @@
+{
+    "description": "Original native showcase compositions, adapted only for the web document lifecycle, inline configuration and self-contained local assets. Original components are imported from mobile-design.",
+    "files": [
+        {
+            "source": "src/screens/examples/mobile-design-core-examples.tsx",
+            "sha256": "ab224791da7f06a146a3a587523c4f54c1220260cad401c3ac3e21bda5e95873"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-content-examples.tsx",
+            "sha256": "af7043541e742cdf824b4932b819462c3df988f5596693fba8187ee6f6d4be0f"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-selection-examples.tsx",
+      "sha256": "b486f159436f2d7af4c5a3f3c6df1ad54354add85d3341437593c734d3196289"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-navigation-examples.tsx",
+            "sha256": "51c0f4511a1f24204844f9a98edde55a5a49f330a5afa7e3ebb9e0cdcab48e3c"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-navigation-playground.tsx",
+            "sha256": "cdbf4f9a61107387ac2842ad4e078098ad01924d84740c204803b97c983c2fe2"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-navigation-state.ts",
+            "sha256": "affedba428580ecda436ae477ee56232fbf3c083e0a22738ead98dfca597a0ab"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-progress-examples.tsx",
+            "sha256": "ea9ab0b2ed4bebcde801d8795053323dae35d9bbb3237bef102a0d85b38e3cc7"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-progress-usage-examples.tsx",
+            "sha256": "dac2da5488284a2039b5fe22663a7100a03b9fe8a1fe44373f73f65eb27f584b"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-action-examples.tsx",
+            "sha256": "64c2383af7315021480aa52e729d856fd8d4e22a85672cc5467ca6732a2933ae"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-action-scenarios.tsx",
+            "sha256": "0f262b128869f32910002cbed297317df00da4579d4263c22af2a266e2610f63"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-demo-task.ts",
+            "sha256": "e2d43ff423ca7bd7d4d23ad7a328ea5732081546a88270eb588dfe38e060cf1a"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-dialog-examples.tsx",
+            "sha256": "37a6372e20bfc74188f2b9ea8ed22848bb7aac73d42e301d222db11c8f3df748"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-sheet-content-examples.tsx",
+            "sha256": "fb7fd606e73c1ab38401ac6bc83cac666dca40a16035bb928127c29c2c3776a0"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-chip-input-examples.tsx",
+            "sha256": "0ec4e6ffe761ca185a2878e92a7489056b4805d990277fd80fed0a2a43c0b998"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-list-examples.tsx",
+            "sha256": "6057353c4a08973c39ee35b2e686bfcb41ce1a613940f098267bf89b20f12c34"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-tabs-examples.tsx",
+            "sha256": "4b530b20adaea130c08f53ad0d14baf66f41632261ed5ade46b32f3d2f44b9c3"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-tabs-usage-data.ts",
+            "sha256": "cbca21e48a30fdc36ccad320d0226eec1d8cc8ed65e80047a39390a9b74d172b"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-tabs-usage-screen.tsx",
+            "sha256": "7724347aee7e2bc5dbd00d344d8623bfc689339398efde65e95ffb47a4acb62d"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-tabs-art.tsx",
+            "sha256": "d7d171c6ec3c972425b46b0e3e6e6438b62725a348db5be77ace74742dd91ac9"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-list-usage-data.ts",
+            "sha256": "9025841a63abd8c4690c6dc256ced9bee8974d5705f16443edd4e689d8775726"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-list-usage-screen.tsx",
+            "sha256": "1b6c5a034f0143eed2e290596abf7fe8f1491692bcec7a8ae8b0e14ada11eb54"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-list-reorder-example.tsx",
+            "sha256": "5ff3507da99fb06c6f5b93a6a2bab0ec0482d50fabe2aeb56a732ef53b0cad6e"
+        },
+        {
+            "source": "src/screens/examples/mobile-design-choice-examples.tsx",
+            "sha256": "293c54e084a8d7fd959e9d04a908316f39cf189854356419b91b986c1ec6f9ba"
+        }
+    ]
+}

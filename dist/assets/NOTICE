@@ -1,22 +1,28 @@
-Documentation website assets: material-symbols.ttf is a local subset served by the official Google Fonts CSS API on 2026-11-03 (Material Symbols Rounded, default axes). Requested names are listed in icon-names.json. Copyright Google LLC, Apache License 2.0. It is distinct from the complete pinned package font described below. The website uses Roboto 400/500/700 under SIL OFL 1.1. Editorial illustrations are original CSS compositions.
+Documentation website assets: material-symbols.ttf is a subset of the Google Material Symbols Rounded variable font pinned by the package, with FILL from 0 to 1 and weight, optical size and grade fixed at 400, 24 and 0. Requested names are listed in icon-names.json. Copyright Google LLC, Apache License 2.0. It is distinct from the complete pinned package font described below. The website uses Roboto 400/500/700 under SIL OFL 1.1. Editorial illustrations are original CSS compositions.
 
 The interactive runtime uses lossless WOFF2 copies of Mobile Design's complete original fonts, preserving glyphs, metrics and all variable axes. Runtime dependency licenses are included in runtime/components/THIRD_PARTY_NOTICES.txt.
 
-The sample photographs in assets/examples are unchanged, bounded art regions from Google Material Design public examples. Their original URLs, crop provenance and hashes are recorded in assets/examples/sources.json. They illustrate local content; the controls are rendered by Mobile Design.
+The sample photographs in assets/examples are unchanged, bounded art regions from Google Material Design public examples. Their original URLs, crop provenance and hashes are recorded in assets/examples/sources.json and the app-bars, badges and button-groups subdirectories. The badge collection example draws only the original art regions through an SVG viewBox; its UI is rendered by Mobile Design. They illustrate local content; the controls are rendered by Mobile Design.
 
 The following notices describe the documented package and its included resources:
 
 
+The Fortnightly wordmark is an unmodified Flutter Gallery asset. Its origin and BSD license are retained in assets/examples/app-bars/README.md and LICENSE.flutter-gallery-assets.
+
+Carousel showcase: unmodified local copies of the original Unsplash example photographs. License: https://unsplash.com/license. Sources: photo-1448375240586-882707db888b, photo-1471922694854-ff1b63b20054 and photo-1509316785289-025f5b846b35 on images.unsplash.com. Exact image URLs are retained in runtime/showcases/assets/carousel/sources.json.
+
 Mobile Design composes React Native Paper 6.0.0-alpha.0 (MIT, Copyright 2017 Callstack); it does not claim authorship of Paper.
 
-Material Symbols Rounded SVG paths: Copyright Google LLC, Apache License 2.0. Unmodified assets from google/material-design-icons, revision10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7, symbols/web; optical size24, weight400, grade0, fill0/1. See LICENSE-Apache-2.0.txt. Paper/MDI aliases are local compatibility mappings.
-
-Material Symbols Rounded variable TTF and complete codepoint map: Copyright Google LLC, Apache License 2.0, same revision, variablefont/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf and .codepoints. Unmodified original font; four native variation axes. See LICENSE-Apache-2.0.txt.
-
-Roboto static fonts: Copyright The Roboto Project Authors (https://github.com/googlefonts/roboto-classic), SIL Open Font License 1.1. Original v3.015 faces distributed by expo/google-fonts and Google Fonts. See assets/fonts/roboto/OFL.txt; includes normal/italic 400/500/600/700/800.
+Material Symbols Rounded and Roboto assets are distributed by @mobile-design/icons with their original notices and licenses.
 
 Carousel geometry and progress paths adapt Material Components Android and AndroidX code under Apache 2.0. Source revisions and notices are preserved in the adapted files. See LICENSE-Apache-2.0.txt. Additional adaptations are identified in source and docs.
 
 Loading Indicator shape coordinates adapt MaterialShapes (Copyright 2024 The Android Open Source Project). Button tokens and other identified current Material3 adaptations reference AndroidX revision d153d87ed76372ece0c99dac837ff07ab845d495, under Apache 2.0. This package is not affiliated with or endorsed by Google or Callstack.
 
 TopAppBar measurement, title/color easing and snap behavior adapt AppBar.kt and Material3 tokens from AndroidX revision d153d87ed76372ece0c99dac837ff07ab845d495 (Copyright The Android Open Source Project), Apache 2.0. The React Native scroll adapter uses native ScrollView momentum and does not reproduce Compose NestedScrollConnection. See LICENSE-Apache-2.0.txt and docs/app-bars-vs-md3-2026-10-26.md.
+
+Material Symbols Rounded SVG paths: Copyright Google LLC, Apache License 2.0. Unmodified assets from google/material-design-icons, revision10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7, symbols/web; optical size24, weight400, grade0, fill0/1. See LICENSE-Apache-2.0.txt.
+
+Material Symbols Rounded variable TTF and complete codepoint map: Copyright Google LLC, Apache License 2.0, same revision, variablefont/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf and .codepoints. Unmodified original font; four native variation axes. See LICENSE-Apache-2.0.txt.
+
+Roboto static fonts: Copyright The Roboto Project Authors (https://github.com/googlefonts/roboto-classic), SIL Open Font License 1.1. Original v3.015 faces distributed by expo/google-fonts and Google Fonts. See assets/fonts/roboto/OFL.txt; includes normal/italic 400/500/600/700/800.

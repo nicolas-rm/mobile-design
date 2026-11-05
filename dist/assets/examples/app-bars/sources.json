@@ -1,0 +1,162 @@
+{
+    "publisher": "Google Material Design",
+    "carbonVersion": "2026-10-13_06-10-19",
+    "carbonPageURL": "https://m3.material.io/_dsm/content/m3/2026-10-13_06-10-19/4135ef28-314c-44dc-b829-6e94a36b69f2.json",
+    "reviewed": "2026-10-26 to 2026-10-27",
+    "assets": [
+        {
+            "file": "recap-dog.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [80, 250, 472, 439],
+            "pixels": [472, 439],
+            "sha256": "29d9ed9f18b0021e18123b2c11057e9076a47e87a5794a1842d2629488ef99cc",
+            "frameSeconds": 0
+        },
+        {
+            "file": "recap-train.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [580, 250, 342, 242],
+            "pixels": [342, 242],
+            "sha256": "ed1f3f66100d74957e87a36bdf0918677fcd056edc9084ccd8fa3143cece1b6f",
+            "frameSeconds": 0
+        },
+        {
+            "file": "recap-mushrooms.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [650, 300, 240, 210],
+            "pixels": [240, 210],
+            "sha256": "5c2abcbc809910ce5b4e94afafa35c8f749f110ae3defb33a2f30ee3f7785db9",
+            "frameSeconds": 3.5
+        },
+        {
+            "file": "recap-beekeeper.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [78, 411, 230, 126],
+            "pixels": [230, 126],
+            "sha256": "d775a5734a646602745270e1343bbe6dbc064cb6da2093fc1df90626a0dcdcda",
+            "frameSeconds": 3.5
+        },
+        {
+            "file": "recap-tree.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [326, 411, 104, 126],
+            "pixels": [104, 126],
+            "sha256": "8999a51b8342b09f01c5fbb9bcc6a6426faa81e93b965df5ef39d1c8c16c8963",
+            "frameSeconds": 3.5
+        },
+        {
+            "file": "recap-tent.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [451, 411, 102, 125],
+            "pixels": [102, 125],
+            "sha256": "6ebb7bc865528ebc11b5290b18efd0adcf3617bf576d49a4691aa2350aad3006",
+            "frameSeconds": 3.5
+        },
+        {
+            "file": "recap-valley.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6pkl9-GM3%20-%20App-bar%20-%20Guidelines%2037%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [88, 574, 830, 120],
+            "pixels": [830, 120],
+            "sha256": "bcd6569b1e09afbbc4091d192463d57d63b0ae06669f7d0f3d788b7ab8137318",
+            "frameSeconds": 3.5
+        },
+        {
+            "file": "news-mushrooms.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6geio-GM3%20-%20App-bar%20-%20Guidelines%2033%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [345, 520, 660, 173],
+            "pixels": [660, 173],
+            "sha256": "ad61e2680fc1a5942e08d157e97af1bb42ea0173663d199b7b94d1d77b0289e4",
+            "frameSeconds": 0
+        },
+        {
+            "file": "films-baker.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp67nmz-GM3%20-%20Top%20App-Bar%20-%20Responsive%20-%201P%20-%20v01.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [325, 375, 700, 223],
+            "pixels": [700, 223],
+            "sha256": "9467426a480a4314759a5dcb2d5bd7647326f9f5b0925f0d3d4d922490b2e3ea",
+            "frameSeconds": 0
+        },
+        {
+            "file": "podcast-recording.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmroev7y0-Hero%201x1-light.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/overview",
+            "cropXYWH": [129, 336, 244, 143],
+            "pixels": [244, 143],
+            "sha256": "41190c2feb23bd78e6fc8b06ea646ab0b5181468bc31626a7d4437bc0d5342f8"
+        },
+        {
+            "file": "podcast-room.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmroev7y0-Hero%201x1-light.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/overview",
+            "cropXYWH": [396, 336, 243, 143],
+            "pixels": [243, 143],
+            "sha256": "cbf2cd09ac26a874119a102265b9b5fd2e63f06c1f1ccec8e625d84c6d533d79"
+        },
+        {
+            "file": "trails-sky.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlnt9v4x-01.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [825, 597, 390, 212],
+            "pixels": [390, 212],
+            "sha256": "4779756388a0770dab14c218860a602826962ee344e02ddcc6152c580911807e"
+        },
+        {
+            "file": "send-illustration.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlnth1j3-03.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [345, 473, 660, 126],
+            "pixels": [660, 126],
+            "sha256": "09d813b0ba8f9c06b16b760a7c1834d05a344bccaf34fc43db1ec4a02628f7c3"
+        },
+        {
+            "file": "hiking-tree.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlnurf1u-22-Do.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [67, 327, 156, 280],
+            "pixels": [156, 280],
+            "sha256": "0e9ffda68054d1d849406a92cdd940da010157b48a7412417eeaff14ff1b1131"
+        },
+        {
+            "file": "hiking-tent.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlnurf1u-22-Do.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [436, 328, 145, 280],
+            "pixels": [145, 280],
+            "sha256": "b4a273b99bb8a44441437f843ebbae260d79893f92d6c09c1646975beec1993a"
+        },
+        {
+            "file": "letter-avatar.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlp6hnuc-GM3%20-%20App-bar%20-%20Guideline%2034%20-%20IA%20-%20v03.mp4?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [300, 445, 70, 70],
+            "pixels": [70, 70],
+            "sha256": "38b9e0735b54092fd0c5b039bab3f2f2b466b0c0854a4de2845f235d02fee385",
+            "frameSeconds": 0
+        },
+        {
+            "file": "sushi-food.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlntdon8-02.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [345, 503, 650, 96],
+            "pixels": [650, 96],
+            "sha256": "af25cd87a86aa41c0b451d48a39c1ad56362dd85d009e7d4007e726f375dda5e"
+        },
+        {
+            "file": "trails-map.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmlnt9v4x-01.png?alt=media",
+            "sourcePage": "https://m3.material.io/components/app-bars/guidelines",
+            "cropXYWH": [1310, 600, 80, 190],
+            "pixels": [80, 190],
+            "sha256": "387b68fe320ab9a2877033e6c874a6eeb1217b2930e31d48ea5a1e8e77b8c04c"
+        }
+    ]
+}

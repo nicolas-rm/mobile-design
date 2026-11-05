@@ -1,5 +1,5 @@
 {
-  "name": "mobile-design-documentation-runtime",
-  "private": true,
-  "main": "./index.tsx"
+    "name": "mobile-design-documentation-runtime",
+    "private": true,
+    "main": "./index.tsx"
 }

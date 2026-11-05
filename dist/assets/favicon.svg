@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="21" fill="#6750A4"/><path d="M12 43V28c0-11 15-11 15 0v15h10V28c0-11 15-11 15 0v15" fill="none" stroke="#fff" stroke-width="6"/><circle cx="52" cy="13" r="5" fill="#EADDFF"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="64" height="64" viewBox="130 138 994 994"
+     role="img" aria-labelledby="mobile-design-title mobile-design-description">
+  <title id="mobile-design-title">Mobile Design</title>
+  <desc id="mobile-design-description">Logo M modular violeta con fondo transparente, reconstruido con cuatro trazados vectoriales editables.</desc>
+  <g id="mobile-design-symbol">
+    <path id="left-pillar" fill="#6D54A7" d="M 175.5 472 C 257.3 562.05 346 653.57 428.5 745 C 427.6 793.78 429.88 843.4 428.5 891 C 426.46 955.71 368.86 1018.82 302 1018.5 C 233.71 1018.79 177.02 956.68 173.5 891 C 174.83 751.61 170.83 610.01 175.5 472 Z"/>
+    <path id="right-pillar" fill="#6D54A7" transform="matrix(-1 0 0 1 1254 0)" d="M 175.5 472 C 257.3 562.05 346 653.57 428.5 745 C 427.6 793.78 429.88 843.4 428.5 891 C 426.46 955.71 368.86 1018.82 302 1018.5 C 233.71 1018.79 177.02 956.68 173.5 891 C 174.83 751.61 170.83 610.01 175.5 472 Z"/>
+    <path id="back-diagonal" fill="#54398C" d="M 532 826.5 C 428.02 707.4 318.1 590.77 208.5 474 C 186.44 447.64 172.92 417.74 173.5 382 C 172.08 313.81 233.16 251.68 301 251.5 C 340.37 252.45 373.72 271.56 399.5 303 C 477.43 399.3 552.32 496.86 627 594.5 L 683 664 L 712 764 L 637 854 Z"/>
+    <path id="front-diagonal" fill="#6D54A7" d="M 627 594.5 C 701.75 497.12 776.29 399.65 854 303.5 C 880 272.33 912.82 251.74 953 252.5 C 1021.42 251.16 1081.55 314.44 1080.5 382 C 1080.59 417.3 1067.88 447.3 1046 473.5 C 935.7 590.92 824.84 708.11 720.5 828 C 694.64 856.64 664.7 875.43 627 875.5 C 588.59 875.64 557.34 855.69 532 826.5 C 518.5 815 515 799.5 515 780 C 515 751 525.5 729.5 548 700 L 627 594.5 Z"/>
+  </g>
+</svg>
