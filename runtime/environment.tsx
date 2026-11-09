@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createMobileDesignTheme } from 'mobile-design';
+import { createMobileDesignTheme } from 'mobile-design/react-native-web';
 
 type Environment = { colorScheme: 'light' | 'dark'; reduced: boolean };
 export function useRuntimeEnvironment() {

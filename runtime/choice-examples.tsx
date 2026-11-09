@@ -1,4 +1,4 @@
-import { MobileDesignProvider } from 'mobile-design';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { ChoiceExamples } from './showcases/mobile-design-choice-examples';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 import { Prose, RuntimeTextRoot } from './prose';

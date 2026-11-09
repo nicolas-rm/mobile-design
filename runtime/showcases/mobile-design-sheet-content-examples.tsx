@@ -13,7 +13,7 @@ import {
     TopAppBar,
     TouchableRipple,
     useMobileTheme,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 
 const photo = require('./assets/welcome-wallpaper.png');
 // Public sample used by https://docs.expo.dev/versions/v57.0.0/sdk/video/.

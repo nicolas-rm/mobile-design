@@ -2,7 +2,9 @@ import { SelectField } from './select-field';
 import { Prose, RuntimeTextRoot } from './prose';
 import { useCallback, useState } from 'react';
 import { View } from 'react-native';
-import { FAB, MaterialSymbol, MobileDesignProvider, Tooltip, type FABProps, type FABSize, type FABVariant } from 'mobile-design';
+import { FAB, Tooltip, type FABProps, type FABSize, type FABVariant } from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 import { FABUsage } from './extended-fab';
 

@@ -1,0 +1,11 @@
+Mobile Design composes React Native Paper 6.0.0-alpha.0 (MIT, Copyright 2017 Callstack); it does not claim authorship of Paper.
+
+Material Symbols Rounded subset, Unicode data and SVG paths: Copyright Google LLC, Apache License 2.0. The subset is derived from the variable font in google/material-design-icons revision 10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7. The font subset retains the original FILL, GRAD, opsz and wght axes. The bootstrap SVG paths come from symbols/web in the same revision. See LICENSE-Apache-2.0.txt.
+
+Roboto static fonts: Copyright The Roboto Project Authors (https://github.com/googlefonts/roboto-classic), SIL Open Font License 1.1. Original v3.015 faces distributed by expo/google-fonts and Google Fonts. See assets/fonts/roboto/OFL.txt.
+
+Carousel geometry and progress paths adapt Material Components Android and AndroidX code under Apache 2.0. The adapted source files preserve the original notices and revisions. See LICENSE-Apache-2.0.txt.
+
+Loading Indicator shape coordinates adapt MaterialShapes (Copyright 2024 The Android Open Source Project). Button tokens and other identified current Material3 adaptations reference AndroidX revision d153d87ed76372ece0c99dac837ff07ab845d495, under Apache 2.0. This package is not affiliated with or endorsed by Google or Callstack.
+
+TopAppBar measurement, title/color easing and snap behavior adapt AppBar.kt and Material3 tokens from AndroidX revision d153d87ed76372ece0c99dac837ff07ab845d495 (Copyright The Android Open Source Project), Apache 2.0. The React Native scroll adapter uses native ScrollView momentum. See LICENSE-Apache-2.0.txt.

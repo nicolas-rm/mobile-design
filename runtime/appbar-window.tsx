@@ -14,9 +14,7 @@ import {
     Icon,
     IconButton,
     List,
-    MaterialSymbol,
     Menu,
-    MobileDesignProvider,
     NavigationRailModal,
     SearchView,
     Text,
@@ -28,7 +26,9 @@ import {
     useMobileTheme,
     type ContainerTransformOrigin,
     type TopAppBarAction,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { useRuntimeEnvironment } from './environment';
 import { useWindowConfiguration } from './component-window';
 import { appBarScenes, initialAppBar, type AppBarConfiguration } from './app-bars-data';

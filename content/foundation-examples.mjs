@@ -3,7 +3,7 @@ export const foundationExamples = {
         id: 'typography',
         title: 'Text, jerarquía y énfasis',
         code: `import { ScrollView, View } from 'react-native';
-import { MobileDesignProvider, Text, type TextVariant } from 'mobile-design';
+import { MobileDesignProvider, Text, type TextVariant } from 'mobile-design/react-native';
 
 const roles = ['display', 'headline', 'title', 'body', 'label'] as const;
 const sizes = ['Large', 'Medium', 'Small'] as const;

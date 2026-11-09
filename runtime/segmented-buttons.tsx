@@ -5,13 +5,13 @@ import { View } from 'react-native';
 import {
     Button,
     Card,
-    MaterialSymbol,
-    MobileDesignProvider,
     SegmentedButtons,
     Text,
     type SegmentedButtonOption,
     type SegmentedButtonsProps,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 const choices = [
     ['walk', 'A pie', 'directions_walk'],

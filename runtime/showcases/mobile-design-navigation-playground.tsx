@@ -19,7 +19,7 @@ import {
     TopAppBar,
     useMobileTheme,
     type NavigationDestination,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createMailState, mailReducer, selectMail, type MailDraft, type MailMessage } from './mobile-design-navigation-state';
 

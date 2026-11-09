@@ -11,7 +11,6 @@ import {
     Icon,
     IconButton,
     List,
-    MaterialSymbol,
     Menu,
     NavigationDrawerModal,
     SearchView,
@@ -22,7 +21,8 @@ import {
     TopAppBar,
     useMobileTheme,
     type SwipeListGroupHandle,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
 import { ListPlayground } from './mobile-design-list-examples';
 import {
     listAlbums,

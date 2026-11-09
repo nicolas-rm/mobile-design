@@ -11,7 +11,7 @@ import {
     type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { Text, useMobileTheme, type TextVariant } from 'mobile-design';
+import { Text, useMobileTheme, type TextVariant } from 'mobile-design/react-native-web';
 
 const RoleContext = createContext<TextVariant>('bodyLarge');
 type TextRun = { key: string; host: HTMLSpanElement; variant: TextVariant; content: string | number };

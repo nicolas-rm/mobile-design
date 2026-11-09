@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode } from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition, ReduceMotion } from 'react-native-reanimated';
-import { Button, Card, Icon, List, ProgressIndicator, Text, useMobileTheme } from 'mobile-design';
+import { Button, Card, Icon, List, ProgressIndicator, Text, useMobileTheme } from 'mobile-design/react-native-web';
 import { useDemoTask } from './mobile-design-demo-task';
 
 function Example({ title, children }: { title: string; children: ReactNode }) {

@@ -24,7 +24,7 @@ import {
     useMobileTheme,
     type TextFieldHandle,
     type TimeValue,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 
 type Props = { onEvent: (message: string) => void };
 const row = { flexDirection: 'row' as const, flexWrap: 'wrap' as const, alignItems: 'center' as const, gap: 8 };

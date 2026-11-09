@@ -12,7 +12,7 @@ import {
     Tooltip,
     useMobileTheme,
     type MobileDesignComponentId,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 import { type ButtonSize } from '@mobile-design/tokens';
 import {
     AppendLoadingExample,

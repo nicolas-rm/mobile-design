@@ -2,7 +2,9 @@ import { SelectField } from './select-field';
 import { Prose, RuntimeTextRoot } from './prose';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
-import { Button, IconButton, MaterialSymbol, MobileDesignProvider, Tooltip, Menu, type IconButtonProps } from 'mobile-design';
+import { Button, IconButton, Tooltip, Menu, type IconButtonProps } from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { type ButtonSize } from '@mobile-design/tokens';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 

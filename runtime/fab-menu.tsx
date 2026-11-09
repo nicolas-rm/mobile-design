@@ -6,13 +6,13 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import {
     FAB,
     Icon,
-    MobileDesignProvider,
     Text,
     type FABMenuItemProps,
     type FABMenuProps,
     type FABSize,
     type FABVariant,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 const previewInsets = { top: 0, right: 0, bottom: 0, left: 0 };
 

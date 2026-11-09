@@ -1,0 +1,8 @@
+packages:
+    - 'packages/*'
+
+overrides:
+    # Use one Expo Font instance across Expo and the workspace packages.
+    expo-font: 58.0.11
+    # Bottom Sheet publishes an invalid >=4.0.0- peer range.
+    '@gorhom/bottom-sheet@5.2.14>react-native-reanimated': '>=3.16.0 || >=4.0.0-0'

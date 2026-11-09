@@ -1,0 +1,68 @@
+import type { Theme } from 'react-native-paper';
+import materialColors from '@mobile-design/tokens/colors';
+
+/** Flat generated tokens are shared by native Paper and the application CSS. */
+type MobileDesignColorScheme = typeof materialColors.appColorTokens.light;
+
+/** Convert only once at the theme boundary; legacy CSS roles stay outside Paper. */
+export function createMobileDesignColors(colorTokens: MobileDesignColorScheme) {
+    return {
+        primary: colorTokens.primary,
+        onPrimary: colorTokens.onPrimary,
+        primaryContainer: colorTokens.primaryContainer,
+        onPrimaryContainer: colorTokens.onPrimaryContainer,
+        secondary: colorTokens.secondary,
+        onSecondary: colorTokens.onSecondary,
+        secondaryContainer: colorTokens.secondaryContainer,
+        onSecondaryContainer: colorTokens.onSecondaryContainer,
+        tertiary: colorTokens.tertiary,
+        onTertiary: colorTokens.onTertiary,
+        tertiaryContainer: colorTokens.tertiaryContainer,
+        onTertiaryContainer: colorTokens.onTertiaryContainer,
+        error: colorTokens.error,
+        onError: colorTokens.onError,
+        errorContainer: colorTokens.errorContainer,
+        onErrorContainer: colorTokens.onErrorContainer,
+        background: colorTokens.background,
+        onBackground: colorTokens.onBackground,
+        surface: colorTokens.surface,
+        onSurface: colorTokens.onSurface,
+        surfaceVariant: colorTokens.surfaceVariant,
+        onSurfaceVariant: colorTokens.onSurfaceVariant,
+        outline: colorTokens.outline,
+        outlineVariant: colorTokens.outlineVariant,
+        inverseSurface: colorTokens.inverseSurface,
+        inverseOnSurface: colorTokens.inverseOnSurface,
+        inversePrimary: colorTokens.inversePrimary,
+        shadow: colorTokens.shadow,
+        scrim: colorTokens.scrim,
+        surfaceDim: colorTokens.surfaceDim,
+        surfaceBright: colorTokens.surfaceBright,
+        surfaceContainerLowest: colorTokens.surfaceContainerLowest,
+        surfaceContainerLow: colorTokens.surfaceContainerLow,
+        surfaceContainer: colorTokens.surfaceContainer,
+        surfaceContainerHigh: colorTokens.surfaceContainerHigh,
+        surfaceContainerHighest: colorTokens.surfaceContainerHighest,
+        primaryFixed: colorTokens.primaryFixed,
+        primaryFixedDim: colorTokens.primaryFixedDim,
+        onPrimaryFixed: colorTokens.onPrimaryFixed,
+        onPrimaryFixedVariant: colorTokens.onPrimaryFixedVariant,
+        secondaryFixed: colorTokens.secondaryFixed,
+        secondaryFixedDim: colorTokens.secondaryFixedDim,
+        onSecondaryFixed: colorTokens.onSecondaryFixed,
+        onSecondaryFixedVariant: colorTokens.onSecondaryFixedVariant,
+        tertiaryFixed: colorTokens.tertiaryFixed,
+        tertiaryFixedDim: colorTokens.tertiaryFixedDim,
+        onTertiaryFixed: colorTokens.onTertiaryFixed,
+        onTertiaryFixedVariant: colorTokens.onTertiaryFixedVariant,
+        stateLayerPressed: colorTokens.stateLayerPressed,
+        elevation: {
+            level0: colorTokens.elevationLevel0,
+            level1: colorTokens.elevationLevel1,
+            level2: colorTokens.elevationLevel2,
+            level3: colorTokens.elevationLevel3,
+            level4: colorTokens.elevationLevel4,
+            level5: colorTokens.elevationLevel5,
+        },
+    } satisfies Theme['colors'];
+}

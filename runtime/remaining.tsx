@@ -1,6 +1,6 @@
 import { SelectField } from './select-field';
 import { useState } from 'react';
-import { MobileDesignProvider } from 'mobile-design';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { Prose, RuntimeTextRoot } from './prose';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 import { ComponentWindow } from './component-window';

@@ -7,13 +7,13 @@ import {
     ButtonGroup,
     IconButton,
     List,
-    MaterialSymbol,
     NavigationBar,
     NavigationRail,
     Text,
     useMobileTheme,
     type ButtonGroupItem,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
 import { Prose } from './prose';
 import { initialCalculator, updateCalculator } from './button-group-calculator';
 

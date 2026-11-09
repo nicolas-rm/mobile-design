@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Linking, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import { Tabs, TabsPager, Text, useMobileTheme, type TabItem, type TabsProps } from 'mobile-design';
+import { Tabs, TabsPager, Text, useMobileTheme, type TabItem, type TabsProps } from 'mobile-design/react-native-web';
 import {
     tabsDogItems,
     tabsIconItems,

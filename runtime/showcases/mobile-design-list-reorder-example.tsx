@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Image, View, useWindowDimensions } from 'react-native';
-import { Icon, List, ListReorderGroup, Text, ThemeProvider, useMobileTheme } from 'mobile-design';
+import { Icon, List, ListReorderGroup, Text, ThemeProvider, useMobileTheme } from 'mobile-design/react-native-web';
 import { listTracks } from './mobile-design-list-usage-data';
 
 const tracks = [

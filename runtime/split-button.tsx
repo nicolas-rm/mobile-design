@@ -2,7 +2,9 @@ import { SelectField } from './select-field';
 import { Prose, RuntimeTextRoot } from './prose';
 import { useEffect, useRef, useState } from 'react';
 import { View, useWindowDimensions } from 'react-native';
-import { Button, Card, IconButton, MaterialSymbol, MobileDesignProvider, SplitButton, Text, type SplitButtonProps } from 'mobile-design';
+import { Button, Card, IconButton, SplitButton, Text, type SplitButtonProps } from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 function useLiveCopy() {
     const alive = useRef(true);

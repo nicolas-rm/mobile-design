@@ -14,5 +14,10 @@ const { getDefaultConfig } = workspaceRequire('expo/metro-config');
 const config = getDefaultConfig(__dirname);
 config.watchFolders = [...new Set([...(config.watchFolders || []), workspace, packageRoot])];
 config.resolver.nodeModulesPaths = [path.join(workspace, 'node_modules')];
-config.resolver.extraNodeModules = { ...config.resolver.extraNodeModules, 'mobile-design': packageRoot };
+config.resolver.extraNodeModules = {
+    ...config.resolver.extraNodeModules,
+    'mobile-design': packageRoot,
+    '@mobile-design/tokens': process.env.MOBILE_DESIGN_TOKENS_DIR,
+    '@mobile-design/icons': process.env.MOBILE_DESIGN_ICONS_DIR,
+};
 module.exports = config;

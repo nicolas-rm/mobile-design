@@ -26,10 +26,10 @@ import {
     type NavigationDestination,
     type SearchResult,
     type ToolbarAction,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 import { Surface, useTheme, type Theme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Text } from 'mobile-design';
+import { Text } from 'mobile-design/react-native-web';
 import { initialDocument, sameDocument } from './mobile-design-navigation-state';
 import { TabExamples } from './mobile-design-tabs-examples';
 

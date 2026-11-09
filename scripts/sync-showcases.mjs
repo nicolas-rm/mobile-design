@@ -5,6 +5,8 @@ import { packageContext } from './package-context.mjs';
 const { site, workspace, ts } = packageContext(),
     source = path.join(workspace, 'src/screens/examples'),
     target = path.join(site, 'runtime/showcases');
+if (!fs.existsSync(source))
+    throw new Error('Edita las galerías en runtime/showcases. Para importar desde otra aplicación, indica su paquete con --package-dir.');
 fs.mkdirSync(target, { recursive: true });
 const selected = [
     'core-examples',
@@ -39,6 +41,10 @@ for (const key of selected) {
     const ast = ts.createSourceFile(original, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX),
         edits = [];
     const visit = (node) => {
+        if (ts.isImportDeclaration(node) && ['mobile-design', 'mobile-design/react-native'].includes(node.moduleSpecifier.text))
+            edits.push([node.moduleSpecifier.getStart(ast), node.moduleSpecifier.end, "'mobile-design/react-native-web'"]);
+        if (ts.isImportDeclaration(node) && node.moduleSpecifier.text === '@mobile-design/icons/react-native')
+            edits.push([node.moduleSpecifier.getStart(ast), node.moduleSpecifier.end, "'@mobile-design/icons/react-native-web'"]);
         if (
             ts.isImportDeclaration(node) &&
             [
@@ -105,11 +111,11 @@ for (const key of selected) {
             .replace('</List.Accordion>', '</View>');
     // Text follows the package typography, including emphasized roles.
     if (/import \{ Text \} from 'react-native-paper';/.test(text))
-        text = text.replace("import { Text } from 'react-native-paper';", "import { Text } from 'mobile-design';");
+        text = text.replace("import { Text } from 'react-native-paper';", "import { Text } from 'mobile-design/react-native-web';");
     if (key === 'navigation-examples')
         text = text
             .replace('Surface, Text, useTheme', 'Surface, useTheme')
-            .replace('import { initialDocument', "import { Text } from 'mobile-design';\nimport { initialDocument");
+            .replace('import { initialDocument', "import { Text } from 'mobile-design/react-native-web';\nimport { initialDocument");
     text = text.replaceAll('siguiendo Android Material', 'con selección de 24 horas');
     text = text.replaceAll("require('../../assets/images/welcome-wallpaper.png')", "require('./assets/welcome-wallpaper.png')");
     fs.writeFileSync(path.join(target, path.basename(original)), text);
@@ -126,7 +132,7 @@ fs.writeFileSync(
     JSON.stringify(
         {
             description:
-                'Original native showcase compositions, adapted only for the web document lifecycle, inline configuration and self-contained local assets. Original components are imported from mobile-design.',
+                'Original native showcase compositions, adapted for the web document lifecycle, inline configuration and self-contained local assets. Original components are imported from mobile-design/react-native-web.',
             files: records,
         },
         null,

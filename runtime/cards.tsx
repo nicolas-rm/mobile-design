@@ -13,9 +13,7 @@ import {
     Divider,
     IconButton,
     ListReorderGroup,
-    MaterialSymbol,
     Menu,
-    MobileDesignProvider,
     Slider,
     SwipeListGroup,
     SwipeListItem,
@@ -23,7 +21,9 @@ import {
     useMobileTheme,
     type CardProps,
     type ContainerTransformOrigin,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 const photo = (name = 'bao') => ({ uri: location.origin + '/assets/examples/' + name + '.png' });
 const variants = ['elevated', 'filled', 'outlined'] as const;

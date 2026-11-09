@@ -14,7 +14,6 @@ import {
     IconButton,
     List,
     LocaleProvider,
-    MaterialSymbol,
     Menu,
     RadioButton,
     SegmentedButtons,
@@ -27,7 +26,8 @@ import {
     useMobileTheme,
     type SwipeListGroupHandle,
     type SwipeListItemHandle,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
 
 type ExamplesProps = { onEvent: (message: string) => void };
 function Example({ title, children, reference }: { title: string; children: ReactNode; reference?: string }) {

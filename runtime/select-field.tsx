@@ -1,4 +1,4 @@
-import { Select, type ChoiceOption, type SelectProps } from 'mobile-design/web';
+import { Select, type ChoiceOption, type SelectProps } from 'mobile-design/react-native-web';
 
 type Option = Omit<ChoiceOption, 'value' | 'label'> & { value: string | number; label: string | number };
 

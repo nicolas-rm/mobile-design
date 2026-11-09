@@ -3,7 +3,8 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { ScrollView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
-import { MobileDesignProvider, Text, useMobileTheme, type MobileDesignComponentId } from 'mobile-design';
+import { Text, useMobileTheme, type MobileDesignComponentId } from 'mobile-design/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { useRuntimeEnvironment } from './environment';
 import { useWindowConfiguration } from './component-window';
 import families from './remaining-families.json';

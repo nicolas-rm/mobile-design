@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Avatar, Button, Dialog, FullScreenDialog, List, Menu, RadioButton, Text, TextField } from 'mobile-design';
+import { Avatar, Button, Dialog, FullScreenDialog, List, Menu, RadioButton, Text, TextField } from 'mobile-design/react-native-web';
 
 const sounds = [
     'Ninguno',
