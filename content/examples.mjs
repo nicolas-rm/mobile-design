@@ -378,5 +378,5 @@ export function exampleModule(example) {
         if (!imports.includes('Text')) imports.push('Text');
     }
     const native = ['View', 'ScrollView'].filter((name) => new RegExp(`\\b${name}\\b`).test(body));
-    return `${hooks.size ? `import { ${[...hooks].join(', ')} } from 'react';\n` : ''}${native.length ? `import { ${native.join(', ')} } from 'react-native';\n` : ''}${example.reanimated ? "import Animated, { useSharedValue } from 'react-native-reanimated';\n" : ''}import { ${imports.join(', ')} } from 'mobile-design';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  ${body}\n}\n`;
+    return `${hooks.size ? `import { ${[...hooks].join(', ')} } from 'react';\n` : ''}${native.length ? `import { ${native.join(', ')} } from 'react-native';\n` : ''}${example.reanimated ? "import Animated, { useSharedValue } from 'react-native-reanimated';\n" : ''}import { ${imports.join(', ')} } from 'mobile-design/react-native';\n\n// Renderizar dentro de MobileDesignProvider. Las hojas necesitan GestureHandlerRootView.\nexport default function Example() {\n  ${body}\n}\n`;
 }

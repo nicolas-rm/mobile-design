@@ -6,12 +6,12 @@ import {
     BadgedBox,
     Icon,
     IconButton,
-    MaterialSymbol,
-    MobileDesignProvider,
     NavigationBar,
     NavigationRail,
     Text,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { Prose, RuntimeTextRoot } from './prose';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 import { ComponentWindow } from './component-window';

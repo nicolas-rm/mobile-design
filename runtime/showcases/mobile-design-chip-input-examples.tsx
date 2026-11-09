@@ -11,7 +11,7 @@ import Animated, {
     withSpring,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import { Avatar, Button, Chip, Dialog, Icon, RadioButton, Text, useMobileTheme } from 'mobile-design';
+import { Avatar, Button, Chip, Dialog, Icon, RadioButton, Text, useMobileTheme } from 'mobile-design/react-native-web';
 
 type Field = 'to' | 'cc';
 type Contact = { id: string; name: string; addresses: readonly string[] };

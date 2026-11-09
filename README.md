@@ -1,4 +1,4 @@
-# Mobile Design · Documentación
+# Mobile Design
 
 <img src="dist/assets/favicon.svg" width="64" height="64" alt="Mobile Design">
 
@@ -8,7 +8,13 @@ Documentación en español de Mobile Design para React Native con módulos Expo.
 
 [Documentación publicada](https://mobile-design-docs.satinfig8.chatgpt.site/) · [Contribuir](CONTRIBUTING.md) · [Verificación](QA.md)
 
-Este repositorio contiene el sitio y su exportación estática. El paquete `mobile-design` se desarrolla en el workspace de Music Design y se enlaza allí como paquete privado.
+El código fuente de los tres paquetes está en `library/packages/`. El sitio de documentación y su exportación estática están en la raíz. [Desarrollo de la librería](library/README.md)
+
+| Paquete | Documentación |
+| --- | --- |
+| `mobile-design` | [Instalación y uso](library/packages/mobile-design/README.md) · [Referencia de componentes](library/packages/mobile-design/COMPONENTS.md) |
+| `@mobile-design/tokens` | [Colores, tipografía, tamaños y movimiento](library/packages/mobile-design-tokens/README.md) |
+| `@mobile-design/icons` | [Colección opcional de iconos](library/packages/mobile-design-icons/README.md) |
 
 ## Abrir en local
 
@@ -48,7 +54,7 @@ Las pruebas de navegador cubren los casos descritos en QA. La aplicación consum
 | Ruta                   | Contenido                                                                                                                                                                               |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`content/`](content/) | Textos de fichas, guías, medidas y fuentes de ejemplos descargables.                                                                                                                    |
-| [`runtime/`](runtime/) | Host Expo de las galerías y componentes compartidos de la página. `runtime/showcases/` contiene composiciones adaptadas desde el workspace nativo.                                      |
+| [`runtime/`](runtime/) | Host Expo de las galerías y componentes compartidos de la página. `runtime/showcases/` contiene las composiciones de ejemplo. |
 | [`dist/`](dist/)       | Sitio que sirve el navegador. `app.js` y `site-sections.js` gestionan páginas y navegación. `component-docs.js` presenta las fichas. `styles.css` y `structure.css` definen el aspecto. |
 | [`scripts/`](scripts/) | Servidor, sincronización, exportación y comprobaciones.                                                                                                                                 |
 
@@ -56,22 +62,23 @@ Los datos de `dist/data.json`, su copia integrada en `dist/index.html` y los TSX
 
 ## Sincronizar y reconstruir
 
-Para actualizar fichas, tipos o ejemplos descargables, usa el workspace nativo con sus dependencias instaladas. Los comandos se ejecutan desde el repositorio de documentación. Ajusta `--package-dir` si la documentación y el workspace están en directorios separados.
+Los comandos de reconstrucción usan los paquetes de `library/`. Ejecuta las comprobaciones desde la raíz del repositorio.
 
 ```sh
-npm run sync -- --package-dir ../../packages/mobile-design
-npm run check:examples -- --package-dir ../../packages/mobile-design
+(cd library && pnpm install --frozen-lockfile)
+npm run sync
+npm run check:examples
 npm run assets
 npm test
 ```
 
-`sync` actualiza la información del paquete, los ejemplos y los recursos compartidos de `@mobile-design/tokens` y `@mobile-design/icons`. Conserva las capturas existentes. Para importar nuevas capturas, añade `--evidence-dir /ruta/a/capturas` al comando de sincronización.
+`sync` actualiza la información del paquete, los ejemplos y los recursos compartidos de la librería. Conserva las capturas y el registro de verificación existente. Para importar nuevas capturas, ejecuta `npm run sync -- --evidence-dir /ruta/a/capturas`.
 
-Si cambió una galería original de la app, ejecuta `npm run sync:showcases -- --package-dir ../../packages/mobile-design` y revisa las diferencias en `runtime/showcases/` antes de exportar. Para reconstruir el runtime, el workspace necesita TypeScript, Expo, React DOM, React Native Web y Metro Runtime compatibles con su SDK.
+Si cambias un componente o una galería, edita la fuente en `library/packages/` o `runtime/` y reconstruye el runtime.
 
 ```sh
-npm run build:web -- --package-dir ../../packages/mobile-design
-npm run sync -- --package-dir ../../packages/mobile-design
+npm run build:web
+npm run sync
 npm run assets
 npm test
 ```
@@ -83,7 +90,8 @@ Si sólo cambias JavaScript, CSS o recursos del sitio, actualiza las huellas con
 | Comando                                                                | Qué comprueba                                                                                           |
 | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | `npm test`                                                             | Datos integrados, rutas, enlaces, recursos, contratos y sintaxis. Es la comprobación de GitHub Actions. |
-| `npm run check:examples -- --package-dir ../../packages/mobile-design` | Tipos de los módulos TSX descargables contra el paquete del workspace.                                  |
+| `npm run check:examples`                                                | Tipos de los módulos TSX descargables contra el paquete del workspace.                                  |
+| `(cd library && pnpm test)`                                            | Tipos y pruebas de los paquetes de Mobile Design. |
 | `npm run test:web`                                                     | Matrices de navegador de las galerías y controles del sitio sobre la exportación incluida.              |
 | `npm run test:web:page-controls`                                       | Navegación, foco, búsqueda y acciones de copiar y descargar.                                            |
 | `npm run test:web:page-typography`                                     | Consumo de `Text` en el sitio y los ejemplos.                                                           |

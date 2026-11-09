@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 import type { TextStyle } from 'react-native';
-import { Text, useMobileTheme, type TextVariant } from 'mobile-design';
+import { Text, useMobileTheme, type TextVariant } from 'mobile-design/react-native-web';
 
 type Run = {
     key: number;

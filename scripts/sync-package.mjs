@@ -135,7 +135,8 @@ const { appColorTokens: tokens } = packageRequire('@mobile-design/tokens/colors'
 const output = path.join(site, 'dist');
 fs.mkdirSync(path.join(output, 'assets'), { recursive: true });
 const packageJson = JSON.parse(read('package.json'));
-const verified = JSON.parse(read('docs/ios-extended-results-2026-11-02.json'));
+// A content refresh retains the results of the last recorded native verification.
+const { verification } = JSON.parse(fs.readFileSync(path.join(output, 'data.json'), 'utf8'));
 const data = {
     version: packageJson.version,
     generated: new Date().toISOString().slice(0, 10),
@@ -165,15 +166,7 @@ const data = {
     foundationExamples,
     optionalPeers: packageJson.peerDependenciesMeta ?? {},
     colors: tokens,
-    verification: {
-        date: verified.date,
-        automatic: verified.automatic.blocksPassed,
-        families: verified.matrix.familiesPassed,
-        nativeCases: verified.finalNativeCases.total,
-        voiceOver: verified.voiceOver.passed,
-        largeText: verified.largeSystemText.passed,
-        limits: verified.limits,
-    },
+    verification,
     platformSupport: {
         primary: 'React Native con módulos Expo',
         web: { status: 'partial', implementationPreserved: true, interactiveComponents: Object.keys(webExamples) },
@@ -215,7 +208,7 @@ for (const [source, target] of [
     ['Roboto_700Bold.ttf', 'roboto-bold.ttf'],
     ['OFL.txt', 'Roboto-OFL.txt'],
 ]) {
-    fs.copyFileSync(path.join(iconsRoot, 'assets/fonts/roboto', source), path.join(output, 'assets', target));
+    fs.copyFileSync(path.join(pkgRoot, 'assets/fonts/roboto', source), path.join(output, 'assets', target));
 }
 for (const license of ['LICENSE', 'LICENSE-Apache-2.0.txt']) {
     if (fs.existsSync(path.join(pkgRoot, license))) fs.copyFileSync(path.join(pkgRoot, license), path.join(output, 'assets', license));

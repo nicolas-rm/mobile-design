@@ -1,0 +1,71 @@
+{
+    "name": "mobile-design",
+    "version": "0.1.2",
+    "description": "Material Design 3 components for React Native and React Native Web, built on React Native Paper",
+    "keywords": [
+        "material-design",
+        "material-design-3",
+        "react-native",
+        "react-native-web",
+        "expo",
+        "design-system"
+    ],
+    "license": "MIT AND Apache-2.0 AND OFL-1.1",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "exports": {
+        "./react-native": {
+            "types": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./react-native-web": {
+            "types": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "src",
+        "assets/fonts",
+        "assets/logo.svg",
+        "README.md",
+        "COMPONENTS.md",
+        "LICENSE",
+        "NOTICE",
+        "LICENSE-Apache-2.0.txt"
+    ],
+    "sideEffects": false,
+    "dependencies": {
+        "@mobile-design/tokens": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": ">=19.2.0",
+        "react-native": ">=0.88.0",
+        "react-dom": ">=19.2.0",
+        "react-native-web": ">=0.21.4",
+        "expo-font": ">=58.0.0",
+        "react-native-paper": "6.0.0-alpha.0",
+        "react-native-reanimated": ">=4.3.0",
+        "react-native-worklets": ">=0.8.1",
+        "react-native-gesture-handler": "~3.3.0",
+        "react-native-safe-area-context": ">=5.0.0",
+        "react-native-svg": ">=15.0.0",
+        "expo-image": ">=57.0.0",
+        "@gorhom/bottom-sheet": ">=5.2.0"
+    },
+    "peerDependenciesMeta": {
+        "react-dom": {
+            "optional": true
+        },
+        "react-native-web": {
+            "optional": true
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nicolas-rm/mobile-design.git",
+        "directory": "library/packages/mobile-design"
+    }
+}

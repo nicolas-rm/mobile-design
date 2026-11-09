@@ -1,4 +1,4 @@
-import type { TabItem } from 'mobile-design';
+import type { TabItem } from 'mobile-design/react-native-web';
 
 const guidelines = 'https://m3.material.io/components/tabs/guidelines';
 

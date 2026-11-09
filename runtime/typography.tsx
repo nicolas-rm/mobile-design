@@ -2,7 +2,8 @@ import { SelectField } from './select-field';
 import { Prose, RuntimeTextRoot } from './prose';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { MobileDesignProvider, Text, useMobileTheme, type TextVariant } from 'mobile-design';
+import { Text, useMobileTheme, type TextVariant } from 'mobile-design/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { type LanguageHeight } from '@mobile-design/tokens';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';
 

@@ -1,0 +1,46 @@
+{
+    "name": "@mobile-design/icons",
+    "version": "0.1.2",
+    "description": "Optional full Material Symbols Rounded collection for Mobile Design",
+    "keywords": [
+        "material-symbols",
+        "icons",
+        "react-native",
+        "react-native-web"
+    ],
+    "license": "MIT AND Apache-2.0",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "exports": {
+        "./react-native": "./src/index.tsx",
+        "./react-native-web": "./src/index.tsx",
+        "./codepoints": "./src/material-symbol-codepoints.ts",
+        "./fonts/*": "./assets/fonts/*",
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "src",
+        "assets/fonts/**/*.ttf",
+        "assets/fonts/**/*.woff2",
+        "README.md",
+        "LICENSE",
+        "LICENSE-Apache-2.0.txt",
+        "NOTICE"
+    ],
+    "sideEffects": false,
+    "dependencies": {
+        "mobile-design": "workspace:*"
+    },
+    "peerDependencies": {
+        "expo-font": ">=58.0.0",
+        "react": ">=19.2.0",
+        "react-native-paper": "6.0.0-alpha.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nicolas-rm/mobile-design.git",
+        "directory": "library/packages/mobile-design-icons"
+    }
+}

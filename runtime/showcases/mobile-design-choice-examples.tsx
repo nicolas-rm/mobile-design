@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Autocomplete, Select, Text, type ChoiceOption } from 'mobile-design';
+import { Autocomplete, Select, Text, type ChoiceOption } from 'mobile-design/react-native-web';
 
 const qualityOptions: readonly ChoiceOption[] = [
     { value: 'standard', label: 'Estándar', description: 'Consume menos datos', icon: 'data_saver_on' },

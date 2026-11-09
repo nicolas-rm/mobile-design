@@ -1,7 +1,8 @@
 import { SelectField } from './select-field';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { ButtonGroup, MobileDesignProvider, createMobileDesignTheme, type ButtonGroupProps, type ButtonGroupItem } from 'mobile-design';
+import { ButtonGroup, createMobileDesignTheme, type ButtonGroupProps, type ButtonGroupItem } from 'mobile-design/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { buttonGroupSizeTokens } from '@mobile-design/tokens';
 import { Prose, RuntimeTextRoot } from './prose';
 import { ButtonGroupUses } from './button-group-usage';

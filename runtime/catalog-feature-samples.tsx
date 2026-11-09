@@ -14,14 +14,14 @@ import {
     FABMenu,
     IconButton,
     List,
-    MaterialSymbol,
     SegmentedButtons,
     SplitButton,
     Text,
     TimePicker,
     TopAppBar,
     useMobileTheme,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
 import { View } from 'react-native';
 
 export const featurePreviewIds = [

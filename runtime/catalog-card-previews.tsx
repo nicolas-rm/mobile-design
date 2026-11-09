@@ -3,9 +3,7 @@ import {
     Divider,
     IconButton,
     List,
-    MaterialSymbol,
     Menu,
-    MobileDesignProvider,
     NavigationBar,
     NavigationDrawer,
     NavigationRail,
@@ -21,7 +19,9 @@ import {
     TextField,
     Toolbar,
     useMobileTheme,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { View, useWindowDimensions } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';

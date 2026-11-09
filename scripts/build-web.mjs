@@ -33,7 +33,13 @@ if (diagnostics.length) {
 const result = spawnSync(process.execPath, [expo, 'export', '--platform', 'web', '--output-dir', destination, '--max-workers', '2'], {
     cwd: runtime,
     stdio: 'inherit',
-    env: { ...process.env, MOBILE_DESIGN_PACKAGE_DIR: packageRoot, EXPO_NO_DOTENV: '1' },
+    env: {
+        ...process.env,
+        MOBILE_DESIGN_PACKAGE_DIR: packageRoot,
+        MOBILE_DESIGN_TOKENS_DIR: tokensRoot,
+        MOBILE_DESIGN_ICONS_DIR: iconsRoot,
+        EXPO_NO_DOTENV: '1',
+    },
 });
 if (result.error) throw result.error;
 if (result.status !== 0) process.exit(result.status ?? 1);
@@ -84,6 +90,7 @@ function collectLicenses(directory) {
     }
 }
 collectLicenses(packageRoot);
+collectLicenses(iconsRoot);
 fs.writeFileSync(path.join(destination, 'THIRD_PARTY_NOTICES.txt'), notices.join('\n\n' + '='.repeat(72) + '\n\n') + '\n');
 const hash = createHash('sha256').update(html).digest('hex').slice(0, 12);
 const sourceHash = createHash('sha256');
@@ -98,6 +105,7 @@ const hashSource = (directory) => {
     }
 };
 for (const directory of [packageRoot, tokensRoot, iconsRoot]) hashSource(path.join(directory, 'src'));
+hashSource(path.join(packageRoot, 'assets/fonts'));
 hashSource(path.join(iconsRoot, 'assets/fonts'));
 const fingerprint = sourceHash.digest('hex');
 const examples = Object.fromEntries(

@@ -10,7 +10,7 @@ La documentación conserva el estilo Material Design 3 del proyecto. Prioriza co
 - `dist/component-docs.js`: presentación de las fichas.
 - `dist/app.js`, `dist/styles.css`: navegación y estilo de la documentación.
 
-Si cambias contenido fuente, sincroniza la salida con el paquete nativo configurado. `dist/data.json`, sus ejemplos y los datos integrados en el HTML deben permanecer iguales. No cambies una API del paquete para acomodar un ejemplo incorrecto.
+Si cambias contenido fuente, instala las dependencias con `(cd library && pnpm install --frozen-lockfile)` y ejecuta `npm run sync` desde la raíz. Mantén sincronizados `dist/data.json`, sus ejemplos y los datos integrados en el HTML. Corrige los ejemplos para que usen la API pública del paquete.
 
 ## Criterios MD3
 
@@ -25,8 +25,8 @@ Si cambias contenido fuente, sincroniza la salida con el paquete nativo configur
 
 ```sh
 npm test
-npm run check:examples -- --package-dir /ruta/al/paquete/mobile-design
+npm run check:examples
 npm start
 ```
 
-La primera comprobación es autónoma y se ejecuta en CI. La segunda compila todos los ejemplos contra el paquete nativo y necesita su workspace. En el navegador revisa catálogo, ficha, búsqueda, tema, menú móvil y capturas. El soporte web de los componentes permanece pendiente; estas comprobaciones prueban el sitio de documentación.
+La primera comprobación es autónoma y se ejecuta en CI. La segunda comprueba los tipos de todos los ejemplos contra el paquete nativo del workspace. En el navegador revisa catálogo, fichas, búsqueda, tema, menú móvil y capturas.

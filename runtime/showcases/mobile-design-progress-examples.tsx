@@ -16,7 +16,7 @@ import {
     Text,
     TopAppBar,
     useMobileTheme,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 import { useDemoTask } from './mobile-design-demo-task';
 import { ProgressTaskExample } from './mobile-design-action-scenarios';
 import { ProgressUsageExamples } from './mobile-design-progress-usage-examples';

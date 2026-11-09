@@ -11,7 +11,6 @@ import {
     ContainerTransformSurface,
     Icon,
     List,
-    MobileDesignProvider,
     NavigationBar,
     NavigationRail,
     Tabs,
@@ -19,7 +18,8 @@ import {
     TopAppBar,
     useMobileTheme,
     type ContainerTransformOrigin,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { useRuntimeEnvironment } from './environment';
 import { useWindowConfiguration } from './component-window';
 type Destination = {

@@ -6,7 +6,6 @@ import {
     Button,
     FAB,
     Icon,
-    MobileDesignProvider,
     ContainerTransformSurface,
     TextField,
     Tooltip,
@@ -15,7 +14,8 @@ import {
     type FABSize,
     type FABVariant,
     type TextFieldHandle,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { cancelAnimation, useSharedValue, withTiming, Easing, ReduceMotion } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { RuntimeBridge, useRuntimeEnvironment } from './environment';

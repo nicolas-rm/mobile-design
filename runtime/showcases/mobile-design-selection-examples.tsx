@@ -11,8 +11,8 @@ import {
     type DateRange,
     type TextFieldHandle,
     type TimeValue,
-} from 'mobile-design';
-import { Text } from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { Text } from 'mobile-design/react-native-web';
 
 type ExampleProps = { onEvent: (message: string) => void };
 

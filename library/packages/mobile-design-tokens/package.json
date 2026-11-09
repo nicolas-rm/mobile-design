@@ -1,0 +1,43 @@
+{
+    "name": "@mobile-design/tokens",
+    "version": "0.1.2",
+    "description": "Framework-independent Mobile Design values",
+    "keywords": [
+        "material-design",
+        "design-tokens",
+        "typography",
+        "color",
+        "motion"
+    ],
+    "license": "MIT AND Apache-2.0",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./colors": {
+            "types": "./src/generated/material-colors.d.ts",
+            "default": "./src/generated/material-colors.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "src",
+        "README.md",
+        "LICENSE",
+        "NOTICE",
+        "LICENSE-Apache-2.0.txt"
+    ],
+    "sideEffects": false,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nicolas-rm/mobile-design.git",
+        "directory": "library/packages/mobile-design-tokens"
+    }
+}

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Portal as SnackbarPortal } from 'mobile-design';
+import { Portal as SnackbarPortal } from 'mobile-design/react-native-web';
 import { ScrollView, View, useWindowDimensions } from 'react-native';
 import {
     Avatar,
@@ -16,7 +16,7 @@ import {
     Snackbar,
     Text,
     type CarouselItem,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 
 import { ChipExamples, MenuExamples, CheckboxExamples, RadioExamples, SwitchExamples } from './mobile-design-content-examples';
 import { ListExamples } from './mobile-design-list-examples';

@@ -108,7 +108,7 @@ assert.ok(
 for (const c of data.components) {
     assert.ok(c.description && c.guidance && c.accessibility, c.id + ' editorial');
     assert.ok(c.api.length > 0, c.id + ' API');
-    assert.ok(c.example.includes("from 'mobile-design'"), c.id + ' import');
+    assert.match(c.example, /from 'mobile-design(?:\/react-native)?'/, c.id + ' import');
     assert.equal(fs.readFileSync(path.join(dist, 'examples', c.id + '.tsx'), 'utf8'), c.example);
     if (c.group !== 'extensions') {
         assert.ok(fs.existsSync(path.join(dist, 'native', c.id + '.png')), c.id + ' native capture');

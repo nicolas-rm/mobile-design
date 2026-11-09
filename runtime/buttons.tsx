@@ -2,7 +2,9 @@ import { SelectField } from './select-field';
 import { Prose, RuntimeTextRoot } from './prose';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { View, type ColorValue } from 'react-native';
-import { Button, MaterialSymbol, MobileDesignProvider } from 'mobile-design';
+import { Button } from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { type ButtonSize, type ButtonVariant } from '@mobile-design/tokens';
 import './styles.css';
 

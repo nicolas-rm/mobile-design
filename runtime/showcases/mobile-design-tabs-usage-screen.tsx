@@ -28,7 +28,7 @@ import {
     TopAppBar,
     useMobileTheme,
     type TabItem,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 import { tabsReferenceArt, TabsSourceArt, type TabsReferenceArtName } from './mobile-design-tabs-art';
 import { tabsDogItems, tabsMediaItems, tabsMovieItems, tabsMusicItems, type TabsUsageScenario } from './mobile-design-tabs-usage-data';
 

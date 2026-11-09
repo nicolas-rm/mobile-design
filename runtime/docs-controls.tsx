@@ -9,7 +9,6 @@ import {
     IconButton,
     ListItem,
     LoadingIndicator,
-    MaterialSymbol,
     NavigationDrawer,
     NavigationDrawerItem,
     NavigationRail,
@@ -20,12 +19,13 @@ import {
     TopAppBar,
     Text,
     TextField,
-    MobileDesignProvider,
     useMobileTheme,
     type IconButtonProps,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
+import { MaterialSymbol } from '@mobile-design/icons/react-native-web';
+import { GalleryProvider as MobileDesignProvider } from './gallery-provider';
 import { type ButtonVariant, type ButtonSize } from '@mobile-design/tokens';
-import { Autocomplete, Select, type ChoiceOption } from 'mobile-design/web';
+import { Autocomplete, Select, type ChoiceOption } from 'mobile-design/react-native-web';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { createDocsTypography } from './docs-typography';
 import { CatalogCardPreview, hasCatalogCardPreview } from './catalog-card-previews';

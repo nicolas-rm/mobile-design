@@ -19,7 +19,7 @@ import {
     TextField,
     useMobileTheme,
     type ContainerTransformOrigin,
-} from 'mobile-design';
+} from 'mobile-design/react-native-web';
 import { useDemoTask, type DemoTaskStatus } from './mobile-design-demo-task';
 
 type Events = { onEvent: (message: string) => void };
