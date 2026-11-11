@@ -1,0 +1,88 @@
+{
+    "retrievedAt": "2026-10-27",
+    "component": "https://m3.material.io/components/buttons",
+    "purpose": "Original documented Dont/Caution comparisons, explicitly noninteractive reference figures.",
+    "assets": [
+        {
+            "id": "G04",
+            "file": "G04.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmlqpykn-04-don't.png?alt=media",
+            "chunkId": "ee393a8b-e31e-4d6c-ba15-0cc07ef74325",
+            "dimensions": [1352, 840],
+            "sha256": "80ecab5bfec4393eb72b9ae152b0830509a4b04fc9ee6b7eca731e6f44fc1972",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G07",
+            "file": "G07.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmlqt8jf-07-don't.png?alt=media",
+            "chunkId": "2454f586-e470-445a-a894-4129c7faf6b7",
+            "dimensions": [656, 600],
+            "sha256": "ca810e73f05cbec5465802cd58157b6de11cbe64a1a7c51f9a50ecf5367de94c",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G12",
+            "file": "G12.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmlt52gk-12-dont.png?alt=media",
+            "chunkId": "62b76da8-0ad9-421a-8254-9b4fd1430bdd",
+            "dimensions": [656, 600],
+            "sha256": "f6e609ebc3d24d169cd77e2c89f5051ff602a97e47e674033b420d68fcd7c086",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G15",
+            "file": "G15.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmlt7yj0-15-dont.png?alt=media",
+            "chunkId": "93b3ec29-8291-4cd5-ac9e-957e898f9e64",
+            "dimensions": [656, 600],
+            "sha256": "05acddac646d7e3b4ea103c52271eecbe3fcf609bedc2530fdca1f85e91a1c91",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G16",
+            "file": "G16.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmlt97u1-16-%20caution.png?alt=media",
+            "chunkId": "2f815cca-7031-4603-849f-75ae8d3b236d",
+            "dimensions": [1352, 600],
+            "sha256": "9c051ca0cddcc0269c3cd8a76883b2ed00fd83d7bae362d4a366f947bff1a316",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G24",
+            "file": "G24.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmltnhb2-24-dont.png?alt=media",
+            "chunkId": "76a002f7-09f0-4afa-9dc4-c8bbfd1a2cc7",
+            "dimensions": [656, 656],
+            "sha256": "2b5d1f9585f40d13402ec2758bd04959d3d2de6f5976d2ee19c5dd133c8ae515",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G25",
+            "file": "G25.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmltof7i-25-dont.png?alt=media",
+            "chunkId": "8ec8b61f-9111-4d6d-8ce6-5996d1c40f86",
+            "dimensions": [656, 656],
+            "sha256": "8caa90a6448383be0249990217fc9bdaed9f584d1cc0fdcd10e4758fb58e466c",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G43",
+            "file": "G43.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmm0yith-43-dont.png?alt=media",
+            "chunkId": "6437a5c7-6184-4597-b6c7-a67490375d24",
+            "dimensions": [656, 600],
+            "sha256": "45d58a721367ca3cfd9d89bbb308a3df09a1df9e7c7c677b39cf9896f9fddee0",
+            "role": "reference-diagram-noninteractive"
+        },
+        {
+            "id": "G44",
+            "file": "G44.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fmmm0zsof-44-dont.png?alt=media",
+            "chunkId": "820314f6-fe92-43d0-802f-e7b7a9948490",
+            "dimensions": [2704, 1600],
+            "sha256": "267abc6f83292999935208dba48d3443ed73621c71cb5397a0191415d4ff3fa6",
+            "role": "reference-diagram-noninteractive"
+        }
+    ]
+}

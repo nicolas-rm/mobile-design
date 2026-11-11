@@ -1,0 +1,58 @@
+[
+    {
+        "file": "music.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fm60dwpex-GM3-Components-Tabs-Guidelines-5.1-v01.mp4?alt=media",
+        "frameTimeSeconds": 0,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [658, 984],
+        "sha256": "9ce702607f73408a01458258275013e9031e55c7a45b3a2cb654ada8806cf85b"
+    },
+    {
+        "file": "music-wide.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fm60dtw9m-GM3-Components-Tabs-Guidelines-2-v01.mp4?alt=media",
+        "frameTimeSeconds": 0,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [1352, 952],
+        "sha256": "353ca27bb6b6355a7c763e9fcb4de305daac0d9a11c85366c46d0bbefce99a82"
+    },
+    {
+        "file": "white-noise.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fm60dvuo4-GM3-Components-Tabs-Guidelines-4-v01.mp4?alt=media",
+        "frameTimeSeconds": 2.96,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [1352, 952],
+        "sha256": "58ada514fe43bd8908084101ff90acdaa2a0e880d461d8868f3acefa7f22c07b"
+    },
+    {
+        "file": "movie-posters.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fm60dztv7-GM3-Components-Tabs-Guidelines-8.1.mp4?alt=media",
+        "frameTimeSeconds": 2.1,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [656, 600],
+        "sha256": "26579bde2920c19de05da12f0fd7d687ab223b0691be43bc5243a039ffb8455b"
+    },
+    {
+        "file": "dogs.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fm60e0d2q-GM3-Components-Tabs-Guidelines-8.2.mp4?alt=media",
+        "frameTimeSeconds": 0,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [656, 600],
+        "sha256": "414433f44acdd6e1dd89c5da15743d7a3ba0abccff3a120e0611a01255b95ff6"
+    },
+    {
+        "file": "recipe.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fm2k217y6-16.png?alt=media",
+        "frameTimeSeconds": null,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [1352, 600],
+        "sha256": "1b7810de3ce34cc898c1411c7fafc93586a271b5c678893a7cc5e1b49382d26b"
+    },
+    {
+        "file": "music-scrolled.png",
+        "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fm60dz0ae-GM3-Components-Tabs-Guidelines-7-v01.mp4?alt=media",
+        "frameTimeSeconds": 2.43,
+        "use": "Photographic regions only; native controls replace the reference UI.",
+        "dimensions": [1352, 952],
+        "sha256": "a1df96722d543b99874a4cf3f8ec0e3ddfaf0aa8e8856a6733a452643d845e5b"
+    }
+]

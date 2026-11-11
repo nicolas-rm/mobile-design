@@ -1,0 +1,72 @@
+{
+    "component": "Button groups",
+    "retrievedAt": "2026-11-02",
+    "sourceDocument": "https://m3.material.io/_dsm/content/m3/2026-10-13_06-10-19/93a2bf4e-18ac-49a4-8560-8d2a7dffc678.json",
+    "visibleMediaCounts": {
+        "images": 30,
+        "videos": 9
+    },
+    "notes": [
+        "Only visible sections and nonhidden content blocks count toward current coverage.",
+        "High contrast is hidden in this publication and is excluded from the gallery."
+    ],
+    "items": [
+        {
+            "id": "S08",
+            "section": "Specs",
+            "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmobjzmlh-07-key01-3P.png?alt=media",
+            "localFile": "S08.png",
+            "dimensions": [1352, 700],
+            "sha256": "fae8ebcbd1d1aece14700fffec57d69994fe3b9ebda31b8e42157ffe2b08a46f",
+            "usage": "Original noninteractive MD3 reference diagram; not a screen or a native verification."
+        },
+        {
+            "id": "S09",
+            "section": "Specs",
+            "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmhsvti2a-08-3P.png?alt=media",
+            "localFile": "S09.png",
+            "dimensions": [1352, 700],
+            "sha256": "b33276462def046b68a562fb6f907d97a9bdaf823146218938aebc96bef291de",
+            "usage": "Original noninteractive MD3 reference diagram; not a screen or a native verification."
+        },
+        {
+            "id": "S10",
+            "section": "Specs",
+            "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmhsvu5c7-09-3P.png?alt=media",
+            "localFile": "S10.png",
+            "dimensions": [2048, 962],
+            "sha256": "2d19d7678a314b98844db0c874eea36a46e16444a4ceef3d9223a058f6e2fa3b",
+            "usage": "Original noninteractive MD3 reference diagram; not a screen or a native verification."
+        },
+        {
+            "id": "S11",
+            "section": "Specs",
+            "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmhsvuqev-10-3P.png?alt=media",
+            "localFile": "S11.png",
+            "dimensions": [2048, 800],
+            "sha256": "96e6b43850165e0f573baafcb88a58b41cd2d72cb246ecd00e9b779a978a615f",
+            "usage": "Original noninteractive MD3 reference diagram; not a screen or a native verification."
+        },
+        {
+            "id": "G08",
+            "section": "Guidelines",
+            "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmk2jyzbl-04.png?alt=media",
+            "localFile": "G08.png",
+            "dimensions": [1352, 600],
+            "sha256": "e59254d51a61ff2dac03c1d3d1bfc6b1cc578ddb4849e363e32393a010529a98",
+            "usage": "Original noninteractive MD3 reference diagram; not a screen or a native verification."
+        },
+        {
+            "id": "G05-avatar",
+            "section": "Guidelines",
+            "sourceUrl": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fm34llls1-Button-Group-B-2.mp4?alt=media",
+            "frameTimeSeconds": 1,
+            "originalDimensions": [1352, 600],
+            "crop": [132, 336, 88, 88],
+            "localFile": "files-avatar.png",
+            "dimensions": [88, 88],
+            "sha256": "20fa8072ccd131289c2e0c5b9720add1236846de0dc2fffd1de7b7f1f48c509c",
+            "usage": "Photographic avatar region only; the account action is a native Avatar.Button."
+        }
+    ]
+}

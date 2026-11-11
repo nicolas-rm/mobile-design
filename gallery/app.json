@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Mobile Design Gallery",
+    "slug": "mobile-design-gallery",
+    "scheme": "mobile-design-gallery",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "dev.mobiledesign.gallery",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "dev.mobiledesign.gallery"
+    }
+  }
+}

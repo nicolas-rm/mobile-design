@@ -1,0 +1,12 @@
+{
+  "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Fm7m4gc9t-slider%20motion.mp4?alt=media",
+  "retrieved": "2026-11-05",
+  "assets": [
+    {
+      "file": "photo-edit.png",
+      "frameSeconds": 0,
+      "crop": "994:518:228:282",
+      "sha256": "a3154f43ebcbe5519d3b9d02450275fa2a7b1cd25204ec79382a0c247ad8587c"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+    "article": "https://m3.material.io/blog/whats-new-at-io26",
+    "retrievedAt": "2026-11-05",
+    "assets": [
+        {
+            "file": "lists-menus-reference.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmp3ozsy1-lists-menus.png?alt=media",
+            "dimensions": [
+                2704,
+                1200
+            ],
+            "sha256": "cc6c85cdf33ec6572a8a7489d1c5a04407421f9afe00b8c066e748f89fff7ef4",
+            "usage": "SVG viewports expose photographic regions only. All list and menu controls remain live components.",
+            "photoViewports": {
+                "salad": [
+                    1410,
+                    90,
+                    152,
+                    152
+                ],
+                "dumplings": [
+                    1410,
+                    278,
+                    152,
+                    152
+                ],
+                "bread": [
+                    1410,
+                    470,
+                    152,
+                    152
+                ],
+                "complex": [
+                    1410,
+                    653,
+                    152,
+                    152
+                ]
+            }
+        },
+        {
+            "file": "shrine-reference.png",
+            "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fmp59ofh3-Shrine%20Color%20A.png?alt=media",
+            "dimensions": [
+                2203,
+                1344
+            ],
+            "sha256": "f7f49955f56812898a4891dbd6d578a34f578abf4422af12fe194fc509273630",
+            "usage": "Only photographic regions are visible through SVG viewports. Controls and typography are rendered by Mobile Design.",
+            "photoViewports": {
+                "compactFront": [
+                    356,
+                    363,
+                    363,
+                    234
+                ],
+                "front": [
+                    1045,
+                    230,
+                    395,
+                    545
+                ],
+                "detail": [
+                    1045,
+                    790,
+                    395,
+                    218
+                ],
+                "alternate": [
+                    1045,
+                    1018,
+                    395,
+                    120
+                ]
+            }
+        }
+    ]
+}

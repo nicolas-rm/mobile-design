@@ -1,0 +1,18 @@
+{
+  "retrievedAt": "2026-11-05",
+  "component": "https://m3.material.io/components/bottom-sheets",
+  "assets": [
+    {
+      "file": "cassette-futurism.png",
+      "source": "https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fgoogle-material-3%2Fimages%2Flvp7ubva-9.png?alt=media",
+      "section": "Guidelines / Standard bottom sheets",
+      "crop": [
+        264,
+        280,
+        128,
+        128
+      ],
+      "sha256": "27a989c917e9cd7232c73f2f77b3b303132a266bb6d8de40a0e47f76a326ef47"
+    }
+  ]
+}
