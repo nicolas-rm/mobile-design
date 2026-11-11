@@ -99,3 +99,5 @@ Consulta [QA.md](QA.md) para los casos, resultados y límites de cada revisión.
 ## Licencias
 
 El código de documentación se distribuye bajo [MIT](LICENSE). Las fuentes, imágenes y dependencias conservan sus atribuciones en [`dist/assets/NOTICE`](dist/assets/NOTICE) y en los [avisos del runtime](dist/runtime/components/THIRD_PARTY_NOTICES.txt). Mobile Design es un proyecto independiente de Google.
+
+La [galería nativa](gallery/README.md) incluye las pantallas de ejemplo y los pasos para abrir el catálogo en Android o iOS.

@@ -1,10 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { packageContext } from './package-context.mjs';
-const { site, workspace, ts } = packageContext(),
-    source = path.join(workspace, 'src/screens/examples'),
-    target = path.join(site, 'runtime/showcases');
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+
+const site = fileURLToPath(new URL('../', import.meta.url));
+const gallery = path.join(site, 'gallery');
+const ts = createRequire(path.join(gallery, 'package.json'))('typescript');
+const source = path.join(gallery, 'src/screens/examples');
+const target = path.join(site, 'runtime/showcases');
 fs.mkdirSync(target, { recursive: true });
 const selected = [
     'core-examples',
@@ -114,13 +118,13 @@ for (const key of selected) {
     text = text.replaceAll("require('../../assets/images/welcome-wallpaper.png')", "require('./assets/welcome-wallpaper.png')");
     fs.writeFileSync(path.join(target, path.basename(original)), text);
     records.push({
-        source: path.relative(workspace, original),
+        source: path.relative(site, original),
         sha256: createHash('sha256').update(fs.readFileSync(original)).digest('hex'),
     });
 }
 for (const name of ['lists', 'tabs', 'buttons'])
     fs.cpSync(path.join(source, 'assets', name), path.join(target, 'assets', name), { recursive: true });
-fs.copyFileSync(path.join(workspace, 'src/assets/images/welcome-wallpaper.png'), path.join(target, 'assets/welcome-wallpaper.png'));
+fs.copyFileSync(path.join(gallery, 'src/assets/images/welcome-wallpaper.png'), path.join(target, 'assets/welcome-wallpaper.png'));
 fs.writeFileSync(
     path.join(target, 'provenance.json'),
     JSON.stringify(
